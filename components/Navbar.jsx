@@ -15,7 +15,6 @@ import { useEffect, useState } from "react";
 const navigation = [
   { name: "Úvod", href: "/", current: false },
   { name: "Informace", href: "/informations", current: false },
-  { name: "Projects", href: "#", current: false },
   { name: "Přihláška", href: "#", current: false },
   { name: "Galerie", href: "#", current: false },
   { name: "Sponzoři", href: "#", current: false },
