@@ -8,6 +8,7 @@ import { getAuth } from 'firebase/auth'; // Import getAuth from Firebase
 
 const NewOfferPage = () => {
   const [offerData, setOfferData] = useState({
+    userId: '',
     firstName: '',
     lastName: '',
     birthDate: '',
@@ -33,6 +34,10 @@ const NewOfferPage = () => {
     const user = auth.currentUser; // Get the currently authenticated user
     if (user) {
       setUserId(user.uid); // Set the user ID in state
+      setOfferData(prevState => ({
+        ...prevState,
+        userId: user.uid
+      }));
     } else {
       // Handle the case where the user is not authenticated
       router.push('/auth/login'); // Redirect to login page if not authenticated
@@ -53,15 +58,18 @@ const NewOfferPage = () => {
     // Input validation
     for (const [key, value] of Object.entries(offerData)) {
       if (value === '' && (key === 'firstName' || key === 'lastName' || key === 'birthDate' || key === 'street' || key === 'city' || key === 'postalCode' || key === 'fatherName' || key === 'motherName' || key === 'contactEmail')) {
-        alert(`Prosím vyplňte ${key}.`); // Alert for required fields
+        alert(`Prosím vyplňte ${key}.`);
         return;
       }
     }
 
     try {
       const offersCollection = collection(db, 'offers');
-      await addDoc(offersCollection, offerData);
-      router.push(`/user/${userId}`); // Navigate to user page on successful submission
+      await addDoc(offersCollection, {
+        ...offerData,
+        userId: userId // Přidejte userId k uloženým datům
+      });
+      router.push(`/user/${userId}`); // Přejděte na stránku uživatele při úspěšném odeslání
     } catch (error) {
       console.error("Error adding document: ", error);
       alert("Došlo k chybě při ukládání nabídky. Zkuste to prosím znovu.");

@@ -1,8 +1,9 @@
 // components/UserTable.tsx
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../Firebase'; // Adjust the path as necessary
-import Link from 'next/link'; // Import Link from Next.js
+import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Import getAuth and onAuthStateChanged from Firebase
+import Link from 'next/link';
 
 interface Offer {
   id: string;
@@ -15,17 +16,25 @@ interface Offer {
 
 const UserTable: React.FC = () => {
   const [offers, setOffers] = useState<Offer[]>([]); // State to hold offers data
+  const [userId, setUserId] = useState<string | null>(null); // State to hold user ID
 
-  // Fetch offers from Firestore
-  const fetchOffers = async () => {
-    const offersCollection = collection(db, 'offers'); // Adjust 'offers' to your collection name
-    const offerDocs = await getDocs(offersCollection);
+  // Fetch offers from Firestore for the logged-in user
+  const fetchOffers = async (currentUserId: string) => {
+    const offersCollection = collection(db, 'offers'); 
+    const userOffersQuery = query(offersCollection, where("userId", "==", currentUserId));
+    const offerDocs = await getDocs(userOffersQuery);
     const offersData = offerDocs.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Offer[];
     setOffers(offersData);
   };
 
   useEffect(() => {
-    fetchOffers();
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserId(user.uid);
+        fetchOffers(user.uid); // Fetch offers when user is authenticated
+      }
+    });
   }, []); // Fetch offers on component mount
 
   return (
