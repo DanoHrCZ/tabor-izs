@@ -45,7 +45,7 @@ const UserTable: React.FC = () => {
   }, []); // Fetch offers on component mount
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8">
+    <div className="px-4 mt-16 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">Přihlášky</h1>
@@ -61,14 +61,14 @@ const UserTable: React.FC = () => {
           </Link>
         </div>
       </div>
-      <div className="mt-8 flow-root">
+      <div className="mt-2 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <table className="min-w-full divide-y divide-gray-300">
               <thead>
                 <tr>
                   <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-0">Jméno</th>
-                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-blue-500">variabilní symbol (rodné č.)</th>
+                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-blue-500">Variabilní symbol (rodné č.)</th>
                   <th className="px-3 py-3.5 text-left text-sm font-semibold text-orange-500">Datum narození</th>
                   <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Stav</th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">

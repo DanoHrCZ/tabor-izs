@@ -61,7 +61,7 @@ export default function UserPage() {
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h1 className="text-3xl font-bold text-center text-gray-900">
-          Jste přihlášen jako: {userData.firstName} {userData.lastName}.
+         Vítej, {userData.firstName}!
         </h1>
         {userData && (
           <div className="mt-4 text-center">
@@ -70,7 +70,7 @@ export default function UserPage() {
           </div>
         )}
       </div>
-      <Offers /> {/* Render Offers component */}
+      <Offers />
     </div>
   );
 }
