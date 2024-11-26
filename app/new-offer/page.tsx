@@ -23,7 +23,8 @@ const NewOfferPage = () => {
     employerContribution: '',
     healthIssues: '',
     medications: '',
-    additionalInfo: ''
+    additionalInfo: '',
+    birthNumber: ''  // Added birthNumber field
   });
 
   const [userId, setUserId] = useState(null); // State to hold user ID
@@ -52,15 +53,27 @@ const NewOfferPage = () => {
     }));
   };
 
+  const validateBirthNumber = (birthNumber) => {
+    // Simple validation for Czech birth number format (XXXXXX/XXXX)
+    const regex = /^\d{6}\/\d{4}$/;
+    return regex.test(birthNumber);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Input validation
     for (const [key, value] of Object.entries(offerData)) {
-      if (value === '' && (key === 'firstName' || key === 'lastName' || key === 'birthDate' || key === 'street' || key === 'city' || key === 'postalCode' || key === 'fatherName' || key === 'motherName' || key === 'contactEmail')) {
+      if (value === '' && (key === 'firstName' || key === 'lastName' || key === 'birthDate' || key === 'street' || key === "birthNumber" || key === 'city' || key === 'postalCode')) {
         alert(`Prosím vyplňte ${key}.`);
         return;
       }
+    }
+
+    // Validate birth number
+    if (!validateBirthNumber(offerData.birthNumber)) {
+      alert("Prosím zadejte platné rodné číslo ve formátu XXXXXX/XXXX.");
+      return;
     }
 
     try {
@@ -83,22 +96,17 @@ const NewOfferPage = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <form onSubmit={handleSubmit} className="space-y-8">
-        <h2 className="text-2xl font-semibold text-gray-900">Nová nabídka</h2>
-        <p className="mt-1 text-sm text-gray-600">Prosím vyplňte níže uvedené informace.</p>
+        <h2 className="text-2xl font-semibold text-gray-900">Nová přihláška</h2>
+        <p className="mt-1 text-sm text-gray-600">Vyplňte prosím informace o vašem dítěti.</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {[
+          {[ 
             { label: 'Křestní jméno', name: 'firstName', type: 'text', required: true },
             { label: 'Příjmení', name: 'lastName', type: 'text', required: true },
             { label: 'Datum narození', name: 'birthDate', type: 'date', required: true },
             { label: 'Ulice', name: 'street', type: 'text', required: true },
             { label: 'Město', name: 'city', type: 'text', required: true },
             { label: 'PSČ', name: 'postalCode', type: 'text', required: true },
-            { label: 'Jméno a příjmení rodiče (otce)', name: 'fatherName', type: 'text', required: true },
-            { label: 'Kontaktní telefon (otce)', name: 'fatherPhone', type: 'tel' },
-            { label: 'Jméno a příjmení rodiče (matky)', name: 'motherName', type: 'text', required: true },
-            { label: 'Kontaktní telefon (matky)', name: 'motherPhone', type: 'tel' },
-            { label: 'Kontaktní e-mail', name: 'contactEmail', type: 'email', required: true },
             { label: 'Příspěvek zaměstnavatele', name: 'employerContribution', type: 'text' },
             { label: 'Zdravotní problémy', name: 'healthIssues', type: 'text' },
             { label: 'Užívané léky', name: 'medications', type: 'text' },
@@ -118,6 +126,22 @@ const NewOfferPage = () => {
               />
             </div>
           ))}
+
+          {/* Rodné číslo */}
+          <div className="flex flex-col">
+            <label htmlFor="birthNumber" className="mb-1 text-sm font-medium text-gray-900">
+              Rodné číslo
+            </label>
+            <input
+              id="birthNumber"
+              name="birthNumber"
+              type="text"
+              required
+              value={offerData.birthNumber}
+              onChange={handleChange}
+              className="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+            />
+          </div>
 
           <div className="col-span-1 sm:col-span-2">
             <label htmlFor="additional-info" className="mb-1 block text-sm font-medium text-gray-900">
@@ -152,6 +176,6 @@ const NewOfferPage = () => {
       </form>
     </div>
   );
-};
+};    
 
 export default NewOfferPage;

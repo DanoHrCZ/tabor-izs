@@ -7,11 +7,11 @@ import Link from 'next/link';
 
 interface Offer {
   id: string;
+  birthNumber: string;
   firstName: string;
   lastName: string;
   birthDate: string;
-  status: string; // Assuming you have a status field in your offer data
-  // Add other fields as necessary
+  status: string;
 }
 
 const UserTable: React.FC = () => {
@@ -20,10 +20,17 @@ const UserTable: React.FC = () => {
 
   // Fetch offers from Firestore for the logged-in user
   const fetchOffers = async (currentUserId: string) => {
-    const offersCollection = collection(db, 'offers'); 
+    const offersCollection = collection(db, 'offers');
     const userOffersQuery = query(offersCollection, where("userId", "==", currentUserId));
     const offerDocs = await getDocs(userOffersQuery);
-    const offersData = offerDocs.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Offer[];
+    const offersData = offerDocs.docs.map(doc => {
+      const offer = doc.data() as Offer;
+      return {
+        id: doc.id,
+        ...offer,
+        status: offer.status || 'neuhrazeno', // Set status to 'neuhrazeno' if it's empty
+      };
+    });
     setOffers(offersData);
   };
 
@@ -61,7 +68,7 @@ const UserTable: React.FC = () => {
               <thead>
                 <tr>
                   <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-0">Jméno</th>
-                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-blue-500">ID Přihlášky</th>
+                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-blue-500">variabilní symbol (rodné č.)</th>
                   <th className="px-3 py-3.5 text-left text-sm font-semibold text-orange-500">Datum narození</th>
                   <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Stav</th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
@@ -75,7 +82,7 @@ const UserTable: React.FC = () => {
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                       {offer.firstName} {offer.lastName}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{offer.id}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{offer.birthNumber}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{offer.birthDate}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{offer.status}</td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">

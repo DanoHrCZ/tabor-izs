@@ -78,13 +78,13 @@ export default function LandingPage() {
                 </p>
                 <div className="mt-4">
                   <a
-                    href="#"
+                    href="/register"
                     className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Vytvořit účet
                   </a>
                 </div>
-                <div className="lg:pr-4">
+                <div className="lg:pr-4 mt-6">
                   <div className="max-w-xl text-base/7 text-gray-700 lg:max-w-lg">
                     <p>
                       Mimo klasických táborových aktivit, jako jsou sportovní

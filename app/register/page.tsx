@@ -2,12 +2,17 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { auth } from '../../../Firebase';
+import { auth, db } from '../../Firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 export default function RegistrationPage() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -15,6 +20,11 @@ export default function RegistrationPage() {
   const validateEmail = (email) => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(String(email).toLowerCase());
+  };
+
+  const validatePhone = (phone) => {
+    const re = /^[0-9]{9}$/; // Telefonní číslo musí mít 9 číslic
+    return re.test(phone);
   };
 
   const translateFirebaseError = (errorCode) => {
@@ -43,25 +53,45 @@ export default function RegistrationPage() {
       return;
     }
 
+    if (!validatePhone(phone)) {
+      setError("Telefonní číslo musí mít 9 číslic.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Hesla se neshodují.");
+      return;
+    }
+
     if (password.length < 6) {
-      setError("Heslo musí mít alespoň 6 znaků");
+      setError("Heslo musí mít alespoň 6 znaků.");
       return;
     }
 
     setLoading(true);
     try {
+      // Vytvoření uživatele
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      
-      // Získáme ID nově zaregistrovaného uživatele
       const userID = userCredential.user.uid;
-      console.log('User registered successfully with ID:', userID);
 
-      // Přesměrujeme na /user/:id
+      // Uložení dalších informací do Firestore
+      await setDoc(doc(db, "users", userID), {
+        firstName,
+        lastName,
+        phone,
+        email,
+        createdAt: new Date(),
+      });
+
+      console.log('Uživatel zaregistrován a informace uloženy do Firestore.');
+
+      // Přesměrování na stránku s úspěšným vytvořením účtu
       router.push(`/user/${userID}`);
+
     } catch (error) {
       const errorMessage = translateFirebaseError(error.code);
       setError(errorMessage);
-      console.error('Error registering user:', error);
+      console.error('Chyba při registraci uživatele:', error);
     } finally {
       setLoading(false);
     }
@@ -84,6 +114,62 @@ export default function RegistrationPage() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && <p className="text-red-500">{error}</p>}
+
+            {/* First Name Field */}
+            <div>
+              <label htmlFor="first-name" className="block text-sm font-medium text-gray-900">
+                Jméno
+              </label>
+              <div className="mt-2">
+                <input
+                  id="first-name"
+                  name="first-name"
+                  type="text"
+                  required
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                />
+              </div>
+            </div>
+
+            {/* Last Name Field */}
+            <div>
+              <label htmlFor="last-name" className="block text-sm font-medium text-gray-900">
+                Příjmení
+              </label>
+              <div className="mt-2">
+                <input
+                  id="last-name"
+                  name="last-name"
+                  type="text"
+                  required
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                />
+              </div>
+            </div>
+
+            {/* Phone Field */}
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-900">
+                Telefonní číslo
+              </label>
+              <div className="mt-2">
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  required
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                />
+              </div>
+            </div>
+
+            {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-900">
                 E-mailová adresa
@@ -102,6 +188,7 @@ export default function RegistrationPage() {
               </div>
             </div>
 
+            {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-900">
                 Heslo
@@ -120,6 +207,25 @@ export default function RegistrationPage() {
               </div>
             </div>
 
+            {/* Confirm Password Field */}
+            <div>
+              <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-900">
+                Potvrďte heslo
+              </label>
+              <div className="mt-2">
+                <input
+                  id="confirm-password"
+                  name="confirm-password"
+                  type="password"
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
             <div>
               <button
                 type="submit"
@@ -135,7 +241,7 @@ export default function RegistrationPage() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Už máte účet?{' '}
-            <a href="/auth/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
+            <a href="/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
               Přihlásit se
             </a>
           </p>

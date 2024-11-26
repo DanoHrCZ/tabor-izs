@@ -17,7 +17,7 @@ import { db } from "../Firebase"; // Import Firebase konfigurace
 const navigation = [
   { name: "Úvod", href: "/", current: false },
   { name: "Informace", href: "/informations", current: false },
-  { name: "Přihláška", href: "#", current: false },
+  { name: "Přihláška", href: "/offers", current: false },
   { name: "Galerie", href: "#", current: false },
   { name: "Sponzoři", href: "#", current: false },
 ];
@@ -33,7 +33,7 @@ export default function Navbar() {
   // Získání role uživatele z Firestore
   const getRole = async (uid) => {
     try {
-      const docRef = doc(db, "roles", uid);
+      const docRef = doc(db, "users", uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         return docSnap.data().role;
@@ -117,7 +117,7 @@ export default function Navbar() {
                 {menuOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
                     <a
-                      href="/profile"
+                      href={"/user/" + user.uid}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       Profil

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { auth } from '../../../Firebase';
+import { auth } from '../../Firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function LoginPage() {
@@ -130,7 +130,7 @@ export default function LoginPage() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Nemáte účet?{' '}
-            <a href="/auth/registration" className="font-semibold text-indigo-600 hover:text-indigo-500">
+            <a href="/register" className="font-semibold text-indigo-600 hover:text-indigo-500">
               Zaregistrujte se
             </a>
           </p>
