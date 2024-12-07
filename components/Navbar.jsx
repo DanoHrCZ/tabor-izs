@@ -18,8 +18,8 @@ const navigation = [
   { name: "Úvod", href: "/", current: false },
   { name: "Informace", href: "/informations", current: false },
   { name: "Přihláška", href: "/offers", current: false },
-  { name: "Galerie", href: "#", current: false },
-  { name: "Sponzoři", href: "#", current: false },
+  { name: "Galerie", href: "gallery", current: false },
+  { name: "Sponzoři", href: "sponsors", current: false },
 ];
 
 export default function Navbar() {

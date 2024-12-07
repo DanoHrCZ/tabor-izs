@@ -6,6 +6,8 @@ import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../Firebase";
 import AdminOffers from "@/components/AdminOffers";
 import AdminUsers from "@/components/AdminUsers";
+import AdminGallery from "@/components/AdminGallery";
+import AdminSponsors from "@/components/AdminSponsors";
 
 const AdminPage = () => {
     const [user, setUser] = useState(null);
@@ -17,17 +19,17 @@ const AdminPage = () => {
         try {
             const usersSnapshot = await getDocs(collection(db, "users"));
             const offersSnapshot = await getDocs(collection(db, "offers"));
-    
+
             const usersData = usersSnapshot.docs.map(doc => doc.data());
             const offersData = offersSnapshot.docs.map(doc => doc.data());
-    
+
             console.log("Users:", usersData);
             console.log("Offers:", offersData);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     };
-    
+
     useEffect(() => {
         fetchData();
     }, []);
@@ -113,6 +115,8 @@ const AdminPage = () => {
                     </dl>
                 </div>
             </div>
+            <AdminGallery />
+            <AdminSponsors />
             <AdminOffers />
             <AdminUsers />
         </div>

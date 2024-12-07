@@ -2,7 +2,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 
-export default function Example() {
+export default function Links() {
   return (
     <div className="flex flex-col items-center">
       <p className="text-base/7 font-semibold text-indigo-600">
