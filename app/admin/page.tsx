@@ -12,6 +12,7 @@ import AdminSponsors from "@/components/AdminSponsors";
 const AdminPage = () => {
     const [user, setUser] = useState(null);
     const [role, setRole] = useState(null);
+    const [selectedTool, setSelectedTool] = useState("gallery");
     const router = useRouter();
     const auth = getAuth();
 
@@ -115,10 +116,22 @@ const AdminPage = () => {
                     </dl>
                 </div>
             </div>
-            <AdminGallery />
-            <AdminSponsors />
-            <AdminOffers />
-            <AdminUsers />
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                <select
+                    value={selectedTool}
+                    onChange={(e) => setSelectedTool(e.target.value)}
+                    className="mb-4 p-2 border border-gray-300 rounded"
+                >
+                    <option value="gallery">Správa Galerie</option>
+                    <option value="sponsors">Správa Sponzorů</option>
+                    <option value="offers">Správa Přihlášek</option>
+                    <option value="users">Správa uživatelů</option>
+                </select>
+                {selectedTool === "gallery" && <AdminGallery />}
+                {selectedTool === "sponsors" && <AdminSponsors />}
+                {selectedTool === "offers" && <AdminOffers />}
+                {selectedTool === "users" && <AdminUsers />}
+            </div>
         </div>
     );
 };
