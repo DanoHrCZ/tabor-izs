@@ -5,7 +5,7 @@ import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 export default function Links() {
   return (
     <div className="flex flex-col items-center">
-      <p className="text-base/7 font-semibold text-indigo-600">
+      <p className="text-base/7 font-semibold text-text-indigo">
         Sledujte nás na sociálních sítích
       </p>
       <div className="flex flex-row justify-around p-4 w-1/2">
@@ -13,7 +13,7 @@ export default function Links() {
           href="https://facebook.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-gray-900 hover:text-gray-700 transition-colors w-16"
+          className="text-text-black hover:text-gray-700 transition-colors w-16"
           aria-label="Facebook"
         >
           <FontAwesomeIcon icon={faFacebook} size="2x" />
@@ -22,7 +22,7 @@ export default function Links() {
           href="https://instagram.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-gray-900 hover:text-gray-700 transition-colors w-16"
+          className="text-text-black hover:text-gray-700 transition-colors w-16"
           aria-label="Instagram"
         >
           <FontAwesomeIcon icon={faInstagram} size="2x" />

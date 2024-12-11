@@ -132,7 +132,7 @@ export default function AdminGallery() {
         <div className="px-4 mt-16 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
-                    <h1 className="text-base font-semibold leading-6 text-gray-900">Galerie</h1>
+                    <h1 className="text-base font-semibold leading-6 text-text-black">Galerie</h1>
                 </div>
                 <select
                     value={selectedAlbum}
@@ -156,11 +156,11 @@ export default function AdminGallery() {
             />
             <button
                 onClick={handleCreateAlbum}
-                className="mr-2 p-2 bg-green-600 text-white rounded"
+                className="mr-2 p-2 bg-positive-color text-background rounded"
             >
                 Vytvořit album
             </button>
-            {message && <p className="mt-4 text-center text-red-600">{message}</p>}
+            {message && <p className="mt-4 text-center text-negative-color">{message}</p>}
             <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
                 {images
                     .filter((image) => image.album === selectedAlbum)
@@ -169,7 +169,7 @@ export default function AdminGallery() {
                             <img src={image.url} alt="Gallery" className="w-full h-64 object-cover rounded" />
                             <button
                                 onClick={() => handleDeleteImage(image.id, image.url)}
-                                className="absolute top-2 right-2 p-1 bg-red-600 text-white rounded"
+                                className="absolute top-2 right-2 p-1 bg-negative-color text-background rounded"
                             >
                                 Smazat
                             </button>
@@ -180,7 +180,7 @@ export default function AdminGallery() {
                 <div>
                     <button
                         onClick={() => handleDeleteAlbum(selectedAlbum)}
-                        className="mr-2 p-2 bg-red-600 text-white rounded"
+                        className="mr-2 p-2 bg-negative-color text-background rounded"
                         disabled={!selectedAlbum}
                     >
                         Smazat album
@@ -191,7 +191,7 @@ export default function AdminGallery() {
 
                     <button
                         onClick={handleUpload}
-                        className="ml-2 p-2 bg-blue-600 text-white rounded"
+                        className="ml-2 p-2 bg-text-indigo text-background rounded"
                         disabled={uploading}
                     >
                         {uploading ? "Nahrávání..." : "Nahrát obrázky"}

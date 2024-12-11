@@ -96,8 +96,8 @@ const NewOfferPage = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <form onSubmit={handleSubmit} className="space-y-8">
-        <h2 className="text-2xl font-semibold text-gray-900">Nová přihláška</h2>
-        <p className="mt-1 text-sm text-gray-600">Vyplňte prosím informace o vašem dítěti.</p>
+        <h2 className="text-2xl font-semibold text-text-black">Nová přihláška</h2>
+        <p className="mt-1 text-sm text-text-secondary">Vyplňte prosím informace o vašem dítěti.</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {[ 
@@ -112,7 +112,7 @@ const NewOfferPage = () => {
             { label: 'Užívané léky', name: 'medications', type: 'text' },
           ].map((field, index) => (
             <div key={index} className="flex flex-col">
-              <label htmlFor={field.name} className="mb-1 text-sm font-medium text-gray-900">
+              <label htmlFor={field.name} className="mb-1 text-sm font-medium text-text-black">
                 {field.label}
               </label>
               <input
@@ -129,7 +129,7 @@ const NewOfferPage = () => {
 
           {/* Rodné číslo */}
           <div className="flex flex-col">
-            <label htmlFor="birthNumber" className="mb-1 text-sm font-medium text-gray-900">
+            <label htmlFor="birthNumber" className="mb-1 text-sm font-medium text-text-black">
               Rodné číslo
             </label>
             <input
@@ -144,7 +144,7 @@ const NewOfferPage = () => {
           </div>
 
           <div className="col-span-1 sm:col-span-2">
-            <label htmlFor="additional-info" className="mb-1 block text-sm font-medium text-gray-900">
+            <label htmlFor="additional-info" className="mb-1 block text-sm font-medium text-text-black">
               Další informace
             </label>
             <textarea
@@ -162,13 +162,13 @@ const NewOfferPage = () => {
           <button
             type="button"
             onClick={handleCancel}
-            className="text-sm font-semibold text-gray-700 hover:text-gray-900"
+            className="text-sm font-semibold text-gray-700 hover:text-text-black"
           >
             Zrušit
           </button>
           <button
             type="submit"
-            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+            className="rounded-md bg-text-indigo px-4 py-2 text-sm font-semibold text-background shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
           >
             Uložit
           </button>

@@ -1,11 +1,11 @@
 export default function InformationsPage() {
   return (
     <>
-      <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
+      <div className="relative isolate overflow-hidden bg-background px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <svg
             aria-hidden="true"
-            className="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
+            className="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,background,transparent)]"
           >
             <defs>
               <pattern
@@ -37,10 +37,10 @@ export default function InformationsPage() {
           <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
             <div className="lg:pr-4">
               <div className="lg:max-w-lg">
-                <p className="text-base/7 font-semibold text-indigo-600">
+                <p className="text-base/7 font-semibold text-text-indigo">
                   Tábor Integrovaného záchranného systému 2024
                 </p>
-                <h1 className="mt-2 text-pretty text-4xl font-black tracking-tight text-gray-900 sm:text-5xl">
+                <h1 className="mt-2 text-pretty text-4xl font-black tracking-tight text-text-black sm:text-5xl">
                   Informace pro rodiče
                 </h1>
                 <p className="mt-6 text-xl/8 text-gray-700">
@@ -54,7 +54,7 @@ export default function InformationsPage() {
             <img
               alt=""
               src="/car.jpg"
-              className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
+              className="w-[48rem] max-w-none rounded-xl bg-text-black shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
             />
           </div>
           <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
@@ -80,7 +80,7 @@ export default function InformationsPage() {
                 <div className="mt-4">
                   <a
                     href="/register"
-                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="rounded-md bg-text-indigo px-3.5 py-2.5 text-sm font-semibold text-background shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-indigo"
                   >
                     Vytvořit účet
                   </a>
@@ -97,10 +97,10 @@ export default function InformationsPage() {
                   Co je možné podepsat - podepište(čepice, mikiny, bundy,
                   karimatky...)
                 </p>
-                <ul role="list" className="mt-8 space-y-8 text-gray-600">
+                <ul role="list" className="mt-8 space-y-8 text-text-secondary">
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Povlečení na jednolůžko
                       </strong>{" "}
                       – napínací prostěradlo, povlečení na deku a polštář
@@ -108,7 +108,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Respirátory
                       </strong>{" "}
                       – na dobu pobytu (pokud nebudou nezbytně nutné, nebudeme
@@ -118,7 +118,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Spací pytel
                       </strong>{" "}
                       + karimatka – nutné pro přespání mimo tábor
@@ -126,7 +126,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Celta nebo plachta malá
                       </strong>{" "}
                       – cca 2x2m, pro přikrytí při táboření pod širým nebem
@@ -134,7 +134,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Pláštěnka a gumovky
                       </strong>{" "}
                       – nezbytné pro špatné počasí
@@ -142,7 +142,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Pokrývka hlavy
                       </strong>{" "}
                       – nejlépe kšiltovka
@@ -150,7 +150,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Batoh na výlety
                       </strong>{" "}
                       – středně velký (ne taška přes rameno ani igelitka)
@@ -158,7 +158,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Jídelní souprava
                       </strong>{" "}
                       – ešus, hrnek a lžíce, nutné pro stravování mimo tábor
@@ -166,14 +166,14 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Malý zavírací nůž
                       </strong>
                     </span>
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Baterka
                       </strong>{" "}
                       (popř. náhradní baterie) nebo čelovka
@@ -181,14 +181,14 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Psací potřeby
                       </strong>
                     </span>
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Poštovní známky, dopisní papíry, pohledy
                       </strong>{" "}
                       – možno zakoupit v areálu tábora
@@ -196,14 +196,14 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Pytel na špinavé prádlo
                       </strong>
                     </span>
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Prostředky pro osobní a intimní hygienu
                       </strong>{" "}
                       – kartáček, pasta, šampon, mýdlo, hřeben, ručníky
@@ -211,7 +211,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Starší šátek
                       </strong>{" "}
                       – na hru
@@ -219,14 +219,14 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Plavky a ručník
                       </strong>
                     </span>
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Sluneční brýle
                       </strong>{" "}
                       a popř. opalovací krém, repelent
@@ -234,7 +234,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Toaletní papír
                       </strong>{" "}
                       a papírové kapesníčky
@@ -242,7 +242,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Spodní prádlo
                       </strong>{" "}
                       na každý den, ponožky, podkolenky, pro menší děti i
@@ -251,7 +251,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Trička
                       </strong>{" "}
                       s krátkým i dlouhým rukávem
@@ -259,7 +259,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Teplý svetr
                       </strong>
                       , mikina, rolák
@@ -267,7 +267,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Kalhoty
                       </strong>
                       , kraťasy, tepláky, šusťáky (ze zkušeností víme, že jich
@@ -276,7 +276,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Teplejší bunda
                       </strong>{" "}
                       a šusťákovka
@@ -284,7 +284,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Tepláková souprava
                       </strong>
                       , něco na spaní (pyžamo)
@@ -292,7 +292,7 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Sportovní obuv
                       </strong>
                       , pevná turistická obuv, letní vzdušná obuv, obuv do vody
@@ -300,21 +300,21 @@ export default function InformationsPage() {
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Utěrka pro vlastní potřebu
                       </strong>
                     </span>
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Šicí potřeby
                       </strong>
                     </span>
                   </li>
                   <li className="flex gap-x-3">
                     <span>
-                      <strong className="font-semibold text-gray-900">
+                      <strong className="font-semibold text-text-black">
                         Malé kapesné
                       </strong>{" "}
                       – cca 400,- Kč, dle uvážení rodičů (v areálu je možné si
@@ -334,10 +334,10 @@ export default function InformationsPage() {
                 hotovosti.
               </p>
               <p className="mt-6 text-xl/8 text-gray-700">Co určitě nebrat?</p>
-              <ul role="list" className="mt-8 space-y-8 text-gray-600">
+              <ul role="list" className="mt-8 space-y-8 text-text-secondary">
                 <li className="flex gap-x-3">
                   <span>
-                    <strong className="font-semibold text-gray-900">
+                    <strong className="font-semibold text-text-black">
                       Mobilní telefony
                     </strong>{" "}
                     – jsou hrubým porušením řádu tábora (více viz "Informace pro
@@ -346,7 +346,7 @@ export default function InformationsPage() {
                 </li>
                 <li className="flex gap-x-3">
                   <span>
-                    <strong className="font-semibold text-gray-900">
+                    <strong className="font-semibold text-text-black">
                       Elektronické hry
                     </strong>
                     , iPod, tablety, MP3, DVD
@@ -354,7 +354,7 @@ export default function InformationsPage() {
                 </li>
                 <li className="flex gap-x-3">
                   <span>
-                    <strong className="font-semibold text-gray-900">
+                    <strong className="font-semibold text-text-black">
                       Drahé oblečení a cenné předměty
                     </strong>
                     , velké peněžní částky
@@ -366,10 +366,10 @@ export default function InformationsPage() {
                 Za uvedené předměty nemůžeme nést odpovědnost.
               </p>
               <p className="mt-6 text-xl/8 text-gray-700">Při předání dítěte na tábor odevzdáte</p>
-              <ul role="list" className="mt-8 space-y-8 text-gray-600">
+              <ul role="list" className="mt-8 space-y-8 text-text-secondary">
                 <li className="flex gap-x-3">
                   <span>
-                    <strong className="font-semibold text-gray-900">
+                    <strong className="font-semibold text-text-black">
                       Očkovací průkaz
                     </strong>{" "}
                     – stačí kopie
@@ -377,7 +377,7 @@ export default function InformationsPage() {
                 </li>
                 <li className="flex gap-x-3">
                   <span>
-                    <strong className="font-semibold text-gray-900">
+                    <strong className="font-semibold text-text-black">
                       Kartička pojištěnce
                     </strong>{" "}
                     – stačí kopie
@@ -385,7 +385,7 @@ export default function InformationsPage() {
                 </li>
                 <li className="flex gap-x-3">
                   <span>
-                    <strong className="font-semibold text-gray-900">
+                    <strong className="font-semibold text-text-black">
                       Lékařské potvrzení
                     </strong>{" "}
                     – né starší než 1 rok, formulář na vyžádání zašleme do
@@ -394,7 +394,7 @@ export default function InformationsPage() {
                 </li>
                 <li className="flex gap-x-3">
                   <span>
-                    <strong className="font-semibold text-gray-900">
+                    <strong className="font-semibold text-text-black">
                       Nástupní list
                     </strong>{" "}
                     – řádně vyplněný a podepsaný v den odjezdu
@@ -402,7 +402,7 @@ export default function InformationsPage() {
                 </li>
                 <li className="flex gap-x-3">
                   <span>
-                    <strong className="font-semibold text-gray-900">
+                    <strong className="font-semibold text-text-black">
                       Dokumenty
                     </strong>{" "}
                     – zaslané po vyplnění elektronické přihlášky na Váš e-mail
@@ -410,7 +410,7 @@ export default function InformationsPage() {
                 </li>
                 <li className="flex gap-x-3">
                   <span>
-                    <strong className="font-semibold text-gray-900">
+                    <strong className="font-semibold text-text-black">
                       Léky
                     </strong>{" "}
                     – pokud dítě nějaké bere, spolu s písemným předpisem jejich

@@ -80,7 +80,7 @@ export default function AdminSponsors() {
         <div className="px-4 mt-16 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
-                    <h1 className="text-base font-semibold leading-6 text-gray-900">Sponzoři</h1>
+                    <h1 className="text-base font-semibold leading-6 text-text-black">Sponzoři</h1>
                 </div>
                 <div className="sm:flex sm:items-center sm:ml-4">
                     <input
@@ -107,7 +107,7 @@ export default function AdminSponsors() {
                     <input type="file" onChange={handleFileChange} />
                     <button
                         onClick={handleUpload}
-                        className="ml-2 p-2 bg-blue-600 text-white rounded"
+                        className="ml-2 p-2 bg-text-indigo text-background rounded"
                         disabled={uploading}
                     >
                         {uploading ? "Nahrávání..." : "Přidat sponzora"}
@@ -118,16 +118,16 @@ export default function AdminSponsors() {
                 {sponsors.map((sponsor) => (
                     <div key={sponsor.id} className="relative">
                         <img src={sponsor.logoUrl} alt={sponsor.name} className="w-full h-64 object-cover rounded" />
-                        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-center p-2">
+                        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-background text-center p-2">
                             <h2>{sponsor.name}</h2>
                             <p>{sponsor.description}</p>
-                            <a href={sponsor.website} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline">
+                            <a href={sponsor.website} target="_blank" rel="noopener noreferrer" className="text-text-indigo-400 underline">
                                 {sponsor.website}
                             </a>
                         </div>
                         <button
                             onClick={() => handleDelete(sponsor.id, sponsor.logoUrl)}
-                            className="absolute top-2 right-2 p-1 bg-red-600 text-white rounded"
+                            className="absolute top-2 right-2 p-1 bg-negative-color text-background rounded"
                         >
                             Smazat
                         </button>

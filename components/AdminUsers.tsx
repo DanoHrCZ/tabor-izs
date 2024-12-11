@@ -76,12 +76,12 @@ const AdminUsers: React.FC = () => {
     <div className="px-4 mt-16 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold leading-6 text-gray-900">Uživatelé</h1>
+          <h1 className="text-base font-semibold leading-6 text-text-black">Uživatelé</h1>
         </div>
         <div className="sm:flex sm:items-center sm:ml-4">
           <button
             onClick={handleBulkDelete}
-            className="mr-2 p-2 bg-red-600 text-white rounded"
+            className="mr-2 p-2 bg-negative-color text-background rounded"
           >
             Smazat vybrané
           </button>
@@ -101,8 +101,8 @@ const AdminUsers: React.FC = () => {
                     />
                   </th>
                   <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-0">Jméno</th>
-                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-blue-500">Email</th>
-                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Telefon</th>
+                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-text-indigo-500">Email</th>
+                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-text-black">Telefon</th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
                     <span className="sr-only">Akce</span>
                   </th>
@@ -111,20 +111,20 @@ const AdminUsers: React.FC = () => {
               <tbody>
                 {users.map((user) => (
                   <tr key={user.id}>
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                    <td className="backgroundspace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-text-black sm:pl-0">
                       <input
                         type="checkbox"
                         checked={selectedUsers.includes(user.id)}
                         onChange={() => handleSelectUser(user.id)}
                       />
                     </td>
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                    <td className="backgroundspace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-text-black sm:pl-0">
                       {user.firstName} {user.lastName}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{user.email}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{user.phone}</td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                      <Link href={`/user/edit/${user.id}`} className="text-blue-600 hover:text-blue-900 ml-2">Upravit</Link>
+                    <td className="backgroundspace-nowrap px-3 py-4 text-sm text-black">{user.email}</td>
+                    <td className="backgroundspace-nowrap px-3 py-4 text-sm text-black">{user.phone}</td>
+                    <td className="relative backgroundspace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                      <Link href={`/user/edit/${user.id}`} className="text-text-indigo hover:text-text-indigo-900 ml-2">Upravit</Link>
                     </td>
                   </tr>
                 ))}

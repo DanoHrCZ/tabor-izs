@@ -9,12 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        primary: "var(--primary)",
-        secondary: "var(--secondary)",
-        active: "var(--active)",
-        muted: "var(--muted)",
+        "background": "var(--background)",
+        "block": "var(--block)",
+        "text-black": "var(--text-black)",
+        "text-secondary": "var(--text-secondary)",
+        "text-indigo": "var(--text-indigo)",
+        "positive-color": "var(--positive-color)",
+        "negative-color": "var(--negative-color)",
       },
     },
   },

@@ -6,16 +6,19 @@
 
 :root {
   --background: #ffffff;
-  
-  --primary: #044d75;
 
-  --secondary: #DB261D;
+  --block: #1f2937;
 
-  --text-color: #000000;
+  --text-black: #252424;
 
-  --active: #0092DF;
+  --text-secondary: #5c616c;
 
-  --muted : #005481;
+  --text-indigo: #4f46e5;
+
+  --positive-color: #10b981;
+
+  --negative-color: #ef4444;
+
 }
 
 body {

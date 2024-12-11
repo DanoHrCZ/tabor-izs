@@ -3,11 +3,11 @@ import Links from "../components/Links";
 export default function LandingPage() {
   return (
     <>
-      <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
+      <div className="relative isolate overflow-hidden bg-background px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <svg
             aria-hidden="true"
-            className="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
+            className="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,background,transparent)]"
           >
             <defs>
               <pattern
@@ -39,10 +39,10 @@ export default function LandingPage() {
           <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
             <div className="lg:pr-4">
               <div className="lg:max-w-lg">
-                <p className="text-base/7 font-semibold text-indigo-600">
+                <p className="text-base/7 font-semibold text-text-indigo">
                   Tábor Integrovaného záchranného systému 2024
                 </p>
-                <h1 className="mt-2 text-pretty text-4xl font-black tracking-tight text-gray-900 sm:text-5xl">
+                <h1 className="mt-2 text-pretty text-4xl font-black tracking-tight text-text-black sm:text-5xl">
                   Ahoj holky a kluci!
                 </h1>
                 <p className="mt-6 text-xl/8 text-gray-700">
@@ -56,7 +56,7 @@ export default function LandingPage() {
             <img
               alt=""
               src="/firemans.jpg"
-              className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
+              className="w-[48rem] max-w-none rounded-xl bg-text-black shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
             />
           </div>
           <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
@@ -79,7 +79,7 @@ export default function LandingPage() {
                 <div className="mt-4">
                   <a
                     href="/register"
-                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="rounded-md bg-text-indigo px-3.5 py-2.5 text-sm font-semibold text-background shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-indigo"
                   >
                     Vytvořit účet
                   </a>
@@ -92,17 +92,17 @@ export default function LandingPage() {
                       táboráky, bude program zaměřen především na práci složek
                       Integrovaného záchranného systému.
                     </p>
-                    <ul role="list" className="mt-8 space-y-8 text-gray-600">
+                    <ul role="list" className="mt-8 space-y-8 text-text-secondary">
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Paintball – adrenalinové přestřelky
                           </strong>
                         </span>
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Lanové aktivity
                           </strong>{" "}
                           – slaňování, lanový traverz, různé prolézačky a dráhy
@@ -110,7 +110,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Střelba
                           </strong>{" "}
                           + ukázky různých zbraní (akustické zbraně, vzduchovky,
@@ -120,7 +120,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Čtyřkolky
                           </strong>{" "}
                           – praktická ukázka zásad bezpečnosti při jízdě a volba
@@ -129,7 +129,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Dvoudenní přežití v přírodě
                           </strong>{" "}
                           – výlet do přírody se spaním v improvizovaných
@@ -138,7 +138,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Dětské dopravní hřiště
                           </strong>{" "}
                           (BESIP)
@@ -146,7 +146,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Recyklace a nakládání s odpady
                           </strong>{" "}
                           – přednáška se spoustou zábavných her a kvízů
@@ -154,7 +154,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Airsoftová zábava
                           </strong>
                         </span>
@@ -163,10 +163,10 @@ export default function LandingPage() {
                     <p className="mt-6 text-xl/8 text-gray-700">
                       Z oblasti práce Zdravotnické záchranné služby
                     </p>
-                    <ul role="list" className="mt-8 space-y-8 text-gray-600">
+                    <ul role="list" className="mt-8 space-y-8 text-text-secondary">
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Praktická bloková výuka první pomoci
                           </strong>{" "}
                           – v průběhu celého tábora se všemi potřebnými
@@ -176,7 +176,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Ukázka zásahu složek IZS
                           </strong>{" "}
                           – při simulované dopravní nehodě a ošetření zraněných
@@ -185,7 +185,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Seznámení se s činností Zdravotnické záchranné
                             služby
                           </strong>{" "}
@@ -194,7 +194,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Hry a modelové situace
                           </strong>{" "}
                           – zaměřené na procvičení první pomoci v praxi
@@ -204,10 +204,10 @@ export default function LandingPage() {
                     <p className="mt-6 text-xl/8 text-gray-700">
                       Z oblasti práce Hasičského záchranného sboru
                     </p>
-                    <ul role="list" className="mt-8 space-y-8 text-gray-600">
+                    <ul role="list" className="mt-8 space-y-8 text-text-secondary">
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Ukázka práce HZS
                           </strong>{" "}
                           – v reálných situacích (vyproštění osob z havarovaného
@@ -217,7 +217,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Seznámení se s činností hasičů
                           </strong>{" "}
                           – a jejich vybavením
@@ -225,7 +225,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Přednášky na téma chování při požárech
                           </strong>{" "}
                           – a jiných mimořádných událostech
@@ -233,7 +233,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Využívání hasičské techniky
                           </strong>{" "}
                           – po celou dobu tábora (požární sport)
@@ -241,7 +241,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Ukázka a vyzkoušení práce hasičů
                           </strong>{" "}
                           – rozstřihání auta, slaňování, jízda po ukloněném
@@ -252,10 +252,10 @@ export default function LandingPage() {
                     <p className="mt-6 text-xl/8 text-gray-700">
                       Z oblasti činnosti Policie ČR a městské policie
                     </p>
-                    <ul role="list" className="mt-8 space-y-8 text-gray-600">
+                    <ul role="list" className="mt-8 space-y-8 text-text-secondary">
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Ukázky práce jednotlivých složek Policie ČR
                           </strong>{" "}
                           – za přítomnosti jejich příslušníků (např. pořádková
@@ -265,7 +265,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Praktické ukázky od vedoucích z řad policistů
                           </strong>{" "}
                           – výuka sebeobrany, zadržování pachatelů, zajišťování
@@ -274,7 +274,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Ukázka výzbroje a výstroje policie
                           </strong>{" "}
                           – včetně služebních automobilů a motocyklů
@@ -284,10 +284,10 @@ export default function LandingPage() {
                     <p className="mt-6 text-xl/8 text-gray-700">
                       Z oblasti práce Armády ČR
                     </p>
-                    <ul role="list" className="mt-8 space-y-8 text-gray-600">
+                    <ul role="list" className="mt-8 space-y-8 text-text-secondary">
                       <li className="flex gap-x-3">
                         <span>
-                          <strong className="font-semibold text-gray-900">
+                          <strong className="font-semibold text-text-black">
                             Ukázka práce AČR
                           </strong>{" "}
                           – a její techniky

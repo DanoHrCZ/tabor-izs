@@ -71,7 +71,7 @@ export default function LoginPage() {
             src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
             className="mx-auto h-10 w-auto"
           />
-          <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
+          <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-text-black">
             Přihlaste se k účtu
           </h2>
         </div>
@@ -80,7 +80,7 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && <p className="text-red-500">{error}</p>}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+              <label htmlFor="email" className="block text-sm font-medium text-text-black">
                 E-mailová adresa
               </label>
               <div className="mt-2">
@@ -92,13 +92,13 @@ export default function LoginPage() {
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                  className="block w-full rounded-md border-0 py-1.5 text-text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-text-indigo"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-900">
+              <label htmlFor="password" className="block text-sm font-medium text-text-black">
                 Heslo
               </label>
               <div className="mt-2">
@@ -110,7 +110,7 @@ export default function LoginPage() {
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                  className="block w-full rounded-md border-0 py-1.5 text-text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-text-indigo"
                 />
               </div>
             </div>
@@ -119,7 +119,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${
+                className={`flex w-full justify-center rounded-md bg-text-indigo px-3 py-1.5 text-sm font-semibold text-background shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-indigo ${
                   loading ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
@@ -130,7 +130,7 @@ export default function LoginPage() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Nemáte účet?{' '}
-            <a href="/register" className="font-semibold text-indigo-600 hover:text-indigo-500">
+            <a href="/register" className="font-semibold text-text-indigo hover:text-indigo-500">
               Zaregistrujte se
             </a>
           </p>

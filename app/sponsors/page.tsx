@@ -25,12 +25,12 @@ export default function SponsorsPage() {
     }, []);
 
     return (
-        <div className="bg-white py-24 sm:py-32">
+        <div className="bg-background py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                <h2 className="text-center text-base/7 font-semibold text-indigo-600">
+                <h2 className="text-center text-base/7 font-semibold text-text-indigo">
                     představujeme vám
                 </h2>
-                <p className="mx-auto mt-2 max-w-lg text-balance text-center text-4xl font-black tracking-tight text-gray-900 sm:text-5xl">
+                <p className="mx-auto mt-2 max-w-lg text-balance text-center text-4xl font-black tracking-tight text-text-black sm:text-5xl">
                     Naše sponzory!
                 </p>
                 <div className="mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5">
@@ -44,8 +44,8 @@ export default function SponsorsPage() {
                                     height={48}
                                     className="max-h-12 w-full object-contain"
                                 />
-                                <h3 className="mt-4 text-sm font-semibold text-gray-900">{sponsor.name}</h3>
-                                <p className="mt-2 text-sm text-gray-600">{sponsor.description}</p>
+                                <h3 className="mt-4 text-sm font-semibold text-text-black">{sponsor.name}</h3>
+                                <p className="mt-2 text-sm text-text-secondary">{sponsor.description}</p>
                             </a>
                         </div>
                     ))}
