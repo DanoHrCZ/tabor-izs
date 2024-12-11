@@ -102,8 +102,8 @@ export default function RegistrationPage() {
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
-            alt="Your Company"
-            src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+            alt="logo"
+            src="/logo.png"
             className="mx-auto h-10 w-auto"
           />
           <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-text-black">
@@ -230,9 +230,8 @@ export default function RegistrationPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`flex w-full justify-center rounded-md bg-text-indigo px-3 py-1.5 text-sm font-semibold text-background shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-indigo ${
-                  loading ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+                className={`flex w-full justify-center rounded-md bg-text-indigo px-3 py-1.5 text-sm font-semibold text-background shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-indigo ${loading ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
               >
                 {loading ? 'Vytváření účtu...' : 'Vytvořit účet'}
               </button>

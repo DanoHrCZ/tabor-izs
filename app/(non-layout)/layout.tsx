@@ -1,4 +1,4 @@
-import Navbar from "../../components/BackButton"
+import BackButton from "../../components/BackButton"
 
 export default function RootLayout({
     children,

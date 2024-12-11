@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation"; // Using Next.js router and params
-import { auth, db } from "../../../Firebase"; // Ensure this path is correct
+import { auth, db } from "../../../../Firebase"; // Ensure this path is correct
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore"; // Import Firestore functions
-import Offers from "../../../components/Offers"; // Ensure this path is correct
+import Offers from "../../../../components/Offers"; // Ensure this path is correct
 
 export default function UserPage() {
   const [loading, setLoading] = useState(true); // State for loading

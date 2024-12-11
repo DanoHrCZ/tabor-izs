@@ -16,7 +16,7 @@ import { db } from "../Firebase"; // Import Firebase konfigurace
 
 const navigation = [
   { name: "Úvod", href: "/", current: false },
-  { name: "Informace", href: "/informations", current: false },
+  { name: "Informace", href: "/information", current: false },
   { name: "Přihláška", href: "/offers", current: false },
   { name: "Galerie", href: "gallery", current: false },
   { name: "Sponzoři", href: "sponsors", current: false },

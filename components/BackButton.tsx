@@ -1,4 +1,8 @@
-import { useRouter } from 'next/router';
+"use client";
+import { useRouter } from 'next/navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+let text: string = "< Vrátit se";
 
 export default function BackButton() {
   const router = useRouter();
@@ -8,11 +12,11 @@ export default function BackButton() {
   };
 
   return (
-    <button
-      onClick={handleClick}
-      className="px-3 py-2 rounded-md text-sm font-medium bg-text-black text-background hover:bg-gray-700 hover:text-background"
-    >
-      Domů
-    </button>
+    <a
+    href="/"
+    className="rounded-md bg-text-indigo px-3.5 py-2.5 text-sm font-semibold text-background shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-indigo"
+  >
+    Zpět na hlavní stránku
+  </a>
   );
 }
