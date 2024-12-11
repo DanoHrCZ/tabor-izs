@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { db } from "../../Firebase"; // Import Firebase konfigurace
+import { db } from "../../../Firebase"; // Import Firebase konfigurace
 import { collection, getDocs } from "firebase/firestore";
 
 interface Image {

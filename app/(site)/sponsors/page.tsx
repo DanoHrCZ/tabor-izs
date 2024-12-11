@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { db } from "../../Firebase"; // Import Firebase configuration
+import { db } from "../../../Firebase"; // Import Firebase configuration
 import { collection, getDocs } from "firebase/firestore";
 
 interface Sponsor {

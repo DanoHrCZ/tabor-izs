@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, collection, getDocs } from "firebase/firestore";
-import { db } from "../../Firebase";
+import { db } from "../../../Firebase";
 import AdminOffers from "@/components/AdminOffers";
 import AdminUsers from "@/components/AdminUsers";
 import AdminGallery from "@/components/AdminGallery";

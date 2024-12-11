@@ -1,4 +1,4 @@
-import Links from "../components/Links";
+import Links from "../../components/Links";
 
 export default function LandingPage() {
   return (
