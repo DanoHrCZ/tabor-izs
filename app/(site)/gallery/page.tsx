@@ -50,7 +50,7 @@ export default function GalleryPage() {
     };
 
     return (
-        <div className="px-4 mt-16 sm:px-6 lg:px-8">
+        <div className="px-4 mt-16 sm:px-6 lg:px-8 min-h-dvh">
             <h2 className="text-center text-base/7 font-semibold text-text-indigo">
                 Podívejte se na naše fotografie
             </h2>

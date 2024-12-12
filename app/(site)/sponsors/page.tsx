@@ -25,7 +25,7 @@ export default function SponsorsPage() {
     }, []);
 
     return (
-        <div className="py-12 sm:py-16">
+        <div className="min-h-dvh py-12 sm:py-16">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <h2 className="text-center text-base/7 font-semibold text-text-indigo">
                     představujeme vám
