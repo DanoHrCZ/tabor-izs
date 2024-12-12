@@ -13,6 +13,7 @@ import {
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../Firebase"; // Import Firebase konfigurace
+import { StringDecoder } from "string_decoder";
 
 const navigation = [
   { name: "Úvod", href: "/", current: false },
@@ -26,21 +27,21 @@ export default function Navbar() {
   const [navItems, setNavItems] = useState(navigation);
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [role, setRole] = useState(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
   const router = useRouter();
   const auth = getAuth();
 
   // Získání role uživatele z Firestore
-  const getRole = async (uid) => {
+  const getUser = async (uid) => {
     try {
       const docRef = doc(db, "users", uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        return docSnap.data().role;
+        return docSnap.data();
       }
       return null;
     } catch (error) {
-      console.error("Chyba při načítání role:", error);
+      console.error("Chyba při načítání uživatele:", error);
       return null;
     }
   };
@@ -49,11 +50,10 @@ export default function Navbar() {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
-        const userRole = await getRole(currentUser.uid);
-        setRole(userRole);
+        const user = await getUser(currentUser.uid);
+        setUser(user);
       } else {
         setUser(null);
-        setRole(null);
       }
     });
     return () => unsubscribe();
@@ -66,6 +66,17 @@ export default function Navbar() {
     );
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const handleSignOut = async () => {
     try {
       await signOut(auth);
@@ -76,7 +87,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-block sticky top-0 z-50">
+    <nav className={`sticky top-0 z-50 transition-all duration-300 bg-text-black text-gray-300 ${scrollPosition > 0 ? 'bg-[#00000010] text-text-black backdrop-blur-md' : ''}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
@@ -90,11 +101,10 @@ export default function Navbar() {
               <a
                 key={item.name}
                 href={item.href}
-                className={`px-3 py-2 rounded-md text-sm font-medium ${
-                  item.current
-                    ? "bg-text-black text-background"
-                    : "text-gray-300 hover:bg-gray-700 hover:text-background"
-                }`}
+                className={`px-3 py-2 rounded-md text-sm font-medium ${item.current
+                    ? `bg-text-black text-background ${scrollPosition > 0 ? 'bg-text-indigo' : ''}`
+                    : "hover:bg-gray-700 hover:text-background"
+                  }`}
               >
                 {item.name}
               </a>
@@ -107,22 +117,21 @@ export default function Navbar() {
             {user ? (
               <div className="relative">
                 <button
-                  className="flex items-center space-x-2 text-gray-300 hover:text-background focus:outline-none"
+                  className="flex items-center space-x-2 hover:text-background focus:outline-none"
                   onClick={() => setMenuOpen(!menuOpen)}
                 >
                   <FontAwesomeIcon icon={faUser} className="h-5 w-5" />{" "}
-                  {/* Ikona uživatele */}
-                  <span>{user.displayName || "Uživatel"}</span>
+                  <span>{user.firstName}</span>
                 </button>
                 {menuOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-background rounded-md shadow-lg py-1">
                     <a
-                      href={"/user/" + user.uid}
+                      href={"/user/" + (auth.currentUser ? auth.currentUser.uid : "")}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       Profil
                     </a>
-                    {role === "admin" && (
+                    {user && user.role === "admin" && (
                       <a
                         href="/admin"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -173,11 +182,10 @@ export default function Navbar() {
             <a
               key={item.name}
               href={item.href}
-              className={`block px-3 py-2 rounded-md text-base font-medium ${
-                item.current
+              className={`block px-3 py-2 rounded-md text-base font-medium ${item.current
                   ? "bg-text-black text-background"
                   : "text-gray-300 hover:bg-gray-500 hover:text-background"
-              }`}
+                }`}
             >
               {item.name}
             </a>
@@ -185,12 +193,12 @@ export default function Navbar() {
           {user && (
             <div>
               <a
-                href="/profile"
+                href={"/user/" + auth.currentUser.uid}
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-500 hover:text-background"
               >
                 Profil
               </a>
-              {role === "admin" && (
+              {user.role === "admin" && (
                 <a
                   href="/admin"
                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-500 hover:text-background"

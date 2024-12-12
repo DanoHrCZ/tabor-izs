@@ -128,7 +128,7 @@ export default function RegistrationPage() {
                   required
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-text-indigo"
+                  className="px-2 block w-full rounded-md border-0 py-1.5 text-text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-text-indigo"
                 />
               </div>
             </div>
@@ -146,7 +146,7 @@ export default function RegistrationPage() {
                   required
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-text-indigo"
+                  className="px-2 block w-full rounded-md border-0 py-1.5 text-text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-text-indigo"
                 />
               </div>
             </div>
@@ -164,7 +164,7 @@ export default function RegistrationPage() {
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-text-indigo"
+                  className="px-2 block w-full rounded-md border-0 py-1.5 text-text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-text-indigo"
                 />
               </div>
             </div>
@@ -183,7 +183,7 @@ export default function RegistrationPage() {
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-text-indigo"
+                  className="px-2 block w-full rounded-md border-0 py-1.5 text-text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-text-indigo"
                 />
               </div>
             </div>
@@ -202,7 +202,7 @@ export default function RegistrationPage() {
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-text-indigo"
+                  className="px-2 block w-full rounded-md border-0 py-1.5 text-text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-text-indigo"
                 />
               </div>
             </div>
@@ -220,7 +220,7 @@ export default function RegistrationPage() {
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-text-indigo"
+                  className="px-2 block w-full rounded-md border-0 py-1.5 text-text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-text-indigo"
                 />
               </div>
             </div>
