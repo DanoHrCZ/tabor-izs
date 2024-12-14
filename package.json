@@ -6,8 +6,7 @@
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint",
-    "build": "next build",
-    "postbuild": "cp -r .next functions/"
+    "build": "next build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
