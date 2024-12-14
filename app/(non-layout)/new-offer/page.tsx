@@ -1,13 +1,33 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { db } from '../../../Firebase'; // Ensure you import db
 import { collection, addDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'; // Import getAuth from Firebase
 
+interface OfferData {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+  street: string;
+  city: string;
+  postalCode: string;
+  fatherName: string;
+  fatherPhone: string;
+  motherName: string;
+  motherPhone: string;
+  contactEmail: string;
+  employerContribution: string;
+  healthIssues: string;
+  medications: string;
+  additionalInfo: string;
+  birthNumber: string;
+}
+
 const NewOfferPage = () => {
-  const [offerData, setOfferData] = useState({
+  const [offerData, setOfferData] = useState<OfferData>({
     userId: '',
     firstName: '',
     lastName: '',
@@ -27,7 +47,7 @@ const NewOfferPage = () => {
     birthNumber: ''  // Added birthNumber field
   });
 
-  const [userId, setUserId] = useState(null); // State to hold user ID
+  const [userId, setUserId] = useState<string>(''); // Initialize with an empty string
   const router = useRouter();
 
   useEffect(() => {
@@ -45,7 +65,7 @@ const NewOfferPage = () => {
     }
   }, [router]);
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setOfferData(prevState => ({
       ...prevState,
@@ -53,13 +73,13 @@ const NewOfferPage = () => {
     }));
   };
 
-  const validateBirthNumber = (birthNumber) => {
+  const validateBirthNumber = (birthNumber: string) => {
     // Simple validation for Czech birth number format (XXXXXX/XXXX)
     const regex = /^\d{6}\/\d{4}$/;
     return regex.test(birthNumber);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     // Input validation
@@ -119,7 +139,7 @@ const NewOfferPage = () => {
                 id={field.name}
                 name={field.name}
                 type={field.type}
-                value={offerData[field.name]}
+                value={offerData[field.name as keyof OfferData]} // Cast field.name to keyof OfferData
                 onChange={handleChange}
                 className="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
                 required={field.required}

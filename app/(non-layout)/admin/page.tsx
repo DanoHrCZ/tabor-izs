@@ -10,7 +10,6 @@ import AdminGallery from "@/components/AdminGallery";
 import AdminSponsors from "@/components/AdminSponsors";
 
 const AdminPage = () => {
-    const [user, setUser] = useState(null);
     const [role, setRole] = useState(null);
     const [selectedTool, setSelectedTool] = useState("gallery");
     const router = useRouter();
@@ -23,7 +22,6 @@ const AdminPage = () => {
 
             const usersData = usersSnapshot.docs.map(doc => doc.data());
             const offersData = offersSnapshot.docs.map(doc => doc.data());
-
             console.log("Users:", usersData);
             console.log("Offers:", offersData);
         } catch (error) {
@@ -35,7 +33,7 @@ const AdminPage = () => {
         fetchData();
     }, []);
 
-    const getRole = async (uid) => {
+    const getRole = async (uid: string) => {
         try {
             const docRef = doc(db, "users", uid);
             const docSnap = await getDoc(docRef);
@@ -82,7 +80,6 @@ const AdminPage = () => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (currentUser) {
-                setUser(currentUser);
                 const userRole = await getRole(currentUser.uid);
                 setRole(userRole);
                 if (userRole !== "admin") {

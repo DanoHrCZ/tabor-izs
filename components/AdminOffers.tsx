@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs, query, where, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, query, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../Firebase'; // Adjust the path as necessary
-import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Import getAuth and onAuthStateChanged from Firebase
 import Link from 'next/link';
 
 interface Offer {
@@ -16,7 +15,6 @@ interface Offer {
 const AdminOffers: React.FC = () => {
   const [offers, setOffers] = useState<Offer[]>([]);
   const [selectedOffers, setSelectedOffers] = useState<string[]>([]);
-  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchOffers = async () => {

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { db, storage } from "../Firebase"; // Import Firebase konfigurace
 import { collection, getDocs, addDoc, deleteDoc, doc, query, where } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import Image from 'next/image';
 
 interface Image {
     id: string;
@@ -66,6 +67,7 @@ export default function AdminGallery() {
             setMessage("Obrázky byly úspěšně nahrány.");
         } catch (error) {
             setMessage("Došlo k chybě při nahrávání obrázků.");
+            console.error(error);
         } finally {
             setUploading(false);
         }
@@ -85,6 +87,7 @@ export default function AdminGallery() {
             setMessage("Obrázek byl úspěšně smazán.");
         } catch (error) {
             setMessage("Došlo k chybě při mazání obrázku.");
+            console.error(error);
         }
     };
 
@@ -114,6 +117,7 @@ export default function AdminGallery() {
             setMessage("Album bylo úspěšně smazáno.");
         } catch (error) {
             setMessage("Došlo k chybě při mazání alba.");
+            console.error(error);
         }
     };
 
@@ -166,7 +170,12 @@ export default function AdminGallery() {
                     .filter((image) => image.album === selectedAlbum)
                     .map((image) => (
                         <div key={image.id} className="relative">
-                            <img src={image.url} alt="Gallery" className="w-full h-64 object-cover rounded" />
+                            <Image
+                                src={image.url}
+                                alt="Gallery Image"
+                                width={500}
+                                height={300}
+                            />
                             <button
                                 onClick={() => handleDeleteImage(image.id, image.url)}
                                 className="absolute top-2 right-2 p-1 bg-negative-color text-background rounded"

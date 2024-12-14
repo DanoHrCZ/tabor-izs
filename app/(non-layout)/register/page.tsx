@@ -1,33 +1,33 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth, db } from '../../../Firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 
 export default function RegistrationPage() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const validateEmail = (email) => {
+  const validateEmail = (email: string): boolean => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(String(email).toLowerCase());
   };
 
-  const validatePhone = (phone) => {
+  const validatePhone = (phone: string): boolean => {
     const re = /^[0-9]{9}$/; // Telefonní číslo musí mít 9 číslic
     return re.test(phone);
   };
 
-  const translateFirebaseError = (errorCode) => {
+  const translateFirebaseError = (errorCode: string): string => {
     switch (errorCode) {
       case "auth/email-already-in-use":
         return "Tento e-mail je již používán.";
@@ -44,7 +44,7 @@ export default function RegistrationPage() {
     }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
     setError(null);
 
@@ -88,8 +88,8 @@ export default function RegistrationPage() {
       // Přesměrování na stránku s úspěšným vytvořením účtu
       router.push(`/user/${userID}`);
 
-    } catch (error) {
-      const errorMessage = translateFirebaseError(error.code);
+    } catch (error: unknown) {
+      const errorMessage = translateFirebaseError((error as { code: string }).code);
       setError(errorMessage);
       console.error('Chyba při registraci uživatele:', error);
     } finally {

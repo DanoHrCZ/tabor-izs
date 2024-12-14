@@ -7,13 +7,18 @@ import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore"; // Import Firestore functions
 import Offers from "../../../../components/Offers"; // Ensure this path is correct
 
+interface UserData {
+  firstName: string;
+  phone: string;
+  email: string;
+}
+
 export default function UserPage() {
-  const [loading, setLoading] = useState(true); // State for loading
+  const [loading, setLoading] = useState<boolean>(true); // State for loading
   const [error, setError] = useState<string | null>(null); // State for error messages
-  const [user, setUser] = useState<any | null>(null); // State for user information
-  const [userData, setUserData] = useState<any | null>(null); // State for Firestore data
+  const [userData, setUserData] = useState<UserData | null>(null); // State for Firestore data
   const router = useRouter();
-  const { id } = useParams(); // Get user ID from URL parameters
+  const { id } = useParams() as { id: string }; // Get user ID from URL parameters
 
   useEffect(() => {
     // Monitor authentication state
@@ -21,20 +26,19 @@ export default function UserPage() {
       if (currentUser) {
         // Check if the authenticated user's ID matches the one from the URL
         if (currentUser.uid === id) {
-          setUser(currentUser); // Set user data if ID matches
-          
           try {
             // Fetch user data from Firestore using the user ID
             const userDocRef = doc(db, "users", currentUser.uid);
             const userDocSnap = await getDoc(userDocRef);
             
             if (userDocSnap.exists()) {
-              setUserData(userDocSnap.data()); // Set Firestore data
+              setUserData(userDocSnap.data() as UserData); // Set Firestore data
             } else {
               setError("Uživatel nebyl nalezen.");
             }
-          } catch (fetchError) {
+          } catch (error) {
             setError("Chyba při načítání dat.");
+            console.error("Error fetching user data:", error);
           }
         } else {
           setError("Nemáte oprávnění k přístupu na tuto stránku."); // Permission error
@@ -61,7 +65,7 @@ export default function UserPage() {
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h1 className="text-3xl font-bold text-center text-text-black">
-         Vítej, {userData.firstName}!
+         Vítej, {userData?.firstName}!
         </h1>
         {userData && (
           <div className="mt-4 text-center">

@@ -339,9 +339,9 @@ export default function InformationsPage() {
                   <span>
                     <strong className="font-semibold text-text-black">
                       Mobilní telefony
-                    </strong>{" "}
-                    – jsou hrubým porušením řádu tábora (více viz "Informace pro
-                    rodiče")
+                    </strong>&quot;
+                    – jsou hrubým porušením řádu tábora (více viz &quot;Informace pro
+                    rodiče&quot;)
                   </span>
                 </li>
                 <li className="flex gap-x-3">

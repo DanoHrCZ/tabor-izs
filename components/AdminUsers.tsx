@@ -1,6 +1,5 @@
-
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs, query, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, query, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../Firebase'; // Adjust the path as necessary
 import Link from 'next/link';
 
@@ -10,6 +9,7 @@ interface User {
   lastName: string;
   email: string;
   role: string;
+  phone: string;
 }
 
 const AdminUsers: React.FC = () => {
@@ -54,16 +54,6 @@ const AdminUsers: React.FC = () => {
       await Promise.all(deletePromises);
       setSelectedUsers([]);
     }
-  };
-
-  const updateUserRole = async (userId: string, newRole: string) => {
-    const userRef = doc(db, 'users', userId);
-    await updateDoc(userRef, { role: newRole });
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.id === userId ? { ...user, role: newRole } : user
-      )
-    );
   };
 
   const deleteUser = async (userId: string) => {

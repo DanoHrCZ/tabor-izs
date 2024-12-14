@@ -1,4 +1,5 @@
 import Links from "../../components/Links";
+import Image from 'next/image';
 
 export default function LandingPage() {
   return (
@@ -53,9 +54,11 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
-            <img
+            <Image
               alt=""
               src="/firemans.jpg"
+              width={768}
+              height={512}
               className="w-[48rem] max-w-none rounded-xl bg-text-black shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
             />
           </div>

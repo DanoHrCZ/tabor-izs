@@ -1,6 +1,7 @@
 // Importujte potřebné moduly
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 export default function Links() {
   return (
@@ -16,7 +17,7 @@ export default function Links() {
           className="text-text-black hover:text-gray-700 transition-colors w-16"
           aria-label="Facebook"
         >
-          <FontAwesomeIcon icon={faFacebook} size="2x" />
+          <FontAwesomeIcon icon={faFacebook as IconProp} size="2x" />
         </a>
         <a
           href="https://instagram.com/taborizs/"
@@ -25,7 +26,7 @@ export default function Links() {
           className="text-text-black hover:text-gray-700 transition-colors w-16"
           aria-label="Instagram"
         >
-          <FontAwesomeIcon icon={faInstagram} size="2x" />
+          <FontAwesomeIcon icon={faInstagram as IconProp} size="2x" />
         </a>
       </div>
     </div>

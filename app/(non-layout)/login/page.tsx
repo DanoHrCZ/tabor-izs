@@ -1,23 +1,23 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth } from '../../../Firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const validateEmail = (email) => {
+  const validateEmail = (email: string): boolean => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(String(email).toLowerCase());
   };
 
-  const translateFirebaseError = (errorCode) => {
+  const translateFirebaseError = (errorCode: string): string => {
     switch (errorCode) {
       case "auth/user-not-found":
         return "Uživatel s tímto e-mailem neexistuje.";
@@ -34,7 +34,7 @@ export default function LoginPage() {
     }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
 
@@ -46,17 +46,21 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      
       // Získáme ID přihlášeného uživatele
       const userID = userCredential.user.uid;
       console.log('User signed in successfully with ID:', userID);
 
       // Přesměrujeme na /user/:id
       router.push(`/user/${userID}`);
-    } catch (error) {
-      const errorMessage = translateFirebaseError(error.code);
-      setError(errorMessage);
-      console.error('Error signing in user:', error);
+    } catch (error: unknown) {
+      if (error instanceof Error && 'code' in error) {
+        const errorMessage = translateFirebaseError((error as { code: string }).code);
+        setError(errorMessage);
+        console.error('Error signing in user:', error);
+      } else {
+        setError("Došlo k neočekávané chybě. Zkuste to prosím znovu.");
+        console.error('Unexpected error:', error);
+      }
     } finally {
       setLoading(false);
     }

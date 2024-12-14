@@ -16,7 +16,6 @@ interface Offer {
 
 const UserTable: React.FC = () => {
   const [offers, setOffers] = useState<Offer[]>([]); // State to hold offers data
-  const [userId, setUserId] = useState<string | null>(null); // State to hold user ID
 
   // Fetch offers from Firestore for the logged-in user
   const fetchOffers = async (currentUserId: string) => {
@@ -26,8 +25,8 @@ const UserTable: React.FC = () => {
     const offersData = offerDocs.docs.map(doc => {
       const offer = doc.data() as Offer;
       return {
-        id: doc.id,
         ...offer,
+        id: doc.id,
         status: offer.status || 'neuhrazeno', // Set status to 'neuhrazeno' if it's empty
       };
     });
@@ -38,7 +37,6 @@ const UserTable: React.FC = () => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUserId(user.uid);
         fetchOffers(user.uid); // Fetch offers when user is authenticated
       }
     });

@@ -6,14 +6,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faTimes,
-  faBell,
   faUser,
   faSignInAlt,
 } from "@fortawesome/free-solid-svg-icons"; // Přidání ikony pro přihlášení
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../Firebase"; // Import Firebase konfigurace
-import { StringDecoder } from "string_decoder";
+import Image from 'next/image';
 
 const navigation = [
   { name: "Úvod", href: "/", current: false },
@@ -92,7 +91,12 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <img src="/logo.png" alt="Logo" className="h-8 w-auto" />
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={100}
+              height={50}
+            />
           </div>
 
           {/* Desktop Menu */}
