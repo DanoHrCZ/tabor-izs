@@ -1,17 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@font-face {
-  font-family: 'Montserrat';
-  src: url('/fonts/Montserrat.ttf') format('ttf');
-}
-
-@font-face {
-  font-family: 'Montserrat-italic';
-  src: url('/fonts/Montserrat-italic.ttf') format('ttf');
-}
-
 :root {
   --background: #ffffff;
   --block: #1f2937;
@@ -24,5 +13,5 @@
 
 body {
   background: var(--background);
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'montserrat', sans-serif;
 }
