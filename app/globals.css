@@ -2,7 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat.ttf') format('ttf');
+}
+
+@font-face {
+  font-family: 'Montserrat-italic';
+  src: url('/fonts/Montserrat-italic.ttf') format('ttf');
+}
 
 :root {
   --background: #ffffff;
@@ -18,10 +26,9 @@
   --positive-color: #10b981;
 
   --negative-color: #ef4444;
-
 }
 
 body {
   background: var(--background);
-  font-family: "Montserrat";
+  font-family: 'Montserrat', sans-serif;
 }
