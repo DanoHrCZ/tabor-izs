@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Montserrat } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Tábor IZS",
   description: "Tábor IZS",
 };
+
+const montserrat = Montserrat({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
 
 export default function RootLayout({
   children,
@@ -14,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="cs">
       <body
+        className={`${montserrat.variable} antialiased`}
       >
         {children}
         <div className="absolute -z-10 top-0 w-full overflow-hidden py-24 sm:py-32 lg:px-0 h-dvh">
@@ -49,7 +56,7 @@ export default function RootLayout({
             </svg>
           </div>
         </div>
-      </body >
-    </html >
+      </body>
+    </html>
   );
 }
