@@ -23,7 +23,6 @@ interface OfferData {
   healthIssues: string;
   medications: string;
   additionalInfo: string;
-  birthNumber: string;
 }
 
 const NewOfferPage = () => {
@@ -43,8 +42,7 @@ const NewOfferPage = () => {
     employerContribution: '',
     healthIssues: '',
     medications: '',
-    additionalInfo: '',
-    birthNumber: ''
+    additionalInfo: ''
   });
 
   const [userId, setUserId] = useState<string>(''); // Initialize with an empty string
@@ -83,12 +81,6 @@ const NewOfferPage = () => {
       ...prevState,
       [name]: value
     }));
-  };
-
-  const validateBirthNumber = (birthNumber: string) => {
-    // Simple validation for Czech birth number format (XXXXXX/XXXX)
-    const regex = /^\d{6}\/\d{4}$/;
-    return regex.test(birthNumber);
   };
 
   const handleSubmit = async (event: FormEvent) => {
