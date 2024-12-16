@@ -93,7 +93,7 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-        <div className="lg:px-12 px-6 md:px-6">
+        <div className="lg:px-12 md:px-6">
           <div className="text-base/7 lg:mx-24 mx-1 md:mx-12">
             <p>
               Mimo klasických táborových aktivit, jako jsou sportovní
