@@ -1,5 +1,4 @@
-// FILE: components/AdminSponsors.tsx
-
+"use client";
 import { useState, useEffect } from "react";
 import { db, storage } from "../Firebase";
 import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";

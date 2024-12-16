@@ -1,5 +1,4 @@
-// FILE: components/AdminGallery.tsx
-
+"use client";
 import { useState, useEffect } from "react";
 import { db, storage } from "../Firebase"; // Import Firebase konfigurace
 import { collection, getDocs, addDoc, deleteDoc, doc, query, where } from "firebase/firestore";
