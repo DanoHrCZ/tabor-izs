@@ -3,7 +3,7 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { db } from '../../../Firebase'; // Ensure you import db
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, doc, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'; // Import getAuth from Firebase
 
 interface OfferData {
@@ -44,10 +44,11 @@ const NewOfferPage = () => {
     healthIssues: '',
     medications: '',
     additionalInfo: '',
-    birthNumber: ''  // Added birthNumber field
+    birthNumber: ''
   });
 
   const [userId, setUserId] = useState<string>(''); // Initialize with an empty string
+  const [allowSubmissions, setAllowSubmissions] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -64,6 +65,17 @@ const NewOfferPage = () => {
       router.push('/auth/login'); // Redirect to login page if not authenticated
     }
   }, [router]);
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      const docRef = doc(db, "settings", "submissionSettings");
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setAllowSubmissions(docSnap.data().allowSubmissions);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -82,18 +94,17 @@ const NewOfferPage = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
+    if (!allowSubmissions) {
+      alert("Odesílání přihlášek je momentálně zakázáno. V případě potřeby nás kontaktujte. Děkujeme za pochopení.");
+      return;
+    }
+
     // Input validation
     for (const [key, value] of Object.entries(offerData)) {
-      if (value === '' && (key === 'firstName' || key === 'lastName' || key === 'birthDate' || key === 'street' || key === "birthNumber" || key === 'city' || key === 'postalCode')) {
+      if (value === '' && (key === 'firstName' || key === 'lastName' || key === 'birthDate' || key === 'street' || key === 'city' || key === 'postalCode')) {
         alert(`Prosím vyplňte ${key}.`);
         return;
       }
-    }
-
-    // Validate birth number
-    if (!validateBirthNumber(offerData.birthNumber)) {
-      alert("Prosím zadejte platné rodné číslo ve formátu XXXXXX/XXXX.");
-      return;
     }
 
     try {
@@ -120,7 +131,7 @@ const NewOfferPage = () => {
         <p className="mt-1 text-sm text-text-secondary">Vyplňte prosím informace o vašem dítěti.</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {[ 
+          {[
             { label: 'Křestní jméno', name: 'firstName', type: 'text', required: true },
             { label: 'Příjmení', name: 'lastName', type: 'text', required: true },
             { label: 'Datum narození', name: 'birthDate', type: 'date', required: true },
@@ -146,22 +157,6 @@ const NewOfferPage = () => {
               />
             </div>
           ))}
-
-          {/* Rodné číslo */}
-          <div className="flex flex-col">
-            <label htmlFor="birthNumber" className="mb-1 text-sm font-medium text-text-black">
-              Rodné číslo
-            </label>
-            <input
-              id="birthNumber"
-              name="birthNumber"
-              type="text"
-              required
-              value={offerData.birthNumber}
-              onChange={handleChange}
-              className="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-            />
-          </div>
 
           <div className="col-span-1 sm:col-span-2">
             <label htmlFor="additional-info" className="mb-1 block text-sm font-medium text-text-black">
@@ -196,6 +191,6 @@ const NewOfferPage = () => {
       </form>
     </div>
   );
-};    
+};
 
 export default NewOfferPage;

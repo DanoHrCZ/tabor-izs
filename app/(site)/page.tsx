@@ -59,7 +59,7 @@ export default function LandingPage() {
               src="/firemans.jpg"
               width={768}
               height={512}
-              className="w-[48rem] max-w-none rounded-xl bg-text-black shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
+              className="w-full max-w-none rounded-xl bg-text-black shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
             />
           </div>
           <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
@@ -93,8 +93,8 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-        <div className="px-12">
-          <div className="text-base/7 mx-24">
+        <div className="lg:px-12 px-6 md:px-6">
+          <div className="text-base/7 lg:mx-24 mx-1 md:mx-12">
             <p>
               Mimo klasických táborových aktivit, jako jsou sportovní
               turnaje, hry, stopovaná, táborová diskotéka, výlety a
@@ -177,7 +177,7 @@ export default function LandingPage() {
               </li>
             </ul>
           </div>
-          <div className="px-2 mt-10 grid gap-4 sm:mt-16 lg:grid-cols-2 lg:grid-rows-2 md:grid-cols-2 md:gid-rows-2 mx-24">
+          <div className="px-2 mt-10 grid gap-4 sm:mt-16 lg:grid-cols-2 lg:grid-rows-2 md:grid-cols-2 md:gid-rows-2 lg:mx-24">
             <div className="p-2 relative lg:row-span-2 border rounded ring-black/5">
               <div className="absolute inset-px rounded-lg bg-background lg:rounded-l-[2rem]"></div>
               <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../../../Firebase";
 import AdminOffers from "@/components/AdminOffers";
 import AdminUsers from "@/components/AdminUsers";
@@ -12,6 +12,7 @@ import AdminSponsors from "@/components/AdminSponsors";
 const AdminPage = () => {
     const [role, setRole] = useState(null);
     const [selectedTool, setSelectedTool] = useState("gallery");
+    const [allowSubmissions, setAllowSubmissions] = useState(true);
     const router = useRouter();
     const auth = getAuth();
 
@@ -78,6 +79,25 @@ const AdminPage = () => {
     }, []);
 
     useEffect(() => {
+        const fetchSettings = async () => {
+            const docRef = doc(db, "settings", "submissionSettings");
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                setAllowSubmissions(docSnap.data().allowSubmissions);
+            }
+        };
+        fetchSettings();
+    }, []);
+
+    const toggleSubmissions = async () => {
+        const newStatus = !allowSubmissions;
+        setAllowSubmissions(newStatus);
+        await updateDoc(doc(db, "settings", "submissionSettings"), {
+            allowSubmissions: newStatus
+        });
+    };
+
+    useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (currentUser) {
                 const userRole = await getRole(currentUser.uid);
@@ -129,6 +149,9 @@ const AdminPage = () => {
                 {selectedTool === "offers" && <AdminOffers />}
                 {selectedTool === "users" && <AdminUsers />}
             </div>
+            <button onClick={toggleSubmissions}>
+                {allowSubmissions ? "Zakázat odesílání přihlášek" : "Povolit odesílání přihlášek"}
+            </button>
         </div>
     );
 };
