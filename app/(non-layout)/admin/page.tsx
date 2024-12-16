@@ -4,10 +4,10 @@ import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, collection, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../../../Firebase";
-import AdminOffers from "@/components/AdminOffers";
-import AdminUsers from "@/components/AdminUsers";
-import AdminGallery from "@/components/AdminGallery";
-import AdminSponsors from "@/components/AdminSponsors";
+import AdminOffers from "../../../components/AdminOffers";
+import AdminUsers from "../../../components/AdminUsers";
+import AdminGallery from "../../../components/AdminGallery";
+import AdminSponsors from "../../../components/AdminSponsors";
 
 const AdminPage = () => {
     const [role, setRole] = useState(null);
