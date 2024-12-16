@@ -24,7 +24,7 @@ const navigation = [
 
 export default function Navbar() {
   const [navItems, setNavItems] = useState(navigation);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState({ navMenu: false, userMenu: false });
   const [user, setUser] = useState(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const router = useRouter();
@@ -107,8 +107,8 @@ export default function Navbar() {
                 key={item.name}
                 href={item.href}
                 className={`px-3 py-2 rounded-md text-sm font-medium ${item.current
-                    ? `bg-text-black text-background ${scrollPosition > 0 ? 'bg-text-indigo' : ''}`
-                    : "hover:bg-gray-700 hover:text-background"
+                  ? `bg-text-black text-background ${scrollPosition > 0 ? 'bg-text-indigo' : ''}`
+                  : "hover:bg-gray-700 hover:text-background"
                   }`}
               >
                 {item.name}
@@ -123,12 +123,12 @@ export default function Navbar() {
               <div className="relative">
                 <button
                   className="flex items-center space-x-2 hover:text-background focus:outline-none"
-                  onClick={() => setMenuOpen(!menuOpen)}
+                  onClick={() => setMenuOpen((prev) => ({ ...prev, userMenu: !prev.userMenu }))}
                 >
                   <FontAwesomeIcon icon={faUser} className="h-5 w-5" />{" "}
                   <span>{user.firstName}</span>
                 </button>
-                {menuOpen && (
+                {menuOpen.userMenu && (
                   <div className="absolute right-0 mt-2 w-48 bg-background rounded-md shadow-lg py-1">
                     <a
                       href={"/user/" + (auth.currentUser ? auth.currentUser.uid : "")}
@@ -165,14 +165,47 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="sm:hidden">
+          {/* Mobile Menu Button and User Icon */}
+          <div className="sm:hidden flex items-center space-x-4">
+            <div className="relative">
+              <button
+                className="p-2 rounded-md text-gray-400 hover:text-background focus:outline-none focus:ring-2 focus:ring-background"
+                onClick={() => setMenuOpen((prev) => ({ ...prev, userMenu: !prev.userMenu }))}
+              >
+                <FontAwesomeIcon icon={faUser} className="h-6 w-6" />
+                <span className="sr-only">Profil</span>
+              </button>
+              {user && menuOpen.userMenu && (
+                <div className="absolute right-0 mt-2 w-48 bg-background rounded-md shadow-lg py-1">
+                  <a
+                    href={"/user/" + auth.currentUser.uid}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Profil
+                  </a>
+                  {user.role === "admin" && (
+                    <a
+                      href="/admin"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      Administrace
+                    </a>
+                  )}
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Odhlásit se
+                  </button>
+                </div>
+              )}
+            </div>
             <button
-              onClick={() => setMenuOpen(!menuOpen)}
+              onClick={() => setMenuOpen((prev) => ({ ...prev, navMenu: !prev.navMenu }))}
               className="p-2 rounded-md text-gray-400 hover:text-background focus:outline-none focus:ring-2 focus:ring-background"
             >
               <FontAwesomeIcon
-                icon={menuOpen ? faTimes : faBars}
+                icon={menuOpen.navMenu ? faTimes : faBars}
                 className="h-6 w-6"
               />
               <span className="sr-only">Otevřít menu</span>
@@ -181,15 +214,15 @@ export default function Navbar() {
         </div>
       </div>
 
-      {menuOpen && (
+      {menuOpen.navMenu && (
         <div className="sm:hidden bg-gray-700 px-2 pt-2 pb-3 space-y-1">
           {navItems.map((item) => (
             <a
               key={item.name}
               href={item.href}
               className={`block px-3 py-2 rounded-md text-base font-medium ${item.current
-                  ? "bg-text-black text-background"
-                  : "text-gray-300 hover:bg-gray-500 hover:text-background"
+                ? "bg-text-black text-background"
+                : "text-gray-300 hover:bg-gray-500 hover:text-background"
                 }`}
             >
               {item.name}
