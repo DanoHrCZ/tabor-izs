@@ -10,13 +10,12 @@ import AdminGallery from "@/components/AdminGallery";
 import AdminSponsors from "@/components/AdminSponsors";
 
 const AdminPage = () => {
-    const [role, setRole] = useState<string | null>(null);
-    const [selectedTool, setSelectedTool] = useState<string>("gallery");
-    const [allowSubmissions, setAllowSubmissions] = useState<boolean>(true);
+    const [role, setRole] = useState(null);
+    const [selectedTool, setSelectedTool] = useState("gallery");
+    const [allowSubmissions, setAllowSubmissions] = useState(true);
     const router = useRouter();
     const auth = getAuth();
 
-    // Fetch data (users and offers) only on the client side
     const fetchData = async () => {
         try {
             const usersSnapshot = await getDocs(collection(db, "users"));
@@ -79,7 +78,6 @@ const AdminPage = () => {
         fetchStats();
     }, []);
 
-    // Fetch submission settings only on the client side
     useEffect(() => {
         const fetchSettings = async () => {
             const docRef = doc(db, "settings", "submissionSettings");
@@ -91,7 +89,6 @@ const AdminPage = () => {
         fetchSettings();
     }, []);
 
-    // Toggle submission settings
     const toggleSubmissions = async () => {
         const newStatus = !allowSubmissions;
         setAllowSubmissions(newStatus);
@@ -100,7 +97,6 @@ const AdminPage = () => {
         });
     };
 
-    // Handle authentication state
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (currentUser) {
@@ -117,12 +113,6 @@ const AdminPage = () => {
         return () => unsubscribe();
     }, [auth, router]);
 
-    // Show loading state while role is being fetched
-    if (role === null) {
-        return <div>Loading...</div>;
-    }
-
-    // If user is not an admin, redirect to login
     if (role !== "admin") {
         return <div>Loading...</div>;
     }
