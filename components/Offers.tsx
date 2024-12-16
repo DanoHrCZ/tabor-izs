@@ -12,6 +12,7 @@ interface Offer {
   lastName: string;
   birthDate: string;
   status: string;
+  variableSymbol: string;
 }
 
 const UserTable: React.FC = () => {
@@ -80,7 +81,7 @@ const UserTable: React.FC = () => {
                     <td className="backgroundspace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-text-black sm:pl-0">
                       {offer.firstName} {offer.lastName}
                     </td>
-                    <td className="backgroundspace-nowrap px-3 py-4 text-sm text-black">{offer.id}</td>
+                    <td className="backgroundspace-nowrap px-3 py-4 text-sm text-black">{offer.variableSymbol}</td>
                     <td className="backgroundspace-nowrap px-3 py-4 text-sm text-black">{offer.birthDate}</td>
                     <td className="backgroundspace-nowrap px-3 py-4 text-sm text-black">{offer.status}</td>
                     <td className="relative backgroundspace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">

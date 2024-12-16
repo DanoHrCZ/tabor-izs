@@ -3,7 +3,7 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { db } from '../../../Firebase'; // Ensure you import db
-import { collection, addDoc, doc, getDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, query, orderBy, limit } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'; // Import getAuth from Firebase
 
 interface OfferData {
@@ -100,11 +100,33 @@ const NewOfferPage = () => {
     }
 
     try {
+      // Získání aktuálního roku
+      const currentYear = new Date().getFullYear();
+      
+      // Získání počtu přihlášek pro daný rok
       const offersCollection = collection(db, 'offers');
+      const offersQuery = query(
+        offersCollection,
+        orderBy('createdAt', 'desc'), // Pokud chcete řadit podle data vytvoření
+        limit(1) // Získat pouze poslední přihlášku
+      );
+      const offersSnapshot = await getDocs(offersQuery);
+      const lastOffer = offersSnapshot.docs[0];
+      const lastOfferNumber = lastOffer ? parseInt(lastOffer.id.split('-')[1]) : 0; // Získání posledního čísla přihlášky
+
+      // Generování nového variabilního symbolu
+      const newOfferNumber = lastOfferNumber + 1;
+      const formattedNumber = newOfferNumber.toString().padStart(4, '0'); // Číslo přihlášky s nulami na začátku
+      const variableSymbol = `${formattedNumber}${currentYear}`;
+
+      // Přidání přihlášky do databáze
       await addDoc(offersCollection, {
         ...offerData,
-        userId: userId // Přidejte userId k uloženým datům
+        userId: userId,
+        createdAt: new Date(),
+        variableSymbol: variableSymbol, // Uložení variabilního symbolu
       });
+
       router.push(`/user/${userId}`); // Přejděte na stránku uživatele při úspěšném odeslání
     } catch (error) {
       console.error("Error adding document: ", error);
@@ -123,7 +145,7 @@ const NewOfferPage = () => {
         <p className="mt-1 text-sm text-text-secondary">Vyplňte prosím informace o vašem dítěti.</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {[
+          {[ 
             { label: 'Křestní jméno', name: 'firstName', type: 'text', required: true },
             { label: 'Příjmení', name: 'lastName', type: 'text', required: true },
             { label: 'Datum narození', name: 'birthDate', type: 'date', required: true },
