@@ -11,6 +11,19 @@ import AdminSponsors from "../../../components/AdminSponsors";
 import React from "react";
 
 const AdminPage = () => {
+
+    useEffect(() => {
+        console.log('NEXT_PUBLIC_API_KEY:', process.env.NEXT_PUBLIC_API_KEY);
+        console.log('NEXT_PUBLIC_AUTH_DOMAIN:', process.env.NEXT_PUBLIC_AUTH_DOMAIN);
+        console.log('NEXT_PUBLIC_PROJECT_ID:', process.env.NEXT_PUBLIC_PROJECT_ID);
+        console.log('NEXT_PUBLIC_STORAGE_BUCKET:', process.env.NEXT_PUBLIC_STORAGE_BUCKET);
+        console.log('NEXT_PUBLIC_MESSAGING_SENDER_ID:', process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID);
+        console.log('NEXT_PUBLIC_APP_ID:', process.env.NEXT_PUBLIC_APP_ID);
+        console.log('NEXT_PUBLIC_MEASUREMENT_ID:', process.env.NEXT_PUBLIC_MEASUREMENT_ID);
+
+        fetchData();
+    }, []);
+
     const [role, setRole] = useState(null);
     const [selectedTool, setSelectedTool] = useState("gallery");
     const [allowSubmissions, setAllowSubmissions] = useState(true);
