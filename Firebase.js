@@ -1,25 +1,19 @@
-// filepath: /c:/izs/Firebase.js
-const { initializeApp } = require('firebase/app');
-const { getAuth } = require('firebase/auth');
-const { getFirestore } = require('firebase/firestore');
-const { getStorage } = require('firebase/storage');
-const loadSecrets = require('./loadSecrets');
+import { initializeApp } from "firebase/app";
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
-(async () => {
-  const secrets = await loadSecrets();
+const firebaseConfig = {
+    apiKey: "AIzaSyD65cha8EuskAmqW9BivLq9p5i6rBNpWxI",
+    authDomain: "tabor-izs.firebaseapp.com",
+    projectId: "tabor-izs",
+    storageBucket: "tabor-izs.firebasestorage.app",
+    messagingSenderId: "19913054232",
+    appId: "1:19913054232:web:beb704dc44be41f1108b6d",
+    measurementId: "G-ZS767CJ7DS"
+};
 
-  const firebaseConfig = {
-    apiKey: secrets.apiKey,
-    authDomain: secrets.authDomain,
-    projectId: secrets.projectId,
-    storageBucket: secrets.storageBucket,
-    messagingSenderId: secrets.messagingSenderId,
-    appId: secrets.appId,
-    measurementId: secrets.measurementId,
-  };
-
-  const app = initializeApp(firebaseConfig);
-  module.exports.auth = getAuth(app);
-  module.exports.db = getFirestore(app);
-  module.exports.storage = getStorage(app);
-})();
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const storage = getStorage(app);
