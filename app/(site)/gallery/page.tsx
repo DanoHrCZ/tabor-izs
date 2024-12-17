@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { db } from "../../../Firebase"; // Import Firebase konfigurace
 import { collection, getDocs } from "firebase/firestore";
+import React from "react";
 
 interface Image {
     id: string;

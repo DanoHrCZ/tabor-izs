@@ -1,5 +1,6 @@
 import Links from "../../components/Links";
 import Image from 'next/image';
+import React from "react";
 
 export default function LandingPage() {
   return (

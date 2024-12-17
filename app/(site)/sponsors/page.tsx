@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { db } from "../../../Firebase"; // Import Firebase configuration
 import { collection, getDocs } from "firebase/firestore";
+import React from "react";
 
 interface Sponsor {
     id: string;

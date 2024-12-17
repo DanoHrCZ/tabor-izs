@@ -6,6 +6,7 @@ import { auth, db } from "../../../../Firebase"; // Ensure this path is correct
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore"; // Import Firestore functions
 import Offers from "../../../../components/Offers"; // Ensure this path is correct
+import React from "react";
 
 interface UserData {
   firstName: string;

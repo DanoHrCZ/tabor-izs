@@ -8,6 +8,7 @@ import AdminOffers from "../../../components/AdminOffers";
 import AdminUsers from "../../../components/AdminUsers";
 import AdminGallery from "../../../components/AdminGallery";
 import AdminSponsors from "../../../components/AdminSponsors";
+import React from "react";
 
 const AdminPage = () => {
     const [role, setRole] = useState(null);

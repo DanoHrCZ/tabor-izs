@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { auth, db } from '../../../Firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
+import React from "react";
 
 export default function RegistrationPage() {
   const [firstName, setFirstName] = useState<string>('');

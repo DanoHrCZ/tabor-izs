@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { db } from '../../../Firebase'; // Ensure you import db
 import { collection, addDoc, getDocs, query, orderBy, limit, doc, getDoc } from 'firebase/firestore'; // Import doc and getDoc
 import { getAuth } from 'firebase/auth'; // Import getAuth from Firebase
+import React from "react";
 
 interface OfferData {
   userId: string;

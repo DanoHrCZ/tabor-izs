@@ -1,3 +1,4 @@
+import React from "react";
 export default function Offers() {
   return (
     <div className=" py-12 sm:py-16">
