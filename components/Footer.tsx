@@ -13,8 +13,8 @@ export default function Footer() {
                         <li className="inline-block"><Link href="/" className="hover:underline">Úvod</Link></li>
                         <li className="inline-block"><Link href="/information" className="hover:underline">Informace</Link></li>
                         <li className="inline-block"><Link href="/offers" className="hover:underline">Přihláška</Link></li>
-                        <li className="inline-block"><Link href="/gallery" className="hover:underline">Galerie</Link></li>
-                        <li className="inline-block"><Link href="/sponsors" className="hover:underline">Sponzoři</Link></li>
+                        {/* <li className="inline-block"><Link href="/gallery" className="hover:underline">Galerie</Link></li>
+                        <li className="inline-block"><Link href="/sponsors" className="hover:underline">Sponzoři</Link></li> */}
                     </ul>
                 </div>
                 <div className="flex flex-col md:flex-row max-w-lg mx-auto justify-between text-center md:text-left mb-8">
