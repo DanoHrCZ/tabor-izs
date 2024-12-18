@@ -76,9 +76,9 @@ export default function UserPage() {
         )}
       </div>
       <div className="text-center">
-        <p>Po vytvoření přihlášky uhraďte nejpozději do 3 dnů zálohu ve výši <b>4000kč</b>. Na účet 123456789/1234 nezapomeňte vyplnit <b>VARIABILNÍ SYMBOL</b> přihlášky!</p>
-        <p>Platby kontrolujeme ručně, proto může trvat nějakou dobu, než vaši platbu zaregistrujeme. V případě nejasností, nebo kompilkací nás kontaktuje prostřednictvím emailu.</p>
-        <p>Následně je potřeba uhradit doplatek ve výši <b>5000kč</b>.</p>
+        <p>Po vytvoření přihlášky uhraďte zálohu ve výši <b>4000 Kč</b> nejpozději do 3 dnů na účet 123456789/1234. Nezapomeňte vyplnit <b>VARIABILNÍ SYMBOL</b> přihlášky!</p>
+        <p>Platby kontrolujeme ručně, proto může trvat nějakou dobu, než vaši platbu zaregistrujeme. V případě nejasností nebo komplikací nás kontaktujte prostřednictvím emailu.</p>
+        <p>Následně je potřeba uhradit doplatek ve výši <b>5000 Kč</b>.</p>
       </div>
       <Offers />
     </div>
