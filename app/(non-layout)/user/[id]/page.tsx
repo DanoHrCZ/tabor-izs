@@ -31,7 +31,7 @@ export default function UserPage() {
             // Fetch user data from Firestore using the user ID
             const userDocRef = doc(db, "users", currentUser.uid);
             const userDocSnap = await getDoc(userDocRef);
-            
+
             if (userDocSnap.exists()) {
               setUserData(userDocSnap.data() as UserData); // Set Firestore data
             } else {
@@ -66,7 +66,7 @@ export default function UserPage() {
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h1 className="text-3xl font-bold text-center text-text-black">
-         Vítej, {userData?.firstName}!
+          Vítej, {userData?.firstName}!
         </h1>
         {userData && (
           <div className="mt-4 text-center">
@@ -74,6 +74,11 @@ export default function UserPage() {
             <p>Email: {userData.email}</p>
           </div>
         )}
+      </div>
+      <div className="text-center">
+        <p>Po vytvoření přihlášky uhraďte nejpozději do 3 dnů zálohu ve výši <b>4000kč</b>. Na účet 123456789/1234 nezapomeňte vyplnit <b>VARIABILNÍ SYMBOL</b> přihlášky!</p>
+        <p>Platby kontrolujeme ručně, proto může trvat nějakou dobu, než vaši platbu zaregistrujeme. V případě nejasností, nebo kompilkací nás kontaktuje prostřednictvím emailu.</p>
+        <p>Následně je potřeba uhradit doplatek ve výši <b>5000kč</b>.</p>
       </div>
       <Offers />
     </div>

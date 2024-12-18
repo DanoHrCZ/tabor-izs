@@ -51,7 +51,7 @@ export default function Offers() {
                 </p>
                 <p className="mt-2 max-w-lg text-sm/6 text-text-secondary max-lg:text-center">
                   Prihlášku máte vyplňenou za pár minut. Následně jen zaplatíte
-                  částku na účet, podle pokynů, a máte hotovo.
+                  částku na účet, podle pokynů, a máte hotovo. <b>celková částka, za jedno díte je 9000kč. (4000kč záloha + 5000kč doplatek)</b>
                 </p>
               </div>
               <div className="relative min-h-[30rem] w-full grow [container-type:inline-size] max-lg:mx-auto max-lg:max-w-sm">
