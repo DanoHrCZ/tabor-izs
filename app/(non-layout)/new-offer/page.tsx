@@ -130,6 +130,7 @@ const NewOfferPage = () => {
         userId: userId,
         createdAt: new Date(),
         variableSymbol: variableSymbol,
+        status: 'neuhrazeno'
       });
 
       router.push(`/user/${userId}`);

@@ -134,6 +134,11 @@ const AdminPage = () => {
                         ))}
                     </dl>
                 </div>
+                <div className="w-full flex justify-center m-4">
+                    <button onClick={toggleSubmissions} className="mr-2 p-2 bg-negative-color text-background rounded">
+                        {allowSubmissions ? "Zakázat odesílání přihlášek" : "Povolit odesílání přihlášek"}
+                    </button>
+                </div>
             </div>
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <select
@@ -151,9 +156,6 @@ const AdminPage = () => {
                 {selectedTool === "offers" && <AdminOffers />}
                 {selectedTool === "users" && <AdminUsers />}
             </div>
-            <button onClick={toggleSubmissions}>
-                {allowSubmissions ? "Zakázat odesílání přihlášek" : "Povolit odesílání přihlášek"}
-            </button>
         </div>
     );
 };

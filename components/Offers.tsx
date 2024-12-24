@@ -28,7 +28,7 @@ const UserTable: React.FC = () => {
       return {
         ...offer,
         id: doc.id,
-        status: offer.status || 'neuhrazeno', // Set status to 'neuhrazeno' if it's empty
+        status: offer.status
       };
     });
     setOffers(offersData);

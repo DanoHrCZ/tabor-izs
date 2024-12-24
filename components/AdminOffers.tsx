@@ -94,11 +94,15 @@ const AdminOffers: React.FC = () => {
         <div className="sm:flex sm:items-center sm:ml-4">
           <select
             onChange={(e) => handleBulkStatusChange(e.target.value)}
+            value=""
             className="mr-2 p-2 border border-gray-300 rounded"
           >
-            <option value="neuhrazeno">Neuhrazeno</option>
-            <option value="uhrazena záloha">Uhrazena záloha</option>
-            <option value="uhrazeno">Uhrazeno</option>
+            <option value="" disabled hidden>
+              Změnit stav vybraných přihlášek
+            </option>
+            <option value="neuhrazeno">změnit na "neuhrazeno"</option>
+            <option value="uhrazena záloha">změnit na "uhrazena záloha"</option>
+            <option value="uhrazeno">Změnit na "uhrazeno"</option>
           </select>
           <button
             onClick={handleBulkDelete}
