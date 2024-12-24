@@ -12,6 +12,7 @@ export default function Footer() {
                     <ul className="space-y-2 md:space-y-0 md:space-x-4">
                         <li className="inline-block"><Link href="/" className="hover:underline">Úvod</Link></li>
                         <li className="inline-block"><Link href="/information" className="hover:underline">Informace</Link></li>
+                        <li className="inline-block"><Link href="/what-with" className="hover:underline">Co s sebou?</Link></li>
                         <li className="inline-block"><Link href="/offers" className="hover:underline">Přihláška</Link></li>
                         {/* <li className="inline-block"><Link href="/gallery" className="hover:underline">Galerie</Link></li>
                         <li className="inline-block"><Link href="/sponsors" className="hover:underline">Sponzoři</Link></li> */}

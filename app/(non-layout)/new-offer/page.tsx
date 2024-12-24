@@ -2,9 +2,9 @@
 
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { db } from '../../../Firebase'; // Ensure you import db
-import { collection, addDoc, getDocs, query, orderBy, limit, doc, getDoc } from 'firebase/firestore'; // Import doc and getDoc
-import { getAuth } from 'firebase/auth'; // Import getAuth from Firebase
+import { db } from '../../../Firebase';
+import { collection, addDoc, getDocs, query, where, doc, getDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 import React from "react";
 
 interface OfferData {
@@ -46,22 +46,21 @@ const NewOfferPage = () => {
     additionalInfo: ''
   });
 
-  const [userId, setUserId] = useState<string>(''); // Initialize with an empty string
+  const [userId, setUserId] = useState<string>('');
   const [allowSubmissions, setAllowSubmissions] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const auth = getAuth(); // Get the Firebase auth instance
-    const user = auth.currentUser; // Get the currently authenticated user
+    const auth = getAuth();
+    const user = auth.currentUser;
     if (user) {
-      setUserId(user.uid); // Set the user ID in state
+      setUserId(user.uid);
       setOfferData(prevState => ({
         ...prevState,
         userId: user.uid
       }));
     } else {
-      // Handle the case where the user is not authenticated
-      router.push('/auth/login'); // Redirect to login page if not authenticated
+      router.push('/auth/login');
     }
   }, [router]);
 
@@ -93,50 +92,55 @@ const NewOfferPage = () => {
     }
 
     // Input validation
-    for (const [key, value] of Object.entries(offerData)) {
-      if (value === '' && (key === 'firstName' || key === 'lastName' || key === 'birthDate' || key === 'street' || key === 'city' || key === 'postalCode')) {
-        alert(`Prosím vyplňte ${key}.`);
+    const requiredFields = ['firstName', 'lastName', 'birthDate', 'street', 'city', 'postalCode'];
+    for (const field of requiredFields) {
+      if (!offerData[field as keyof OfferData]) {
+        alert(`Prosím vyplňte pole: ${field}`);
         return;
       }
     }
 
     try {
-      // Získání aktuálního roku
       const currentYear = new Date().getFullYear();
-      
-      // Získání počtu přihlášek pro daný rok
-      const offersCollection = collection(db, 'offers');
-      const offersQuery = query(
-        offersCollection,
-        orderBy('createdAt', 'desc'), // Pokud chcete řadit podle data vytvoření
-        limit(1) // Získat pouze poslední přihlášku
-      );
-      const offersSnapshot = await getDocs(offersQuery);
-      const lastOffer = offersSnapshot.docs[0];
-      const lastOfferNumber = lastOffer ? parseInt(lastOffer.id.split('-')[1]) : 0; // Získání posledního čísla přihlášky
+      let newOfferNumber = 1;
+      let variableSymbol = '';
+      let isUnique = false;
 
-      // Generování nového variabilního symbolu
-      const newOfferNumber = lastOfferNumber + 1;
-      const formattedNumber = newOfferNumber.toString().padStart(4, '0'); // Číslo přihlášky s nulami na začátku
-      const variableSymbol = `${formattedNumber}${currentYear}`;
+      while (!isUnique) {
+        const formattedNumber = newOfferNumber.toString().padStart(4, '0');
+        variableSymbol = `${formattedNumber}${currentYear}`;
+
+        // Kontrola, zda variabilní symbol již existuje
+        const offersQuery = query(
+          collection(db, 'offers'),
+          where('variableSymbol', '==', variableSymbol)
+        );
+        const offersSnapshot = await getDocs(offersQuery);
+
+        if (offersSnapshot.empty) {
+          isUnique = true;
+        } else {
+          newOfferNumber++;
+        }
+      }
 
       // Přidání přihlášky do databáze
-      await addDoc(offersCollection, {
+      await addDoc(collection(db, 'offers'), {
         ...offerData,
         userId: userId,
         createdAt: new Date(),
-        variableSymbol: variableSymbol, // Uložení variabilního symbolu
+        variableSymbol: variableSymbol,
       });
 
-      router.push(`/user/${userId}`); // Přejděte na stránku uživatele při úspěšném odeslání
+      router.push(`/user/${userId}`);
     } catch (error) {
       console.error("Error adding document: ", error);
-      alert("Došlo k chybě při ukládání nabídky. Zkuste to prosím znovu.");
+      alert("Došlo k chybě při ukládání přihlášky. Zkuste to prosím znovu.");
     }
   };
 
   const handleCancel = () => {
-    router.push(`/user/${userId}`); // Navigate to user page when canceled
+    router.push(`/user/${userId}`);
   };
 
   return (
@@ -146,7 +150,7 @@ const NewOfferPage = () => {
         <p className="mt-1 text-sm text-text-secondary">Vyplňte prosím informace o vašem dítěti.</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {[ 
+          {[
             { label: 'Křestní jméno', name: 'firstName', type: 'text', required: true },
             { label: 'Příjmení', name: 'lastName', type: 'text', required: true },
             { label: 'Datum narození', name: 'birthDate', type: 'date', required: true },
@@ -165,7 +169,7 @@ const NewOfferPage = () => {
                 id={field.name}
                 name={field.name}
                 type={field.type}
-                value={offerData[field.name as keyof OfferData]} // Cast field.name to keyof OfferData
+                value={offerData[field.name as keyof OfferData]}
                 onChange={handleChange}
                 className="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
                 required={field.required}

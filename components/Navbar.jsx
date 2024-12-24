@@ -17,6 +17,7 @@ import Image from 'next/image';
 const navigation = [
   { name: "Úvod", href: "/", current: false },
   { name: "Informace", href: "/information", current: false },
+  { name: "Co s sebou?", href: "/what-with", current: false },
   { name: "Přihláška", href: "/offers", current: false },
   // { name: "Galerie", href: "gallery", current: false },
   // { name: "Sponzoři", href: "sponsors", current: false },

@@ -14,7 +14,7 @@ export default function Links() {
           href="https://www.facebook.com/taborizs.cz/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-text-black hover:text-gray-700 transition-colors w-16"
+          className="text-text-black hover:text-gray-700 transition-colors w-16 text-ce"
           aria-label="Facebook"
         >
           <FontAwesomeIcon icon={faFacebook as IconProp} size="2x" />
