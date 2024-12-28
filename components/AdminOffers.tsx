@@ -100,9 +100,9 @@ const AdminOffers: React.FC = () => {
             <option value="" disabled hidden>
               Změnit stav vybraných přihlášek
             </option>
-            <option value="neuhrazeno">změnit na "neuhrazeno"</option>
-            <option value="uhrazena záloha">změnit na "uhrazena záloha"</option>
-            <option value="uhrazeno">Změnit na "uhrazeno"</option>
+            <option value="neuhrazeno">změnit na &quot;neuhrazeno&quot;</option>
+            <option value="uhrazena záloha">změnit na &quot;uhrazena záloha&quot;</option>
+            <option value="uhrazeno">Změnit na &quot;uhrazeno&quot;</option>
           </select>
           <button
             onClick={handleBulkDelete}
