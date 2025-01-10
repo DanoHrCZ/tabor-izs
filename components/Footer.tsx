@@ -25,7 +25,7 @@ export default function Footer() {
                     </div>
                     <div className="mb-4 md:mb-0">
                         <p className="font-semibold">Číslo účtu: 2300799562/2010</p>
-                        <p className="font-semibold">IČ: 12345678</p>
+                        <p className="font-semibold">IČ: </p>
                     </div>
                 </div>
                 <div className="">
