@@ -20,11 +20,11 @@ export default function Footer() {
                 </div>
                 <div className="flex flex-col md:flex-row max-w-lg mx-auto justify-between text-center md:text-left mb-8">
                     <div className="mb-4 md:mb-0">
-                        <p className="font-semibold">Email: <a href="mailto:info@tabor-izs.cz" className="hover:underline">info@tabor-izs.cz</a></p>
-                        <p className="font-semibold">Telefon: <a href="tel:+420123456789" className="hover:underline">+420 123 456 789</a></p>
+                        <p className="font-semibold">Email: <a href="mailto:taborizs@gmail.com" className="hover:underline">taborizs@gmail.com</a></p>
+                        <p className="font-semibold">Telefon: <a href="tel:+420777859776" className="hover:underline">+420 777 859 776</a></p>
                     </div>
                     <div className="mb-4 md:mb-0">
-                        <p className="font-semibold">Číslo účtu: 123456789/0100</p>
+                        <p className="font-semibold">Číslo účtu: 2300799562/2010</p>
                         <p className="font-semibold">IČ: 12345678</p>
                     </div>
                 </div>
