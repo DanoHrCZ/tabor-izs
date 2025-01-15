@@ -1,23 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook as fabFacebook, faInstagram as fabInstagram } from "@fortawesome/free-brands-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Footer() {
     return (
         <footer className="bg-text-black text-background py-8">
             <div className="px-4">
-                {/* <div className="mb-4 md:mb-0 flex justify-center py-4">
-                    <ul className="space-y-2 md:space-y-0 md:space-x-4">
-                        <li className="inline-block"><Link href="/" className="hover:underline">Úvod</Link></li>
-                        <li className="inline-block"><Link href="/information" className="hover:underline">Informace</Link></li>
-                        <li className="inline-block"><Link href="/what-with" className="hover:underline">Co s sebou?</Link></li>
-                        <li className="inline-block"><Link href="/offers" className="hover:underline">Přihláška</Link></li>
-                        {/* <li className="inline-block"><Link href="/gallery" className="hover:underline">Galerie</Link></li>
-                        <li className="inline-block"><Link href="/sponsors" className="hover:underline">Sponzoři</Link></li> */}
-                    {/* </ul>
-                </div> */} */}
                 <div className="flex flex-col md:flex-row max-w-lg mx-auto justify-between text-center md:text-left mb-8">
                     <div className="mb-4 md:mb-0">
                         <p className="font-semibold">Email: <a href="mailto:taborizs@gmail.com" className="hover:underline">taborizs@seznam.cz</a></p>
