@@ -115,7 +115,7 @@ const AdminUsers: React.FC = () => {
                     <td className="backgroundspace-nowrap px-3 py-4 text-sm text-black">{user.email}</td>
                     <td className="backgroundspace-nowrap px-3 py-4 text-sm text-black">{user.phone}</td>
                     <td className="relative backgroundspace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                      <Link href={`/user/edit/${user.id}`} className="text-text-indigo hover:text-text-indigo-900 ml-2">Upravit</Link>
+                      <Link href={`/user/edit/${user.id}`} className="text-text-indigo hover:text-text-indigo-900 ml-2">Více</Link>
                     </td>
                   </tr>
                 ))}

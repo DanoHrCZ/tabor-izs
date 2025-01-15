@@ -24,9 +24,9 @@ export default function RootLayout({
   return (
     <html lang="cs">
       <body className={`${montserrat.variable}`}>
-        <div className="w-full bg-yellow-300 text-center py-2">
+        {/* <div className="w-full bg-yellow-300 text-center py-2">
             <b>Tato webová aplikace je momentálně ve fázi testování a není určena pro produkční použití. Děkujeme za pochopení.</b>
-        </div>
+        </div> */}
         {children}
         <div className="absolute -z-10 top-0 w-full overflow-hidden py-24 sm:py-32 lg:px-0 h-dvh">
           <div className="absolute inset-0 -z-10 overflow-hidden">

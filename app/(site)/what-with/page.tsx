@@ -23,7 +23,7 @@ export default function InformationsPage() {
                     <div className="lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
                         <img
                             alt=""
-                            src="/car.jpg"
+                            src="/picture3.jpg"
                             className="w-full max-w-none rounded-xl bg-text-black shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
                         />
                     </div>

@@ -83,11 +83,12 @@ export default function Offers() {
                 </div>
                 <div className="relative min-h-[30rem] w-full grow [container-type:inline-size] max-lg:mx-auto max-lg:max-w-sm">
                   <div className="absolute inset-x-10 bottom-0 top-10 overflow-hidden rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-text-black shadow-2xl">
-                    <img
+                    <p className="text-negative-color text-center p-16 font-bold text-lg">V tuto chvíli ve vývoji.</p>
+                    {/* <img
                       className="size-full object-cover object-top"
                       src="/screen2.png"
                       alt=""
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>

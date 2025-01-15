@@ -86,6 +86,14 @@ export default function Navbar() {
     }
   };
 
+  const handleUserIconClick = () => {
+    if (!user) {
+      router.push("/login");
+    } else {
+      setMenuOpen((prev) => ({ ...prev, userMenu: !prev.userMenu }));
+    }
+  };
+
   return (
     <nav className={`sticky top-0 z-50 transition-all duration-300 text-gray-300 ${scrollPosition > 0 ? 'bg-[#00000010] text-text-black backdrop-blur-md' : 'bg-text-black'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -124,7 +132,7 @@ export default function Navbar() {
               <div className="relative">
                 <button
                   className="flex items-center space-x-2 hover:text-background focus:outline-none"
-                  onClick={() => setMenuOpen((prev) => ({ ...prev, userMenu: !prev.userMenu }))}
+                  onClick={handleUserIconClick}
                 >
                   <FontAwesomeIcon icon={faUser} className="h-5 w-5" />{" "}
                   <span>{user.firstName}</span>
@@ -171,7 +179,7 @@ export default function Navbar() {
             <div className="relative">
               <button
                 className="p-2 rounded-md text-gray-400 hover:text-background focus:outline-none focus:ring-2 focus:ring-background"
-                onClick={() => setMenuOpen((prev) => ({ ...prev, userMenu: !prev.userMenu }))}
+                onClick={handleUserIconClick}
               >
                 <FontAwesomeIcon icon={faUser} className="h-6 w-6" />
                 <span className="sr-only">Profil</span>
