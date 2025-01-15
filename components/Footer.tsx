@@ -8,7 +8,7 @@ export default function Footer() {
     return (
         <footer className="bg-text-black text-background py-8">
             <div className="px-4">
-                <div className="mb-4 md:mb-0 flex justify-center py-4">
+                {/* <div className="mb-4 md:mb-0 flex justify-center py-4">
                     <ul className="space-y-2 md:space-y-0 md:space-x-4">
                         <li className="inline-block"><Link href="/" className="hover:underline">Úvod</Link></li>
                         <li className="inline-block"><Link href="/information" className="hover:underline">Informace</Link></li>
@@ -16,16 +16,16 @@ export default function Footer() {
                         <li className="inline-block"><Link href="/offers" className="hover:underline">Přihláška</Link></li>
                         {/* <li className="inline-block"><Link href="/gallery" className="hover:underline">Galerie</Link></li>
                         <li className="inline-block"><Link href="/sponsors" className="hover:underline">Sponzoři</Link></li> */}
-                    </ul>
-                </div>
+                    {/* </ul>
+                </div> */} */}
                 <div className="flex flex-col md:flex-row max-w-lg mx-auto justify-between text-center md:text-left mb-8">
                     <div className="mb-4 md:mb-0">
-                        <p className="font-semibold">Email: <a href="mailto:taborizs@gmail.com" className="hover:underline">taborizs@gmail.com</a></p>
-                        <p className="font-semibold">Telefon: <a href="tel:+420777859776" className="hover:underline">+420 777 859 776</a></p>
+                        <p className="font-semibold">Email: <a href="mailto:taborizs@gmail.com" className="hover:underline">taborizs@seznam.cz</a></p>
+                        <p className="font-semibold">Telefon: <a href="tel:+420777859730" className="hover:underline">+420 777 859 730</a></p>
                     </div>
                     <div className="mb-4 md:mb-0">
                         <p className="font-semibold">Číslo účtu: 2300799562/2010</p>
-                        <p className="font-semibold">IČ: </p>
+                        <p className="font-semibold">IČ: 943731</p>
                     </div>
                 </div>
                 <div className="">
