@@ -319,7 +319,7 @@ export default function InformationsPage() {
                                         <strong className="font-semibold text-text-black">
                                             Lékařské potvrzení
                                         </strong>{" "}
-                                        – né starší než 1 rok, formulář na vyžádání zašleme do
+                                        – né starší než 2 roky, formulář na vyžádání zašleme do
                                         emailu
                                     </span>
                                 </li>
@@ -336,7 +336,7 @@ export default function InformationsPage() {
                                         <strong className="font-semibold text-text-black">
                                             Dokumenty
                                         </strong>{" "}
-                                        – zaslané po vyplnění elektronické přihlášky na Váš e-mail
+                                        – Najdete je po přihlášení na vašem profilu
                                     </span>
                                 </li>
                                 <li className="flex gap-x-3">
