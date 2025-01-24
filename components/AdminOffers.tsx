@@ -26,6 +26,7 @@ const AdminOffers: React.FC = () => {
         id: doc.id,
         ...doc.data(),
       })) as Offer[];
+      offersData.sort((a, b) => a.variableSymbol.localeCompare(b.variableSymbol));
       setOffers(offersData);
     };
 
