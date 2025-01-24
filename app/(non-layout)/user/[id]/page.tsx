@@ -75,10 +75,19 @@ export default function UserPage() {
           </div>
         )}
       </div>
-      <div className="text-center">
+      <div className="text-center mt-6">
         <p>Po vytvoření přihlášky uhraďte zálohu ve výši <b>4000 Kč</b> nejpozději do 3 dnů na účet 2300799562/2010. Nezapomeňte vyplnit <b>VARIABILNÍ SYMBOL</b> přihlášky!</p>
-        <p>Platby kontrolujeme ručně, proto může trvat nějakou dobu, než vaši platbu zaregistrujeme. V případě nejasností nebo komplikací nás kontaktujte prostřednictvím emailu. (taborizs@seznam.cz))</p>
+        <p>Platby kontrolujeme ručně, proto může trvat nějakou dobu, než vaši platbu zaregistrujeme. V případě nejasností nebo komplikací nás kontaktujte prostřednictvím emailu. (taborizs@seznam.cz)</p>
         <p>Následně je potřeba uhradit doplatek ve výši <b>5000 Kč</b> do 15.5.</p>
+      </div>
+      <div className="text-center mt-6">
+        <h2 className="text-2xl font-semibold">Dokumenty ke stažení</h2>
+        <ul className="list-none mt-4">
+          <li><a href="documents/NÁSTUPNÍ LIST 2025.docx" download className="text-blue-500 underline">Nástupní list</a></li>
+          <li><a href="documents/PROHLÁŠENÍ O BEZINFEKČNOSTI, ZZ DÍTĚTE 2025.docx" download className="text-blue-500 underline">Prohlášení o bezinfekčnosti</a></li>
+          <li><a href="documents/Tábor IZS 2025 základní informace.docx" download className="text-blue-500 underline">Tábor IZS 2025 základní informace</a></li>
+          <li><a href="documents/Seznam věcí na tábor IZS.docx" download className="text-blue-500 underline">Seznam věcí na tábor</a></li>
+        </ul>
       </div>
       <Offers />
     </div>
