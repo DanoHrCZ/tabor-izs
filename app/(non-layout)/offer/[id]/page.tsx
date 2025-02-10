@@ -1,29 +1,104 @@
-import Link from "next/link"
+"use client";
+
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation"; // Using Next.js router and params
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../../Firebase"; // Ensure this path is correct
 import React from "react";
-export default function Offer () {
+
+interface OfferData {
+  firstName: string;
+  lastName: string;
+  street: string;
+  birthDate: string;
+  postalCode: string;
+  status: string;
+  variableSymbol: string;
+  userId: string;
+  healthIssues: string;
+  medications: string;
+  additionalInfo: string;
+}
+
+interface UserData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+}
+
+export default function UserPage() {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [offer, setOffer] = useState<OfferData | null>(null);
+  const [user, setUser] = useState<UserData | null>(null);
+  const { id } = useParams() as { id: string };
+
+  useEffect(() => {
+    const fetchOffer = async () => {
+      if (!id) return;
+      setLoading(true);
+      try {
+        const docRef = doc(db, "offers", id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const offerData = docSnap.data() as OfferData;
+          setOffer(offerData);
+
+          // Fetch user data using userid
+          const userDocRef = doc(db, "users", offerData.userId);
+          const userDocSnap = await getDoc(userDocRef);
+          if (userDocSnap.exists()) {
+            setUser(userDocSnap.data() as UserData);
+          } else {
+            setError("Uživatel nenalezen.");
+          }
+        } else {
+          setError("Nabídka nenalezena.");
+        }
+      } catch (err) {
+        setError("Chyba při načítání dat.");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOffer();
+  }, [id]);
+
+  if (loading) return <p>Načítání...</p>;
+  if (error) return <p>Chyba: {error}</p>;
+
   return (
     <>
-      <main className="grid min-h-full place-items-center bg-background px-6 py-24 sm:py-32 lg:px-8">
-        <div className="text-center">
-          <h1 className="mt-4 text-pretty text-5xl font-black tracking-tight text-text-black sm:text-7xl">
-            Tato stránka bude brzy dostupná
-          </h1>
+      {offer ? (
+        <div className="flex flex-col space-y-2 m-4">
           <p className="mt-6 text-xl/8 text-gray-700">
-            Tato stránka se v tuto chvíli nachází ve vývoji. Omlouváme se za případné potíže. Stránka bude dostupná před začátkem tábora.
+            Informace o dítěti
           </p>
-          <div className="mt-10 flex items-center justify-center gap-x-6">
-            <Link
-              href="/"
-              className="rounded-md bg-text-indigo px-3.5 py-2.5 text-sm font-semibold text-background shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-indigo"
-            >
-              Zpět na hlavní stránku
-            </Link>
-            <Link href="/contact" className="text-sm font-semibold text-text-black">
-              Kontaktujte podporu <span aria-hidden="true">&rarr;</span>
-            </Link>
-          </div>
+          <span><span className="font-bold text-text-indigo">Jméno: </span> {offer.firstName} {offer.lastName}</span>
+          <span><span className="font-bold text-text-indigo">Adresa: </span> {offer.street}, {offer.postalCode}</span>
+          <span><span className="font-bold text-text-indigo">Narození: </span> {offer.birthDate}</span>
+          <span><span className="font-bold text-text-indigo">Status: </span> {offer.status}</span>
+          <span><span className="font-bold text-text-indigo">Variabilní symbol: </span> {offer.variableSymbol}</span>
+          <p className="max-w-96"><span className="font-bold text-text-indigo">Zdravotní Problémy: </span> {offer.healthIssues}</p>
+          <p className="max-w-96"><span className="font-bold text-text-indigo">Léky: </span> {offer.medications}</p>
+          <p className="max-w-96"><span className="font-bold text-text-indigo">Další informace: </span> {offer.additionalInfo}</p>
         </div>
-      </main>
+      ) : (
+        <p>Data nenalezena.</p>
+      )}
+      {user && (
+        <div className="flex flex-col space-y-2 m-4">
+          <p className="mt-6 text-xl/8 text-gray-700">
+            Informace o rodiči
+          </p>
+          <span><span className="font-bold text-text-indigo">Jméno: </span> {user.firstName} {user.lastName}</span>
+          <span><span className="font-bold text-text-indigo">Email: </span> {user.email}</span>
+          <span><span className="font-bold text-text-indigo">Telefon: </span> {user.phone}</span>
+        </div>
+      )}
     </>
   );
 }

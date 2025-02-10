@@ -152,7 +152,7 @@ const AdminOffers: React.FC = () => {
                     <td className="backgroundspace-nowrap px-3 py-4 text-sm text-black">{offer.birthDate}</td>
                     <td className="backgroundspace-nowrap px-3 py-4 text-sm text-black">{offer.status}</td>
                     <td className="relative backgroundspace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                      <Link href={`/offer/edit/${offer.id}`} className="text-text-indigo hover:text-text-indigo-900 ml-2">Více</Link>
+                      <Link href={`/offer/${offer.id}`} className="text-text-indigo hover:text-text-indigo-900 ml-2">Více</Link>
                     </td>
                   </tr>
                 ))}
