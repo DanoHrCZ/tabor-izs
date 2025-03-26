@@ -56,40 +56,48 @@ export default function UserPage() {
   }, [id, router]);
 
   // Loading state
-  if (loading) return <p>Načítání...</p>;
+  if (loading) return <p className="text-center text-lg text-gray-500">Načítání...</p>;
 
   // Error handling
-  if (error) return <p className="text-red-500">{error}</p>;
+  if (error) return <p className="text-center text-lg text-red-500">{error}</p>;
 
   // Render user information and Offers component if authenticated
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h1 className="text-3xl font-bold text-center text-text-black">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 py-12 px-6">
+      <div className="w-full max-w-3xl bg-white p-8 rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold text-center text-gray-900">
           Vítej, {userData?.firstName}!
         </h1>
         {userData && (
           <div className="mt-4 text-center">
-            <p>Telefon: {userData.phone}</p>
-            <p>Email: {userData.email}</p>
+            <p className="text-lg text-gray-700">Telefon: {userData.phone}</p>
+            <p className="text-lg text-gray-700">Email: {userData.email}</p>
           </div>
         )}
       </div>
-      <div className="text-center mt-6">
-        <p>Po vytvoření přihlášky uhraďte zálohu ve výši <b>4000 Kč</b> nejpozději do 3 dnů na účet 2300799562/2010. Nezapomeňte vyplnit <b>VARIABILNÍ SYMBOL</b> přihlášky!</p>
-        <p>Platby kontrolujeme ručně, proto může trvat nějakou dobu, než vaši platbu zaregistrujeme. V případě nejasností nebo komplikací nás kontaktujte prostřednictvím emailu. (taborizs@seznam.cz)</p>
-        <p>Následně je potřeba uhradit doplatek ve výši <b>5000 Kč</b> do 15.5.</p>
+      <div className="w-full max-w-3xl bg-white p-8 mt-6 rounded-lg shadow-md">
+        <p className="text-lg text-gray-700">
+          Po vytvoření přihlášky uhraďte zálohu ve výši <b>4000 Kč</b> nejpozději do 3 dnů na účet 2300799562/2010. Nezapomeňte vyplnit <b>VARIABILNÍ SYMBOL</b> přihlášky!
+        </p>
+        <p className="text-lg text-gray-700 mt-4">
+          Platby kontrolujeme ručně, proto může trvat nějakou dobu, než vaši platbu zaregistrujeme. V případě nejasností nebo komplikací nás kontaktujte prostřednictvím emailu. (taborizs@seznam.cz)
+        </p>
+        <p className="text-lg text-gray-700 mt-4">
+          Následně je potřeba uhradit doplatek ve výši <b>5000 Kč</b> do 15.5.
+        </p>
       </div>
-      <div className="text-center mt-6">
-        <h2 className="text-2xl font-semibold">Dokumenty ke stažení</h2>
-        <ul className="list-none mt-4">
-          <li><a href="documents/NÁSTUPNÍ LIST 2025.docx" download className="text-blue-500 underline">Nástupní list</a></li>
-          <li><a href="documents/PROHLÁŠENÍ O BEZINFEKČNOSTI, ZZ DÍTĚTE 2025.docx" download className="text-blue-500 underline">Prohlášení o bezinfekčnosti</a></li>
-          <li><a href="documents/Tábor IZS 2025 základní informace.docx" download className="text-blue-500 underline">Tábor IZS 2025 základní informace</a></li>
-          <li><a href="documents/Seznam věcí na tábor IZS.docx" download className="text-blue-500 underline">Seznam věcí na tábor</a></li>
+      <div className="w-full max-w-3xl bg-white p-8 mt-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold text-gray-900">Dokumenty ke stažení</h2>
+        <ul className="list-none mt-4 space-y-2">
+          <li><a href="/documents/NÁSTUPNÍ LIST 2025.docx" download className="text-blue-500 underline">Nástupní list</a></li>
+          <li><a href="/documents/PROHLÁŠENÍ O BEZINFEKČNOSTI, ZZ DÍTĚTE 2025.docx" download className="text-blue-500 underline">Prohlášení o bezinfekčnosti</a></li>
+          <li><a href="/documents/Tábor IZS 2025 základní informace.docx" download className="text-blue-500 underline">Tábor IZS 2025 základní informace</a></li>
+          <li><a href="/documents/Seznam věcí na tábor IZS.docx" download className="text-blue-500 underline">Seznam věcí na tábor</a></li>
         </ul>
       </div>
-      <Offers />
+      <div className="w-full max-w-3xl mt-6">
+        <Offers />
+      </div>
     </div>
   );
 }
