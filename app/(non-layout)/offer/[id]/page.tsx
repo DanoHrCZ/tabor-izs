@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation"; // Using Next.js router and params
+import { useParams, useRouter } from "next/navigation"; // Using Next.js router and params
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../../Firebase"; // Ensure this path is correct
 import React from "react";
@@ -33,6 +33,7 @@ export default function UserPage() {
   const [offer, setOffer] = useState<OfferData | null>(null);
   const [user, setUser] = useState<UserData | null>(null);
   const { id } = useParams() as { id: string };
+  const router = useRouter();
 
   useEffect(() => {
     const fetchOffer = async () => {
@@ -97,6 +98,12 @@ export default function UserPage() {
           <span><span className="font-bold text-text-indigo">Jméno: </span> {user.firstName} {user.lastName}</span>
           <span><span className="font-bold text-text-indigo">Email: </span> {user.email}</span>
           <span><span className="font-bold text-text-indigo">Telefon: </span> {user.phone}</span>
+          <button
+            className="text-text-indigo font-medium text-left"
+            onClick={() => router.push(`/parent/${offer.userId}`)}
+          >
+            Zobrazit rodiče
+          </button>
         </div>
       )}
     </>
