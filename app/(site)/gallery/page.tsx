@@ -1,3 +1,8 @@
+import React from "react"
+export default function GalleryPage() {
+    return <>
+    </>
+}
 // "use client";
 // import { useState, useEffect } from "react";
 // import { db } from "../../../Firebase"; // Import Firebase konfigurace
