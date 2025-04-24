@@ -1,4 +1,5 @@
 import React from "react";
+import Image from 'next/image';
 export default function InformationsPage() {
   return (
     <>
@@ -52,7 +53,7 @@ export default function InformationsPage() {
             </div>
           </div>
           <div className="lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
-            <img
+            <Image
               alt=""
               src="/car.jpg"
               className="w-full max-w-none rounded-xl bg-text-black shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"

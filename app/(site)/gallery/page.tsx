@@ -63,7 +63,7 @@ export default function GalleryPage() {
                     <button onClick={handlePrevImage} className="absolute left-4 p-2 bg-background text-black rounded-full">
                         &#9664;
                     </button>
-                    <img src={selectedImage} alt="Full size" className="max-w-full max-h-full" onClick={() => setSelectedImage("")} />
+                    <Image src={selectedImage} alt="Full size" className="max-w-full max-h-full" onClick={() => setSelectedImage("")} />
                     <button onClick={handleNextImage} className="absolute right-4 p-2 bg-background text-black rounded-full">
                         &#9654;
                     </button>
@@ -78,7 +78,7 @@ export default function GalleryPage() {
                             .filter((image) => image.album === selectedAlbum)
                             .map((image) => (
                                 <div key={image.id} className="relative w-64 h-64">
-                                    <img src={image.url} alt="Gallery" className="w-full h-full object-cover rounded cursor-pointer" onClick={() => handleImageClick(image.url)} />
+                                    <Image src={image.url} alt="Gallery" className="w-full h-full object-cover rounded cursor-pointer" onClick={() => handleImageClick(image.url)} />
                                 </div>
                             ))}
                     </div>
@@ -90,7 +90,7 @@ export default function GalleryPage() {
                         const firstImage = albumImages[0]?.url;
                         return (
                             <div key={album} className="relative w-64 h-64 cursor-pointer" onClick={() => handleAlbumClick(album)}>
-                                {firstImage && <img src={firstImage} alt={album} className="w-full h-full object-cover rounded" />}
+                                {firstImage && <Image src={firstImage} alt={album} className="w-full h-full object-cover rounded" />}
                                 <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-background text-center p-2">
                                     {album}
                                 </div>

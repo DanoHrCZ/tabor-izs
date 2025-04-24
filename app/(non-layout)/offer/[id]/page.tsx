@@ -90,7 +90,7 @@ export default function UserPage() {
       ) : (
         <p>Data nenalezena.</p>
       )}
-      {user && (
+      {user && offer && (
         <div className="flex flex-col space-y-2 m-4">
           <p className="mt-6 text-xl/8 text-gray-700">
             Informace o rodiči

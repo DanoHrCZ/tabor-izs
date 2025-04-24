@@ -6,6 +6,7 @@ import { auth, db } from '../../../Firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import React from "react";
+import Image from 'next/image';
 
 export default function RegistrationPage() {
   const [firstName, setFirstName] = useState<string>('');
@@ -102,7 +103,7 @@ export default function RegistrationPage() {
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
+          <Image
             alt="logo"
             src="/logo.png"
             className="mx-auto h-10 w-auto"

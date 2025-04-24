@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { db } from "../../../Firebase"; // Import Firebase configuration
 import { collection, getDocs } from "firebase/firestore";
 import React from "react";
+import Image from 'next/image';
 
 interface Sponsor {
     id: string;
@@ -38,7 +39,7 @@ export default function SponsorsPage() {
                     {sponsors.map((sponsor) => (
                         <div key={sponsor.id} className="col-span-2 lg:col-span-1 text-center cursor-pointer">
                             <a href={sponsor.website} target="_blank" rel="noopener noreferrer">
-                                <img
+                                <Image
                                     alt={sponsor.name}
                                     src={sponsor.logoUrl}
                                     width={158}
