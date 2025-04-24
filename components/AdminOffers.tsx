@@ -93,18 +93,28 @@ const AdminOffers: React.FC = () => {
           <h1 className="text-base font-semibold leading-6 text-text-black">Přihlášky</h1>
         </div>
         <div className="sm:flex sm:items-center sm:ml-4">
-          <select
-            onChange={(e) => handleBulkStatusChange(e.target.value)}
+            <select
+            onChange={(e) => {
+              if (e.target.value === "custom") {
+              const amount = prompt("Zadejte částku:");
+              if (amount) {
+                handleBulkStatusChange(`uhrazeno ${amount} Kč`);
+              }
+              } else {
+              handleBulkStatusChange(e.target.value);
+              }
+            }}
             value=""
             className="mr-2 p-2 border border-gray-300 rounded"
-          >
+            >
             <option value="" disabled hidden>
               Změnit stav vybraných přihlášek
             </option>
             <option value="neuhrazeno">změnit na &quot;neuhrazeno&quot;</option>
             <option value="uhrazena záloha">změnit na &quot;uhrazena záloha&quot;</option>
             <option value="uhrazeno">Změnit na &quot;uhrazeno&quot;</option>
-          </select>
+            <option value="custom">Uhrazena částka (vlastní)</option>
+            </select>
           <button
             onClick={handleBulkDelete}
             className="mr-2 p-2 bg-negative-color text-background rounded"

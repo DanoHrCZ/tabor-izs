@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../Firebase";
 import AdminOffers from "../../../components/AdminOffers";
 import AdminUsers from "../../../components/AdminUsers";
@@ -14,6 +14,11 @@ import { Tab } from '@headlessui/react';
 const AdminPage = () => {
     const [role, setRole] = useState<string | null>(null);
     const [allowSubmissions, setAllowSubmissions] = useState(true);
+    const [stats, setStats] = useState({
+        totalOffers: 0,
+        paidOffers: 0,
+        totalUsers: 0
+    });
     const router = useRouter();
     const auth = getAuth();
 
@@ -33,6 +38,40 @@ const AdminPage = () => {
 
         return () => unsubscribe();
     }, [auth, router]);
+
+    useEffect(() => {
+        if (role === "admin") {
+            fetchStats();
+        }
+    }, [role]);
+
+    const fetchStats = async () => {
+        try {
+            // Get total users count
+            const usersSnapshot = await getDocs(collection(db, "users"));
+            const usersCount = usersSnapshot.size;
+
+            // Get total offers count
+            const offersSnapshot = await getDocs(collection(db, "offers"));
+            const offersCount = offersSnapshot.size;
+
+            // Get paid offers count
+            const paidOffersQuery = query(
+                collection(db, "offers"), 
+                where("status", "in", ["uhrazeno", "uhrazena záloha"])
+            );
+            const paidOffersSnapshot = await getDocs(paidOffersQuery);
+            const paidOffersCount = paidOffersSnapshot.size;
+
+            setStats({
+                totalUsers: usersCount,
+                totalOffers: offersCount,
+                paidOffers: paidOffersCount
+            });
+        } catch (error) {
+            console.error("Error fetching statistics:", error);
+        }
+    };
 
     const toggleSubmissions = async () => {
         const newStatus = !allowSubmissions;
@@ -57,6 +96,23 @@ const AdminPage = () => {
                     {allowSubmissions ? "Zakázat odesílání přihlášek" : "Povolit odesílání přihlášek"}
                 </button>
             </div>
+            
+            {/* Statistics Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div className="bg-white rounded-lg shadow p-4">
+                    <h2 className="text-lg font-semibold text-gray-700">Registrovaní uživatelé</h2>
+                    <p className="text-3xl font-bold text-text-indigo mt-2">{stats.totalUsers}</p>
+                </div>
+                <div className="bg-white rounded-lg shadow p-4">
+                    <h2 className="text-lg font-semibold text-gray-700">Vytvořené přihlášky</h2>
+                    <p className="text-3xl font-bold text-text-indigo mt-2">{stats.totalOffers}</p>
+                </div>
+                <div className="bg-white rounded-lg shadow p-4">
+                    <h2 className="text-lg font-semibold text-gray-700">Uhrazené přihlášky</h2>
+                    <p className="text-3xl font-bold text-text-indigo mt-2">{stats.paidOffers}</p>
+                </div>
+            </div>
+            
             <Tab.Group>
                 <Tab.List className="flex space-x-1 rounded-xl bg-block p-1">
                     <Tab className={({ selected }) =>
