@@ -52,7 +52,7 @@ export default function GalleryPage() {
 
     return (
         <div className="px-4 mt-16 sm:px-6 lg:px-8 min-h-dvh">
-            <h2 className="text-center text-base/7 font-semibold text-text-indigo">
+            {/* <h2 className="text-center text-base/7 font-semibold text-text-indigo">
                 Podívejte se na naše fotografie
             </h2>
             <p className="mx-auto mt-2 max-w-lg text-balance text-center text-4xl font-black tracking-tight text-text-black sm:text-5xl">
@@ -98,7 +98,7 @@ export default function GalleryPage() {
                         );
                     })}
                 </div>
-            )}
+            )} */}
         </div>
     );
 }
