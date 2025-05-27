@@ -16,6 +16,7 @@ interface User {
 const AdminUsers: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -31,6 +32,16 @@ const AdminUsers: React.FC = () => {
     fetchUsers();
   }, []);
 
+  const filteredUsers = users.filter((user) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      user.firstName?.toLowerCase().includes(query) ||
+      user.lastName?.toLowerCase().includes(query) ||
+      user.email?.toLowerCase().includes(query) ||
+      user.phone?.toLowerCase().includes(query)
+    );
+  });
+
   const handleSelectUser = (userId: string) => {
     setSelectedUsers((prevSelected) =>
       prevSelected.includes(userId)
@@ -40,10 +51,10 @@ const AdminUsers: React.FC = () => {
   };
 
   const handleSelectAll = () => {
-    if (selectedUsers.length === users.length) {
+    if (selectedUsers.length === filteredUsers.length) {
       setSelectedUsers([]);
     } else {
-      setSelectedUsers(users.map((user) => user.id));
+      setSelectedUsers(filteredUsers.map((user) => user.id));
     }
   };
 
@@ -78,64 +89,77 @@ const AdminUsers: React.FC = () => {
           </button>
         </div>
       </div>
+      
+      <div className="mt-4 mb-2">
+        <input
+          type="text"
+          placeholder="Vyhledat uživatele..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
+      
       <div className="mt-2 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            <table className="min-w-full divide-y divide-gray-300">
-              <thead>
-                <tr>
-                  <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-0">
-                    <input
-                      type="checkbox"
-                      checked={selectedUsers.length === users.length}
-                      onChange={handleSelectAll}
-                    />
-                  </th>
-                  <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-0">
-                    Jméno
-                  </th>
-                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-text-indigo-500">
-                    Email
-                  </th>
-                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-text-black">
-                    Telefon
-                  </th>
-                  <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                    <span className="sr-only">Akce</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user.id}>
-                    <td className="backgroundspace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-text-black sm:pl-0">
+            <div className="max-h-[70vh] overflow-y-auto">
+              <table className="min-w-full divide-y divide-gray-300">
+                <thead className="sticky top-0 bg-white z-10">
+                  <tr>
+                    <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-0">
                       <input
                         type="checkbox"
-                        checked={selectedUsers.includes(user.id)}
-                        onChange={() => handleSelectUser(user.id)}
+                        checked={selectedUsers.length === filteredUsers.length && filteredUsers.length > 0}
+                        onChange={handleSelectAll}
                       />
-                    </td>
-                    <td className="backgroundspace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-text-black sm:pl-0">
-                      {user.firstName} {user.lastName}
-                    </td>
-                    <td className="backgroundspace-nowrap px-3 py-4 text-sm text-black">
-                      {user.email}
-                    </td>
-                    <td className="backgroundspace-nowrap px-3 py-4 text-sm text-black">
-                      {user.phone}
-                    </td>
-                    <td className="relative backgroundspace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                      <Link
-                        href={`/parent/${user.id}`}
-                        className="text-text-indigo hover:text-text-indigo-900 ml-2"
-                      >
-                        Více
-                      </Link>
-                    </td>
+                    </th>
+                    <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-0">
+                      Jméno
+                    </th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-text-indigo-500">
+                      Email
+                    </th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-text-black">
+                      Telefon
+                    </th>
+                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                      <span className="sr-only">Akce</span>
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {filteredUsers.map((user) => (
+                    <tr key={user.id}>
+                      <td className="backgroundspace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-text-black sm:pl-0">
+                        <input
+                          type="checkbox"
+                          checked={selectedUsers.includes(user.id)}
+                          onChange={() => handleSelectUser(user.id)}
+                        />
+                      </td>
+                      <td className="backgroundspace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-text-black sm:pl-0">
+                        {user.firstName} {user.lastName}
+                      </td>
+                      <td className="backgroundspace-nowrap px-3 py-4 text-sm text-black">
+                        {user.email}
+                      </td>
+                      <td className="backgroundspace-nowrap px-3 py-4 text-sm text-black">
+                        {user.phone}
+                      </td>
+                      <td className="relative backgroundspace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                        <Link
+                          href={`/parent/${user.id}`}
+                          className="text-text-indigo hover:text-text-indigo-900 ml-2"
+                        >
+                          Více
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

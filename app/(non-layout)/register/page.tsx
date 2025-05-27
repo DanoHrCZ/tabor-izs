@@ -106,6 +106,8 @@ export default function RegistrationPage() {
           <Image
             alt="logo"
             src="/logo.png"
+            width={100}
+              height={50}
             className="mx-auto h-10 w-auto"
           />
           <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-text-black">
