@@ -86,7 +86,7 @@ const AdminOffers: React.FC = () => {
     }
   };
 
-  const updateStatus = async (offerId: string, newStatus: string) => {
+  const updateStatus = async (offerId: string, newStatus: string): Promise<void> => {
     const offerRef = doc(db, "offers", offerId);
     await updateDoc(offerRef, { status: newStatus });
     setOffers((prevOffers) =>
@@ -96,7 +96,7 @@ const AdminOffers: React.FC = () => {
     );
   };
 
-  const deleteOffer = async (offerId: string) => {
+  const deleteOffer = async (offerId: string): Promise<void> => {
     const offerRef = doc(db, "offers", offerId);
     await deleteDoc(offerRef);
     setOffers((prevOffers) =>
@@ -248,7 +248,11 @@ const AdminOffers: React.FC = () => {
           italics: true,
           color: '#666666',
           margin: [5, 2, 0, 2]
-        }
+        },
+        tableCell: {
+          fontSize: 10,
+          margin: [0, 2, 0, 2],
+        },
       },
       defaultStyle: {
         fontSize: 10
@@ -291,10 +295,10 @@ const AdminOffers: React.FC = () => {
         : offer.status || "";
       
       mainTableBody.push([
-        `${offer.firstName || ""} ${offer.lastName || ""}`,
-        offer.variableSymbol || "",
-        offer.birthDate || "",
-        status
+        { text: `${offer.firstName || ""} ${offer.lastName || ""}`, style: 'tableCell' },
+        { text: offer.variableSymbol || "", style: 'tableCell' },
+        { text: offer.birthDate || "", style: 'tableCell' },
+        { text: status, style: 'tableCell' }
       ]);
     });
 
@@ -303,80 +307,82 @@ const AdminOffers: React.FC = () => {
         {
           text: 'Seznam všech přihlášek',
           style: 'header',
-          alignment: 'center'
+          alignment: 'center',
         },
         {
           columns: [
             { text: `Vygenerováno: ${new Date().toLocaleDateString("cs-CZ")}`, style: 'subheader' },
-            { text: `Celkem přihlášek: ${filteredOffers.length}`, style: 'subheader', alignment: 'right' }
+            { text: `Celkem přihlášek: ${filteredOffers.length}`, style: 'subheader', alignment: 'right' },
           ],
-          margin: [0, 10, 0, 20]
+          margin: [0, 10, 0, 20],
         },
-        // Statistiky
         {
           text: 'Statistiky podle stavu',
           style: 'sectionHeader',
-          margin: [0, 20, 0, 10]
+          margin: [0, 20, 0, 10],
         },
         {
           table: {
             headerRows: 1,
             widths: ['*', 'auto'],
-            body: statsTableBody
+            body: statsTableBody,
           },
           layout: 'lightHorizontalLines',
-          margin: [0, 0, 0, 20]
+          margin: [0, 0, 0, 20],
         },
-        // Hlavní tabulka
         {
           text: 'Přehled všech přihlášek',
           style: 'sectionHeader',
-          margin: [0, 20, 0, 10]
+          margin: [0, 20, 0, 10],
         },
         {
           table: {
             headerRows: 1,
             widths: ['*', 'auto', 'auto', '*'],
-            body: mainTableBody
+            body: mainTableBody,
           },
           layout: {
             fillColor: function (rowIndex: number) {
-              return (rowIndex === 0) ? '#CCCCCC' : (rowIndex % 2 === 0 ? '#F3F3F3' : null);
-            }
-          }
-        }
+              return rowIndex === 0 ? '#CCCCCC' : rowIndex % 2 === 0 ? '#F3F3F3' : null;
+            },
+          },
+        },
       ],
       styles: {
         header: {
           fontSize: 18,
           bold: true,
-          margin: [0, 0, 0, 10]
+          margin: [0, 0, 0, 10],
         },
         sectionHeader: {
           fontSize: 14,
           bold: true,
-          margin: [0, 10, 0, 5]
+          margin: [0, 10, 0, 5],
         },
         subheader: {
           fontSize: 12,
-          margin: [0, 0, 0, 5]
+          margin: [0, 0, 0, 5],
         },
         tableHeader: {
           bold: true,
           fontSize: 12,
-          color: 'black'
-        }
+          color: 'black',
+        },
+        tableCell: {
+          fontSize: 10,
+          margin: [0, 2, 0, 2],
+        },
       },
       defaultStyle: {
-        fontSize: 10
+        fontSize: 10,
       },
-      footer: function(currentPage: number, pageCount: number) {
+      footer: function (currentPage: number, pageCount: number) {
         return {
           text: `Strana ${currentPage} z ${pageCount}`,
           alignment: 'right',
-          margin: [0, 0, 20, 0]
+          margin: [0, 0, 20, 0],
         };
-      }
+      },
     };
 
     pdfMake.createPdf(docDefinition).download(`vsechny_prihlasky_${new Date().toISOString().split("T")[0]}.pdf`);

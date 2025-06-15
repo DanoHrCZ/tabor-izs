@@ -13,6 +13,10 @@ import {
 } from "firebase/firestore";
 import { db } from "../Firebase";
 import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Content, TDocumentDefinitions } from "pdfmake/interfaces";
+
+pdfMake.vfs = pdfFonts.vfs;
 
 interface Message {
   id: string;
@@ -145,37 +149,17 @@ const AdminMessages: React.FC = () => {
       selectedMessages.has(msg.id)
     );
 
-    interface PDFContent {
-      text?: string;
-      style?: string;
-      alignment?: string;
-      margin?: number[];
-      pageBreak?: string;
-      stack?: PDFContent[];
-      columns?: PDFContent[];
-      canvas?: Array<{
-        type: string;
-        x1: number;
-        y1: number;
-        x2: number;
-        y2: number;
-        lineWidth: number;
-        dash?: { length: number; space: number };
-        lineColor: string;
-      }>;
-    }
-
-    const content: PDFContent[] = [
+    const content: Content[] = [
       {
         text: 'Zprávy pro děti',
         style: 'header',
-        alignment: 'center'
+        alignment: 'center',
       },
       {
         text: `Vygenerováno: ${new Date().toLocaleDateString("cs-CZ")}`,
         style: 'subheader',
-        margin: [0, 10, 0, 20]
-      }
+        margin: [0, 10, 0, 20],
+      },
     ];
 
     selectedMessagesData.forEach((message, index) => {
@@ -187,26 +171,26 @@ const AdminMessages: React.FC = () => {
         stack: [
           {
             text: `Pro: ${message.childName}`,
-            style: 'messageHeader'
+            style: 'messageHeader',
           },
           {
             columns: [
               {
                 text: `Od: ${message.senderName}${message.isAnonymous ? " (Anonymní)" : ""}`,
-                style: 'messageInfo'
+                style: 'messageInfo',
               },
               {
                 text: `Datum: ${message.timestamp?.toDate?.()?.toLocaleDateString?.("cs-CZ") || "Neznámé datum"}`,
                 style: 'messageInfo',
-                alignment: 'right'
-              }
+                alignment: 'right',
+              },
             ],
-            margin: [0, 5, 0, 10]
+            margin: [0, 5, 0, 10],
           },
           {
             text: message.message,
             style: 'messageContent',
-            margin: [10, 0, 0, 20]
+            margin: [10, 0, 0, 20],
           },
           {
             canvas: [
@@ -218,44 +202,44 @@ const AdminMessages: React.FC = () => {
                 y2: 0,
                 lineWidth: 1,
                 dash: { length: 3, space: 3 },
-                lineColor: '#CCCCCC'
-              }
+                lineColor: '#CCCCCC',
+              },
             ],
-            margin: [0, 10, 0, 20]
-          }
-        ]
+            margin: [0, 10, 0, 20],
+          },
+        ],
       });
     });
 
-    const docDefinition = {
-      content: content,
+    const docDefinition: TDocumentDefinitions = {
+      content,
       styles: {
         header: {
           fontSize: 18,
           bold: true,
-          margin: [0, 0, 0, 10]
+          margin: [0, 0, 0, 10],
         },
         subheader: {
           fontSize: 12,
-          margin: [0, 0, 0, 5]
+          margin: [0, 0, 0, 5],
         },
         messageHeader: {
           fontSize: 14,
           bold: true,
-          color: '#2563EB'
+          color: '#2563EB',
         },
         messageInfo: {
           fontSize: 10,
-          color: '#666666'
+          color: '#666666',
         },
         messageContent: {
           fontSize: 11,
-          lineHeight: 1.3
-        }
+          lineHeight: 1.3,
+        },
       },
       defaultStyle: {
-        fontSize: 10
-      }
+        fontSize: 10,
+      },
     };
 
     pdfMake.createPdf(docDefinition).download(`zpravy_${new Date().toISOString().split("T")[0]}.pdf`);
