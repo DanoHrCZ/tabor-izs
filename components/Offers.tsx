@@ -113,6 +113,15 @@ const UserTable: React.FC = () => {
                           , {offer.firstName} {offer.lastName}
                         </span>
                       </Link>
+                      <Link
+                        href={`/message/${offer.id}`}
+                        className="text-text-indigo hover:text-text-indigo-900 ml-4"
+                      >
+                        Poslat zprávu
+                        <span className="sr-only">
+                          , {offer.firstName} {offer.lastName}
+                        </span>
+                      </Link>
                     </td>
                   </tr>
                 ))}

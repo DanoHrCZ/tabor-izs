@@ -8,6 +8,7 @@ import AdminOffers from "../../../components/AdminOffers";
 import AdminUsers from "../../../components/AdminUsers";
 import AdminGallery from "../../../components/AdminGallery";
 import AdminSponsors from "../../../components/AdminSponsors";
+import AdminMessages from "../../../components/AdminMessages";
 import React from "react";
 import { Tab } from '@headlessui/react';
 
@@ -131,6 +132,12 @@ const AdminPage = () => {
                         selected ? 'w-full py-2.5 text-sm font-bold text-text-indigo rounded-lg bg-background shadow'
                             : 'w-full py-2.5 text-sm font-medium text-background'
                     }>
+                        Zprávy
+                    </Tab>
+                    <Tab className={({ selected }) =>
+                        selected ? 'w-full py-2.5 text-sm font-bold text-text-indigo rounded-lg bg-background shadow'
+                            : 'w-full py-2.5 text-sm font-medium text-background'
+                    }>
                         Přihlášky
                     </Tab>
                     <Tab className={({ selected }) =>
@@ -146,6 +153,9 @@ const AdminPage = () => {
                     </Tab.Panel>
                     <Tab.Panel>
                         <AdminSponsors />
+                    </Tab.Panel>
+                    <Tab.Panel>
+                        <AdminMessages />
                     </Tab.Panel>
                     <Tab.Panel>
                         <AdminOffers />
