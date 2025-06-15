@@ -90,7 +90,7 @@ export default function UserPage() {
         <h2 className="text-2xl font-semibold text-gray-900">Dokumenty ke stažení</h2>
         <ul className="list-none mt-4 space-y-2">
           <li><a href="/documents/NÁSTUPNÍ LIST 2025.docx" download className="text-blue-500 underline">Nástupní list</a></li>
-          <li><a href="/documents/PROHLÁŠENÍ O BEZINFEKČNOSTI, ZZ DÍTĚTE 2025.docx" download className="text-blue-500 underline">Prohlášení o bezinfekčnosti</a></li>
+          <li><a href="/documents/prohlášení o bezinfekčnosti.docx" download className="text-blue-500 underline">Prohlášení o bezinfekčnosti</a></li>
           <li><a href="/documents/Tábor IZS 2025 základní informace.docx" download className="text-blue-500 underline">Tábor IZS 2025 základní informace</a></li>
           <li><a href="/documents/Seznam věcí na tábor IZS.docx" download className="text-blue-500 underline">Seznam věcí na tábor</a></li>
         </ul>
