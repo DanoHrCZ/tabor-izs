@@ -12,6 +12,7 @@ import {
 import { db } from "../Firebase";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Content, TDocumentDefinitions } from "pdfmake/interfaces";
 
 // Set fonts for pdfMake
 pdfMake.vfs = pdfFonts.vfs;
@@ -165,23 +166,23 @@ const AdminOffers: React.FC = () => {
     );
 
     // Připrava dat pro tabulku
-    const tableBody = [
+    const tableBody: Content[][] = [
       // Hlavička tabulky
       [
         { text: 'Jméno', style: 'tableHeader' },
         { text: 'Var. symbol', style: 'tableHeader' },
         { text: 'Datum nar.', style: 'tableHeader' },
         { text: 'Stav', style: 'tableHeader' }
-      ]
+      ] as Content[]
     ];
 
     // Přidání dat
     selectedOffersData.forEach((offer) => {
-      const row = [
-        `${offer.firstName} ${offer.lastName}`,
-        offer.variableSymbol || '',
-        offer.birthDate || '',
-        offer.status || ''
+      const row: Content[] = [
+        { text: `${offer.firstName} ${offer.lastName}`, style: 'tableCell' },
+        { text: offer.variableSymbol || '', style: 'tableCell' },
+        { text: offer.birthDate || '', style: 'tableCell' },
+        { text: offer.status || '', style: 'tableCell' }
       ];
       
       tableBody.push(row);
@@ -194,26 +195,28 @@ const AdminOffers: React.FC = () => {
         
         tableBody.push([
           { text: `Platby: ${paymentsText}`, colSpan: 4, style: 'paymentHistory' },
-          '', '', ''
-        ]);
+          { text: '' },
+          { text: '' },
+          { text: '' }
+        ] as Content[]);
       }
     });
 
-    const docDefinition = {
+    const docDefinition: TDocumentDefinitions = {
       content: [
         // Hlavička dokumentu
         {
           text: 'Seznam vybraných přihlášek',
           style: 'header',
           alignment: 'center'
-        },
+        } as Content,
         {
           columns: [
             { text: `Vygenerováno: ${new Date().toLocaleDateString("cs-CZ")}`, style: 'subheader' },
             { text: `Celkem přihlášek: ${selectedOffersData.length}`, style: 'subheader', alignment: 'right' }
-          ],
+          ] as Content[],
           margin: [0, 10, 0, 20]
-        },
+        } as Content,
         // Tabulka
         {
           table: {
@@ -226,7 +229,7 @@ const AdminOffers: React.FC = () => {
               return (rowIndex === 0) ? '#CCCCCC' : (rowIndex % 2 === 0 ? '#F3F3F3' : null);
             }
           }
-        }
+        } as Content
       ],
       styles: {
         header: {
@@ -271,22 +274,25 @@ const AdminOffers: React.FC = () => {
     }, {} as Record<string, number>);
 
     // Statistická tabulka
-    const statsTableBody = [
-      [{ text: 'Stav', style: 'tableHeader' }, { text: 'Počet', style: 'tableHeader' }]
+    const statsTableBody: Content[][] = [
+      [{ text: 'Stav', style: 'tableHeader' }, { text: 'Počet', style: 'tableHeader' }] as Content[]
     ];
     
     Object.entries(statusCounts).forEach(([status, count]) => {
-      statsTableBody.push([status, `${count}x`]);
+      statsTableBody.push([
+        { text: status, style: 'tableCell' },
+        { text: `${count}x`, style: 'tableCell' }
+      ] as Content[]);
     });
 
     // Hlavní tabulka s přihláškami
-    const mainTableBody = [
+    const mainTableBody: Content[][] = [
       [
         { text: 'Jméno', style: 'tableHeader' },
         { text: 'Var. symbol', style: 'tableHeader' },
         { text: 'Datum nar.', style: 'tableHeader' },
         { text: 'Stav', style: 'tableHeader' }
-      ]
+      ] as Content[]
     ];
 
     filteredOffers.forEach((offer) => {
@@ -299,28 +305,28 @@ const AdminOffers: React.FC = () => {
         { text: offer.variableSymbol || "", style: 'tableCell' },
         { text: offer.birthDate || "", style: 'tableCell' },
         { text: status, style: 'tableCell' }
-      ]);
+      ] as Content[]);
     });
 
-    const docDefinition = {
+    const docDefinition: TDocumentDefinitions = {
       content: [
         {
           text: 'Seznam všech přihlášek',
           style: 'header',
           alignment: 'center',
-        },
+        } as Content,
         {
           columns: [
             { text: `Vygenerováno: ${new Date().toLocaleDateString("cs-CZ")}`, style: 'subheader' },
             { text: `Celkem přihlášek: ${filteredOffers.length}`, style: 'subheader', alignment: 'right' },
-          ],
+          ] as Content[],
           margin: [0, 10, 0, 20],
-        },
+        } as Content,
         {
           text: 'Statistiky podle stavu',
           style: 'sectionHeader',
           margin: [0, 20, 0, 10],
-        },
+        } as Content,
         {
           table: {
             headerRows: 1,
@@ -329,12 +335,12 @@ const AdminOffers: React.FC = () => {
           },
           layout: 'lightHorizontalLines',
           margin: [0, 0, 0, 20],
-        },
+        } as Content,
         {
           text: 'Přehled všech přihlášek',
           style: 'sectionHeader',
           margin: [0, 20, 0, 10],
-        },
+        } as Content,
         {
           table: {
             headerRows: 1,
@@ -346,7 +352,7 @@ const AdminOffers: React.FC = () => {
               return rowIndex === 0 ? '#CCCCCC' : rowIndex % 2 === 0 ? '#F3F3F3' : null;
             },
           },
-        },
+        } as Content,
       ],
       styles: {
         header: {
@@ -426,7 +432,7 @@ const AdminOffers: React.FC = () => {
             <option value="neuhrazeno">změnit na &quot;neuhrazeno&quot;</option>
             <option value="uhrazena záloha">změnit na &quot;uhrazena záloha&quot;</option>
             <option value="uhrazeno">Změnit na &quot;uhrazeno&quot;</option>
-            <option value="custom">Uhrazena částka (vlastní)</option>
+            <option value="custom">Uhrazená částka (vlastní)</option>
           </select>
           <button
             onClick={handleBulkDelete}

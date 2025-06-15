@@ -1,6 +1,5 @@
 "use client";
 
-
 import React, { useEffect, useState, useCallback } from "react";
 import {
   collection,
@@ -164,7 +163,7 @@ const AdminMessages: React.FC = () => {
 
     selectedMessagesData.forEach((message, index) => {
       if (index > 0) {
-        content.push({ text: '', pageBreak: 'before' });
+        content.push({ text: '', pageBreak: 'before' } as Content);
       }
 
       content.push({
@@ -184,7 +183,7 @@ const AdminMessages: React.FC = () => {
                 style: 'messageInfo',
                 alignment: 'right',
               },
-            ],
+            ] as Content[],
             margin: [0, 5, 0, 10],
           },
           {
@@ -207,8 +206,8 @@ const AdminMessages: React.FC = () => {
             ],
             margin: [0, 10, 0, 20],
           },
-        ],
-      });
+        ] as Content[],
+      } as Content);
     });
 
     const docDefinition: TDocumentDefinitions = {
