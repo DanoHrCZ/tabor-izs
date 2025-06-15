@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { db } from "../../../../Firebase";
-import { updateDoc, addDoc, collection, query, where, getDocs, serverTimestamp, Timestamp } from "firebase/firestore";
+import { updateDoc, addDoc, collection, query, where, getDocs, serverTimestamp, Timestamp, doc } from "firebase/firestore";
 import React from "react";
 
 interface TokenData {
