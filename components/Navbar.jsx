@@ -192,6 +192,12 @@ export default function Navbar() {
                   >
                     Profil
                   </a>
+                  <a
+                    href="/send-general-message"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Poslat zprávu
+                  </a>
                   {(user.role === "admin" || user.role === "zdravotnik") && (
                     <a
                       href="/admin"
@@ -244,6 +250,12 @@ export default function Navbar() {
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-500 hover:text-background"
               >
                 Profil
+              </a>
+              <a
+                href="/send-general-message"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-500 hover:text-background"
+              >
+                Poslat zprávu
               </a>
               {(user.role === "admin" || user.role === "zdravotnik") && (
                 <a

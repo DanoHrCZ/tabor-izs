@@ -334,6 +334,51 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
+
+      {/* Sekce o obecných zprávách */}
+      <div className="bg-white py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              Pošlete zprávu svému dítěti
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-gray-600">
+              Během tábora můžete posílat zprávy svému dítěti nebo jakémukoli jinému dítěti na táboře. 
+              Stačí se zaregistrovat a máte možnost poslat obecnou zprávu.
+            </p>
+          </div>
+          <div className="mt-10 flex justify-center">
+            <div className="grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
+              <div className="rounded-lg bg-blue-50 p-8">
+                <h3 className="text-xl font-semibold text-blue-900">Jak to funguje?</h3>
+                <ul className="mt-4 space-y-2 text-blue-800">
+                  <li>• Zaregistrujte se na našem webu</li>
+                  <li>• Napište zprávu a zadejte jméno dítěte</li>
+                  <li>• My zprávu vytiskneme a předáme</li>
+                  <li>• Všechny zprávy jsou moderovány</li>
+                </ul>
+              </div>
+              <div className="rounded-lg bg-green-50 p-8">
+                <h3 className="text-xl font-semibold text-green-900">Pro koho?</h3>
+                <ul className="mt-4 space-y-2 text-green-800">
+                  <li>• Rodiče a příbuzní</li>
+                  <li>• Přátelé a spolužáci</li>
+                  <li>• Babičky a dědečkové</li>
+                  <li>• Kdokoli s účtem na webu</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="mt-10 flex justify-center">
+            <a
+              href="/register"
+              className="rounded-md bg-blue-600 px-6 py-3 text-lg font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            >
+              Zaregistrovat se
+            </a>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

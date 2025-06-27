@@ -9,6 +9,7 @@ import {
   updateDoc,
   deleteDoc,
   getDoc,
+  Timestamp,
 } from "firebase/firestore";
 import { db } from "../Firebase";
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -40,7 +41,7 @@ interface Offer {
   additionalInfo: string;
   status: string;
   variableSymbol: string;
-  createdAt: any;
+  createdAt: Timestamp | null;
   payments?: Array<{ date: string; amount: number }>;
 }
 

@@ -117,7 +117,7 @@ export default function AdminSponsors() {
             <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {sponsors.map((sponsor) => (
                     <div key={sponsor.id} className="relative">
-                        <Image src={sponsor.logoUrl} alt={sponsor.name} className="w-full h-64 object-cover rounded" />
+                        <Image src={sponsor.logoUrl} alt={sponsor.name} width={400} height={256} className="w-full h-64 object-cover rounded" />
                         <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-background text-center p-2">
                             <h2>{sponsor.name}</h2>
                             <p>{sponsor.description}</p>

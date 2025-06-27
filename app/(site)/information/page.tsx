@@ -56,6 +56,8 @@ export default function InformationsPage() {
             <Image
               alt=""
               src="/car.jpg"
+              width={800}
+              height={600}
               className="w-full max-w-none rounded-xl bg-text-black shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
             />
           </div>

@@ -1,49 +1,39 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
-import {
-  collection,
-  getDocs,
-  orderBy,
-  query,
-  deleteDoc,
-  doc,
-  Timestamp,
-} from "firebase/firestore";
+import { useState, useEffect, useCallback } from "react";
+import { collection, query, orderBy, getDocs, deleteDoc, doc, Timestamp } from "firebase/firestore";
 import { db } from "../Firebase";
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { Content, TDocumentDefinitions } from "pdfmake/interfaces";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import { Content } from "pdfmake/interfaces";
 
+// Set fonts for pdfMake
 pdfMake.vfs = pdfFonts.vfs;
 
-interface Message {
+interface GeneralMessage {
   id: string;
   childName: string;
   message: string;
   senderName: string;
   timestamp: Timestamp | null;
-  isAnonymous: boolean;
-  isGeneral?: boolean;
-  offerId: string | null;
+  isGeneral: boolean;
 }
 
-const AdminMessages: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [filteredMessages, setFilteredMessages] = useState<Message[]>([]);
+const AdminGeneralMessages: React.FC = () => {
+  const [messages, setMessages] = useState<GeneralMessage[]>([]);
+  const [filteredMessages, setFilteredMessages] = useState<GeneralMessage[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedMessages, setSelectedMessages] = useState<Set<string>>(
     new Set()
   );
   const [dateFilter, setDateFilter] = useState<string>("");
-  const [messageTypeFilter, setMessageTypeFilter] = useState<string>("all");
   const [sortBy, setSortBy] = useState<"date" | "child" | "sender">("date");
 
   const fetchMessages = async () => {
     try {
       const messagesQuery = query(
-        collection(db, "messages"),
+        collection(db, "generalMessages"),
         orderBy("timestamp", "desc")
       );
       const messagesDocs = await getDocs(messagesQuery);
@@ -52,12 +42,12 @@ const AdminMessages: React.FC = () => {
           ({
             id: doc.id,
             ...doc.data(),
-          } as Message)
+          } as GeneralMessage)
       );
       setMessages(messagesData);
       setFilteredMessages(messagesData);
     } catch (error) {
-      console.error("Error fetching messages:", error);
+      console.error("Error fetching general messages:", error);
     } finally {
       setLoading(false);
     }
@@ -66,7 +56,7 @@ const AdminMessages: React.FC = () => {
   const deleteMessage = async (messageId: string) => {
     if (confirm("Opravdu chcete smazat tuto zprávu?")) {
       try {
-        await deleteDoc(doc(db, "messages", messageId));
+        await deleteDoc(doc(db, "generalMessages", messageId));
         const updatedMessages = messages.filter((msg) => msg.id !== messageId);
         setMessages(updatedMessages);
         setFilteredMessages(
@@ -83,7 +73,7 @@ const AdminMessages: React.FC = () => {
     }
   };
 
-  const filterMessage = useCallback((message: Message) => {
+  const filterMessage = useCallback((message: GeneralMessage) => {
     const matchesSearch =
       searchTerm === "" ||
       message.childName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -95,15 +85,10 @@ const AdminMessages: React.FC = () => {
       message.timestamp?.toDate?.()?.toISOString?.().split("T")[0] ===
         dateFilter;
 
-    const matchesType =
-      messageTypeFilter === "all" ||
-      (messageTypeFilter === "general" && message.isGeneral) ||
-      (messageTypeFilter === "specific" && !message.isGeneral);
+    return matchesSearch && matchesDate;
+  }, [searchTerm, dateFilter]);
 
-    return matchesSearch && matchesDate && matchesType;
-  }, [searchTerm, dateFilter, messageTypeFilter]);
-
-  const sortMessages = useCallback((messages: Message[]) => {
+  const sortMessages = useCallback((messages: GeneralMessage[]) => {
     return [...messages].sort((a, b) => {
       switch (sortBy) {
         case "child":
@@ -157,14 +142,14 @@ const AdminMessages: React.FC = () => {
 
     const content: Content[] = [
       {
-        text: 'Zprávy pro děti',
+        text: 'Obecné zprávy pro děti',
         style: 'header',
         alignment: 'center',
       },
       {
         text: `Vygenerováno: ${new Date().toLocaleDateString("cs-CZ")}`,
         style: 'subheader',
-        margin: [0, 10, 0, 20],
+        margin: [0, 10, 0, 20] as [number, number, number, number],
       },
     ];
 
@@ -182,7 +167,7 @@ const AdminMessages: React.FC = () => {
           {
             columns: [
               {
-                text: `Od: ${message.senderName}${message.isAnonymous ? " (Anonymní)" : ""}`,
+                text: `Od: ${message.senderName}`,
                 style: 'messageInfo',
               },
               {
@@ -191,12 +176,12 @@ const AdminMessages: React.FC = () => {
                 alignment: 'right',
               },
             ] as Content[],
-            margin: [0, 5, 0, 10],
+            margin: [0, 5, 0, 10] as [number, number, number, number],
           },
           {
             text: message.message,
             style: 'messageContent',
-            margin: [10, 0, 0, 20],
+            margin: [10, 0, 0, 20] as [number, number, number, number],
           },
           {
             canvas: [
@@ -211,44 +196,48 @@ const AdminMessages: React.FC = () => {
                 lineColor: '#CCCCCC',
               },
             ],
-            margin: [0, 10, 0, 20],
+            margin: [0, 10, 0, 20] as [number, number, number, number],
           },
         ] as Content[],
-      } as Content);
+      });
     });
 
-    const docDefinition: TDocumentDefinitions = {
-      content,
+    const docDefinition = {
+      content: content,
       styles: {
         header: {
-          fontSize: 18,
+          fontSize: 20,
           bold: true,
-          margin: [0, 0, 0, 10],
+          color: '#1e40af',
+          margin: [0, 0, 0, 10] as [number, number, number, number],
         },
         subheader: {
-          fontSize: 12,
-          margin: [0, 0, 0, 5],
+          fontSize: 14,
+          italics: true,
+          color: '#6b7280',
         },
         messageHeader: {
-          fontSize: 14,
+          fontSize: 16,
           bold: true,
-          color: '#2563EB',
+          color: '#1f2937',
+          margin: [0, 0, 0, 5] as [number, number, number, number],
         },
         messageInfo: {
-          fontSize: 10,
-          color: '#666666',
+          fontSize: 12,
+          color: '#6b7280',
         },
         messageContent: {
-          fontSize: 11,
-          lineHeight: 1.3,
+          fontSize: 14,
+          lineHeight: 1.4,
+          color: '#374151',
         },
       },
       defaultStyle: {
-        fontSize: 10,
+        font: 'Helvetica',
       },
     };
 
-    pdfMake.createPdf(docDefinition).download(`zpravy_${new Date().toISOString().split("T")[0]}.pdf`);
+    pdfMake.createPdf(docDefinition).download(`obecne-zpravy-${new Date().toISOString().split('T')[0]}.pdf`);
   };
 
   useEffect(() => {
@@ -268,13 +257,16 @@ const AdminMessages: React.FC = () => {
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-text-black">
-            Zprávy pro děti
+            Obecné zprávy pro děti
           </h1>
+          <p className="mt-2 text-sm text-gray-700">
+            Přehled všech obecných zpráv odeslaných uživateli.
+          </p>
         </div>
       </div>
 
       {/* Filtry a vyhledávání */}
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <div>
           <label className="block text-sm font-medium text-text-black mb-2">
             Vyhledávání
@@ -298,21 +290,6 @@ const AdminMessages: React.FC = () => {
             onChange={(e) => setDateFilter(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-text-indigo"
           />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-text-black mb-2">
-            Typ zprávy
-          </label>
-          <select
-            value={messageTypeFilter}
-            onChange={(e) => setMessageTypeFilter(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-text-indigo"
-          >
-            <option value="all">Všechny zprávy</option>
-            <option value="specific">Specifické zprávy</option>
-            <option value="general">Obecné zprávy</option>
-          </select>
         </div>
 
         <div>
@@ -370,24 +347,12 @@ const AdminMessages: React.FC = () => {
 
       {/* Statistiky */}
       <div className="bg-background rounded-lg shadow p-4 mb-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
           <div>
             <div className="text-2xl font-bold text-text-indigo">
               {messages.length}
             </div>
             <div className="text-sm text-text-black">Celkem zpráv</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-green-600">
-              {messages.filter(msg => !msg.isGeneral).length}
-            </div>
-            <div className="text-sm text-text-black">Specifické zprávy</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-blue-600">
-              {messages.filter(msg => msg.isGeneral).length}
-            </div>
-            <div className="text-sm text-text-black">Obecné zprávy</div>
           </div>
           <div>
             <div className="text-2xl font-bold text-positive-color">
@@ -409,7 +374,7 @@ const AdminMessages: React.FC = () => {
         <div className="bg-background rounded-lg shadow p-8 text-center">
           <div className="text-gray-400 text-6xl mb-4">📭</div>
           <p className="text-text-black text-lg">
-            Žádné zprávy nebyly nalezeny.
+            Žádné obecné zprávy nebyly nalezeny.
           </p>
         </div>
       ) : (
@@ -420,38 +385,35 @@ const AdminMessages: React.FC = () => {
                 {filteredMessages.map((message) => (
                   <div
                     key={message.id}
-                    className={`bg-background rounded-lg shadow border-l-4 transition-all duration-200 hover:shadow-md ${
+                    className={`bg-background rounded-lg shadow border transition-all duration-200 ${
                       selectedMessages.has(message.id)
-                        ? "border-l-text-indigo bg-indigo-50"
-                        : "border-l-gray-200"
+                        ? "border-text-indigo ring-2 ring-indigo-200"
+                        : "border-gray-200 hover:border-gray-300"
                     }`}
                   >
                     <div className="p-6">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-start space-x-4">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-start space-x-4 flex-grow">
                           <input
                             type="checkbox"
                             checked={selectedMessages.has(message.id)}
                             onChange={() => toggleMessageSelection(message.id)}
-                            className="mt-1 h-4 w-4 text-text-indigo border-gray-300 rounded focus:ring-text-indigo"
+                            className="mt-1 h-4 w-4 text-text-indigo focus:ring-text-indigo border-gray-300 rounded"
                           />
-                          <div>
-                            <h3 className="text-xl font-semibold text-text-black mb-1">
-                              {message.childName}
-                            </h3>
+
+                          <div className="flex-grow">
+                            <div className="flex items-center justify-between mb-2">
+                              <h3 className="text-lg font-semibold text-text-black">
+                                Pro: {message.childName}
+                              </h3>
+                            </div>
+
                             <div className="flex items-center space-x-4 text-sm text-gray-600 mb-2">
                               <span className="flex items-center">
                                 {message.senderName}
-                                {message.isAnonymous && (
-                                  <span className="ml-2 px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded-full">
-                                    Anonymní
-                                  </span>
-                                )}
-                                {message.isGeneral && (
-                                  <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
-                                    Obecná zpráva
-                                  </span>
-                                )}
+                                <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                                  Obecná zpráva
+                                </span>
                               </span>
                               <span className="flex items-center">
                                 {message.timestamp
@@ -471,7 +433,7 @@ const AdminMessages: React.FC = () => {
                       </div>
 
                       <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg border border-blue-100">
-                        <p className="text-text-black whitespace-pre-wrap leading-relaxed">
+                        <p className="text-text-black leading-relaxed whitespace-pre-wrap">
                           {message.message}
                         </p>
                       </div>
@@ -487,4 +449,4 @@ const AdminMessages: React.FC = () => {
   );
 };
 
-export default AdminMessages;
+export default AdminGeneralMessages;
