@@ -8,24 +8,46 @@ import {
   doc,
   updateDoc,
   deleteDoc,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "../Firebase";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Content, TDocumentDefinitions } from "pdfmake/interfaces";
+import * as XLSX from 'xlsx';
 
 // Set fonts for pdfMake
 pdfMake.vfs = pdfFonts.vfs;
 
 interface Offer {
   id: string;
-  birthNumber: string;
+  userId: string;
   firstName: string;
   lastName: string;
   birthDate: string;
+  street: string;
+  city: string;
+  postalCode: string;
+  fatherName: string;
+  fatherPhone: string;
+  motherName: string;
+  motherPhone: string;
+  contactEmail: string;
+  employerContribution: string;
+  healthIssues: string;
+  medications: string;
+  additionalInfo: string;
   status: string;
   variableSymbol: string;
+  createdAt: any;
   payments?: Array<{ date: string; amount: number }>;
+}
+
+interface UserData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
 }
 
 const AdminOffers: React.FC = () => {
@@ -394,6 +416,157 @@ const AdminOffers: React.FC = () => {
     pdfMake.createPdf(docDefinition).download(`vsechny_prihlasky_${new Date().toISOString().split("T")[0]}.pdf`);
   };
 
+  // Excel export functions
+  const exportToExcel = async () => {
+    if (selectedOffers.length === 0) {
+      alert("Vyberte alespoň jednu přihlášku pro export.");
+      return;
+    }
+
+    const selectedOffersData = offers.filter((offer) =>
+      selectedOffers.includes(offer.id)
+    );
+
+    // Fetch user data for each offer
+    const enrichedData = await Promise.all(
+      selectedOffersData.map(async (offer) => {
+        let userData: UserData | null = null;
+        if (offer.userId) {
+          try {
+            const userDoc = await getDoc(doc(db, "users", offer.userId));
+            if (userDoc.exists()) {
+              userData = userDoc.data() as UserData;
+            }
+          } catch (error) {
+            console.error("Error fetching user data:", error);
+          }
+        }
+
+        return {
+          "Variabilní symbol": offer.variableSymbol || "",
+          "Jméno dítěte": offer.firstName || "",
+          "Příjmení dítěte": offer.lastName || "",
+          "Datum narození": offer.birthDate || "",
+          "Ulice": offer.street || "",
+          "Město": offer.city || "",
+          "PSČ": offer.postalCode || "",
+          "Příspěvek zaměstnavatele": offer.employerContribution || "",
+          "Zdravotní problémy": offer.healthIssues || "",
+          "Léky": offer.medications || "",
+          "Další informace": offer.additionalInfo || "",
+          "Stav": offer.status || "",
+          "Datum vytvoření": offer.createdAt?.toDate?.()?.toLocaleDateString("cs-CZ") || "",
+          "Jméno rodiče": userData ? `${userData.firstName} ${userData.lastName}` : "",
+          "Email rodiče": userData?.email || "",
+          "Telefon rodiče": userData?.phone || "",
+          "Platby": offer.payments 
+            ? offer.payments.map(p => `${p.date}: ${p.amount} Kč`).join("; ") 
+            : "",
+          "Celkem uhrazeno": offer.payments 
+            ? offer.payments.reduce((sum, p) => sum + p.amount, 0) + " Kč"
+            : "0 Kč"
+        };
+      })
+    );
+
+    // Create workbook
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(enrichedData);
+
+    // Auto-size columns
+    const colWidths = Object.keys(enrichedData[0] || {}).map(key => {
+      const maxLength = Math.max(
+        key.length,
+        ...enrichedData.map(row => String(row[key as keyof typeof row]).length)
+      );
+      return { wch: Math.min(maxLength + 2, 50) };
+    });
+    ws['!cols'] = colWidths;
+
+    XLSX.utils.book_append_sheet(wb, ws, "Vybrané přihlášky");
+    XLSX.writeFile(wb, `vybrane_prihlasky_${new Date().toISOString().split("T")[0]}.xlsx`);
+  };
+
+  const exportAllToExcel = async () => {
+    // Fetch user data for all offers
+    const enrichedData = await Promise.all(
+      filteredOffers.map(async (offer) => {
+        let userData: UserData | null = null;
+        if (offer.userId) {
+          try {
+            const userDoc = await getDoc(doc(db, "users", offer.userId));
+            if (userDoc.exists()) {
+              userData = userDoc.data() as UserData;
+            }
+          } catch (error) {
+            console.error("Error fetching user data:", error);
+          }
+        }
+
+        return {
+          "Variabilní symbol": offer.variableSymbol || "",
+          "Jméno dítěte": offer.firstName || "",
+          "Příjmení dítěte": offer.lastName || "",
+          "Datum narození": offer.birthDate || "",
+          "Ulice": offer.street || "",
+          "Město": offer.city || "",
+          "PSČ": offer.postalCode || "",
+          "Příspěvek zaměstnavatele": offer.employerContribution || "",
+          "Zdravotní problémy": offer.healthIssues || "",
+          "Léky": offer.medications || "",
+          "Další informace": offer.additionalInfo || "",
+          "Stav": offer.status || "",
+          "Datum vytvoření": offer.createdAt?.toDate?.()?.toLocaleDateString("cs-CZ") || "",
+          "Jméno rodiče": userData ? `${userData.firstName} ${userData.lastName}` : "",
+          "Email rodiče": userData?.email || "",
+          "Telefon rodiče": userData?.phone || "",
+          "Platby": offer.payments 
+            ? offer.payments.map(p => `${p.date}: ${p.amount} Kč`).join("; ") 
+            : "",
+          "Celkem uhrazeno": offer.payments 
+            ? offer.payments.reduce((sum, p) => sum + p.amount, 0) + " Kč"
+            : "0 Kč"
+        };
+      })
+    );
+
+    // Create workbook with multiple sheets
+    const wb = XLSX.utils.book_new();
+    
+    // Main data sheet
+    const ws = XLSX.utils.json_to_sheet(enrichedData);
+    
+    // Auto-size columns
+    const colWidths = Object.keys(enrichedData[0] || {}).map(key => {
+      const maxLength = Math.max(
+        key.length,
+        ...enrichedData.map(row => String(row[key as keyof typeof row]).length)
+      );
+      return { wch: Math.min(maxLength + 2, 50) };
+    });
+    ws['!cols'] = colWidths;
+    
+    XLSX.utils.book_append_sheet(wb, ws, "Všechny přihlášky");
+
+    // Statistics sheet
+    const statusCounts = filteredOffers.reduce((acc, offer) => {
+      const status = offer.status || "nezadáno";
+      acc[status] = (acc[status] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    const statsData = Object.entries(statusCounts).map(([status, count]) => ({
+      "Stav": status,
+      "Počet": count,
+      "Procento": `${((count / filteredOffers.length) * 100).toFixed(1)}%`
+    }));
+
+    const statsWs = XLSX.utils.json_to_sheet(statsData);
+    XLSX.utils.book_append_sheet(wb, statsWs, "Statistiky");
+
+    XLSX.writeFile(wb, `vsechny_prihlasky_${new Date().toISOString().split("T")[0]}.xlsx`);
+  };
+
   // Calculate statistics
   const totalOffers = offers.length;
   const filteredCount = filteredOffers.length;
@@ -430,7 +603,7 @@ const AdminOffers: React.FC = () => {
               Změnit stav vybraných přihlášek
             </option>
             <option value="neuhrazeno">změnit na &quot;neuhrazeno&quot;</option>
-            <option value="uhrazena záloha">změnit na &quot;uhrazena záloha&quot;</option>
+            <option value="uhrazena záloha">změnit na &quot;uhrazená záloha&quot;</option>
             <option value="uhrazeno">Změnit na &quot;uhrazeno&quot;</option>
             <option value="custom">Uhrazená částka (vlastní)</option>
           </select>
@@ -477,6 +650,30 @@ const AdminOffers: React.FC = () => {
           }`}
         >
           Exportovat všechny do PDF ({filteredOffers.length})
+        </button>
+
+        <button
+          onClick={exportToExcel}
+          disabled={selectedOffers.length === 0}
+          className={`px-4 py-2 rounded font-medium transition-colors ${
+            selectedOffers.length > 0
+              ? "bg-green-500 text-background hover:bg-green-600"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
+        >
+          Exportovat vybrané do Excelu ({selectedOffers.length})
+        </button>
+
+        <button
+          onClick={exportAllToExcel}
+          disabled={filteredOffers.length === 0}
+          className={`px-4 py-2 rounded font-medium transition-colors ${
+            filteredOffers.length > 0
+              ? "bg-blue-500 text-background hover:bg-blue-600"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
+        >
+          Exportovat všechny do Excelu ({filteredOffers.length})
         </button>
       </div>
 

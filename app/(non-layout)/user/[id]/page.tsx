@@ -56,7 +56,8 @@ export default function UserPage() {
   }, [id, router]);
 
   // Loading state
-  if (loading) return <p className="text-center text-lg text-gray-500">Načítání...</p>;
+  if (loading)
+    return <p className="text-center text-lg text-gray-500">Načítání...</p>;
 
   // Error handling
   if (error) return <p className="text-center text-lg text-red-500">{error}</p>;
@@ -77,22 +78,69 @@ export default function UserPage() {
       </div>
       <div className="w-full max-w-3xl bg-white p-8 mt-6 rounded-lg shadow-md">
         <p className="text-lg text-gray-700">
-          Po vytvoření přihlášky uhraďte zálohu ve výši <b>4000 Kč</b> nejpozději do 3 dnů na účet 2300799562/2010. Nezapomeňte vyplnit <b>VARIABILNÍ SYMBOL</b> přihlášky!
+          Po vytvoření přihlášky uhraďte zálohu ve výši <b>4000 Kč</b>{" "}
+          nejpozději do 3 dnů na účet 2300799562/2010. Nezapomeňte vyplnit{" "}
+          <b>VARIABILNÍ SYMBOL</b> přihlášky!
         </p>
         <p className="text-lg text-gray-700 mt-4">
-          Platby kontrolujeme ručně, proto může trvat nějakou dobu, než vaši platbu zaregistrujeme. V případě nejasností nebo komplikací nás kontaktujte prostřednictvím emailu. (taborizs@seznam.cz)
+          Platby kontrolujeme ručně, proto může trvat nějakou dobu, než vaši
+          platbu zaregistrujeme. V případě nejasností nebo komplikací nás
+          kontaktujte prostřednictvím emailu. (taborizs@seznam.cz)
         </p>
         <p className="text-lg text-gray-700 mt-4">
           Následně je potřeba uhradit doplatek ve výši <b>5000 Kč</b> do 15.5.
         </p>
       </div>
       <div className="w-full max-w-3xl bg-white p-8 mt-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-semibold text-gray-900">Dokumenty ke stažení</h2>
+        <h2 className="text-2xl font-semibold text-gray-900">
+          Dokumenty ke stažení
+        </h2>
         <ul className="list-none mt-4 space-y-2">
-          <li><a href="/documents/NÁSTUPNÍ LIST 2025.docx" download className="text-blue-500 underline">Nástupní list</a></li>
-          <li><a href="/documents/prohlášení o bezinfekčnosti.docx" download className="text-blue-500 underline">Prohlášení o bezinfekčnosti</a></li>
-          <li><a href="/documents/Tábor IZS 2025 základní informace.docx" download className="text-blue-500 underline">Tábor IZS 2025 základní informace</a></li>
-          <li><a href="/documents/Seznam věcí na tábor IZS.docx" download className="text-blue-500 underline">Seznam věcí na tábor</a></li>
+          <li>
+            <a
+              href="/documents/NÁSTUPNÍ LIST 2025.docx"
+              download
+              className="text-blue-500 underline"
+            >
+              Nástupní list
+            </a>
+          </li>
+          <li>
+            <a
+              href="/documents/prohlášení o bezinfekčnosti.docx"
+              download
+              className="text-blue-500 underline"
+            >
+              Prohlášení o bezinfekčnosti
+            </a>
+          </li>
+          <li>
+            <a
+              href="/documents/Tábor IZS 2025 základní informace.docx"
+              download
+              className="text-blue-500 underline"
+            >
+              Tábor IZS 2025 základní informace
+            </a>
+          </li>
+          <li>
+            <a
+              href="/documents/Seznam věcí na tábor IZS.docx"
+              download
+              className="text-blue-500 underline"
+            >
+              Seznam věcí na tábor
+            </a>
+          </li>
+          <li>
+            <a
+              href="/documents/zdravotni zpusobilost dítěte.pdf"
+              download
+              className="text-blue-500 underline"
+            >
+              Posudek o zdravotní způsobilosti dítěte
+            </a>
+          </li>
         </ul>
       </div>
       <div className="w-full max-w-3xl mt-6">

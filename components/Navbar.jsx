@@ -145,12 +145,12 @@ export default function Navbar() {
                     >
                       Profil
                     </a>
-                    {user && user.role === "admin" && (
+                    {user && (user.role === "admin" || user.role === "zdravotnik") && (
                       <a
                         href="/admin"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
-                        Administrace
+                        {user.role === "admin" ? "Administrace" : "Zdravotnický panel"}
                       </a>
                     )}
                     <button
@@ -192,12 +192,12 @@ export default function Navbar() {
                   >
                     Profil
                   </a>
-                  {user.role === "admin" && (
+                  {(user.role === "admin" || user.role === "zdravotnik") && (
                     <a
                       href="/admin"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      Administrace
+                      {user.role === "admin" ? "Administrace" : "Zdravotnický panel"}
                     </a>
                   )}
                   <button
@@ -245,12 +245,12 @@ export default function Navbar() {
               >
                 Profil
               </a>
-              {user.role === "admin" && (
+              {(user.role === "admin" || user.role === "zdravotnik") && (
                 <a
                   href="/admin"
                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-500 hover:text-background"
                 >
-                  Administrace
+                  {user.role === "admin" ? "Administrace" : "Zdravotnický panel"}
                 </a>
               )}
               <button

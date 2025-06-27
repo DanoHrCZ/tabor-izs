@@ -5,6 +5,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, updateDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../Firebase";
 import AdminOffers from "../../../components/AdminOffers";
+import ZdravotnikOffers from "../../../components/ZdravotnikOffers";
 import AdminUsers from "../../../components/AdminUsers";
 import AdminGallery from "../../../components/AdminGallery";
 import AdminSponsors from "../../../components/AdminSponsors";
@@ -28,7 +29,12 @@ const AdminPage = () => {
             if (currentUser) {
                 const userDoc = await getDoc(doc(db, "users", currentUser.uid));
                 if (userDoc.exists()) {
-                    setRole(userDoc.data().role);
+                    const userRole = userDoc.data().role;
+                    if (userRole === "admin" || userRole === "zdravotnik") {
+                        setRole(userRole);
+                    } else {
+                        router.push("/login");
+                    }
                 } else {
                     router.push("/login");
                 }
@@ -82,89 +88,123 @@ const AdminPage = () => {
         });
     };
 
-    if (role !== "admin") {
-        return <div>Loading...</div>;
+    if (role !== "admin" && role !== "zdravotnik") {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500 mx-auto"></div>
+                    <p className="mt-4 text-gray-600">Načítání...</p>
+                </div>
+            </div>
+        );
     }
 
     return (
         <div className="container mx-auto p-4">
             <div className="flex justify-between items-center mb-4">
-                <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-                <button
-                    onClick={toggleSubmissions}
-                    className={`p-2 rounded ${allowSubmissions ? 'bg-red-500' : 'bg-green-500'} text-white`}
-                >
-                    {allowSubmissions ? "Zakázat odesílání přihlášek" : "Povolit odesílání přihlášek"}
-                </button>
+                <h1 className="text-2xl font-bold">
+                    {role === "admin" ? "Admin Dashboard" : "Zdravotnický panel"}
+                </h1>
+                {role === "admin" && (
+                    <button
+                        onClick={toggleSubmissions}
+                        className={`p-2 rounded ${allowSubmissions ? 'bg-red-500' : 'bg-green-500'} text-white`}
+                    >
+                        {allowSubmissions ? "Zakázat odesílání přihlášek" : "Povolit odesílání přihlášek"}
+                    </button>
+                )}
             </div>
             
-            {/* Statistics Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div className="bg-white rounded-lg shadow p-4">
-                    <h2 className="text-lg font-semibold text-gray-700">Registrovaní uživatelé</h2>
-                    <p className="text-3xl font-bold text-text-indigo mt-2">{stats.totalUsers}</p>
+            {/* Statistics Cards - only for admin */}
+            {role === "admin" && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div className="bg-white rounded-lg shadow p-4">
+                        <h2 className="text-lg font-semibold text-gray-700">Registrovaní uživatelé</h2>
+                        <p className="text-3xl font-bold text-text-indigo mt-2">{stats.totalUsers}</p>
+                    </div>
+                    <div className="bg-white rounded-lg shadow p-4">
+                        <h2 className="text-lg font-semibold text-gray-700">Vytvořené přihlášky</h2>
+                        <p className="text-3xl font-bold text-text-indigo mt-2">{stats.totalOffers}</p>
+                    </div>
+                    <div className="bg-white rounded-lg shadow p-4">
+                        <h2 className="text-lg font-semibold text-gray-700">Uhrazené přihlášky</h2>
+                        <p className="text-3xl font-bold text-text-indigo mt-2">{stats.paidOffers}</p>
+                    </div>
                 </div>
-                <div className="bg-white rounded-lg shadow p-4">
-                    <h2 className="text-lg font-semibold text-gray-700">Vytvořené přihlášky</h2>
-                    <p className="text-3xl font-bold text-text-indigo mt-2">{stats.totalOffers}</p>
+            )}
+
+            {/* Statistics Cards for zdravotnik - only offers */}
+            {role === "zdravotnik" && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div className="bg-white rounded-lg shadow p-4">
+                        <h2 className="text-lg font-semibold text-gray-700">Celkem přihlášek</h2>
+                        <p className="text-3xl font-bold text-indigo-600 mt-2">{stats.totalOffers}</p>
+                    </div>
+                    <div className="bg-white rounded-lg shadow p-4">
+                        <h2 className="text-lg font-semibold text-gray-700">Uhrazené přihlášky</h2>
+                        <p className="text-3xl font-bold text-green-600 mt-2">{stats.paidOffers}</p>
+                    </div>
                 </div>
-                <div className="bg-white rounded-lg shadow p-4">
-                    <h2 className="text-lg font-semibold text-gray-700">Uhrazené přihlášky</h2>
-                    <p className="text-3xl font-bold text-text-indigo mt-2">{stats.paidOffers}</p>
-                </div>
-            </div>
+            )}
             
-            <Tab.Group>
-                <Tab.List className="flex space-x-1 rounded-xl bg-block p-1">
-                    <Tab className={({ selected }) =>
-                        selected ? 'w-full py-2.5 text-sm font-bold text-text-indigo rounded-lg bg-background shadow'
-                            : 'w-full py-2.5 text-sm font-medium text-background'
-                    }>
-                        Galerie
-                    </Tab>
-                    <Tab className={({ selected }) =>
-                        selected ? 'w-full py-2.5 text-sm font-bold text-text-indigo rounded-lg bg-background shadow'
-                            : 'w-full py-2.5 text-sm font-medium text-background'
-                    }>
-                        Sponzoři
-                    </Tab>
-                    <Tab className={({ selected }) =>
-                        selected ? 'w-full py-2.5 text-sm font-bold text-text-indigo rounded-lg bg-background shadow'
-                            : 'w-full py-2.5 text-sm font-medium text-background'
-                    }>
-                        Zprávy
-                    </Tab>
-                    <Tab className={({ selected }) =>
-                        selected ? 'w-full py-2.5 text-sm font-bold text-text-indigo rounded-lg bg-background shadow'
-                            : 'w-full py-2.5 text-sm font-medium text-background'
-                    }>
-                        Přihlášky
-                    </Tab>
-                    <Tab className={({ selected }) =>
-                        selected ? 'w-full py-2.5 text-sm font-bold text-text-indigo rounded-lg bg-background shadow'
-                            : 'w-full py-2.5 text-sm font-medium text-background'
-                    }>
-                        Uživatelé
-                    </Tab>
-                </Tab.List>
-                <Tab.Panels className="mt-2">
-                    <Tab.Panel>
-                        <AdminGallery />
-                    </Tab.Panel>
-                    <Tab.Panel>
-                        <AdminSponsors />
-                    </Tab.Panel>
-                    <Tab.Panel>
-                        <AdminMessages />
-                    </Tab.Panel>
-                    <Tab.Panel>
-                        <AdminOffers />
-                    </Tab.Panel>
-                    <Tab.Panel>
-                        <AdminUsers />
-                    </Tab.Panel>
-                </Tab.Panels>
-            </Tab.Group>
+            {role === "admin" ? (
+                <Tab.Group>
+                    <Tab.List className="flex space-x-1 rounded-xl bg-block p-1">
+                        <Tab className={({ selected }) =>
+                            selected ? 'w-full py-2.5 text-sm font-bold text-text-indigo rounded-lg bg-background shadow'
+                                : 'w-full py-2.5 text-sm font-medium text-background'
+                        }>
+                            Galerie
+                        </Tab>
+                        <Tab className={({ selected }) =>
+                            selected ? 'w-full py-2.5 text-sm font-bold text-text-indigo rounded-lg bg-background shadow'
+                                : 'w-full py-2.5 text-sm font-medium text-background'
+                        }>
+                            Sponzoři
+                        </Tab>
+                        <Tab className={({ selected }) =>
+                            selected ? 'w-full py-2.5 text-sm font-bold text-text-indigo rounded-lg bg-background shadow'
+                                : 'w-full py-2.5 text-sm font-medium text-background'
+                        }>
+                            Zprávy
+                        </Tab>
+                        <Tab className={({ selected }) =>
+                            selected ? 'w-full py-2.5 text-sm font-bold text-text-indigo rounded-lg bg-background shadow'
+                                : 'w-full py-2.5 text-sm font-medium text-background'
+                        }>
+                            Přihlášky
+                        </Tab>
+                        <Tab className={({ selected }) =>
+                            selected ? 'w-full py-2.5 text-sm font-bold text-text-indigo rounded-lg bg-background shadow'
+                                : 'w-full py-2.5 text-sm font-medium text-background'
+                        }>
+                            Uživatelé
+                        </Tab>
+                    </Tab.List>
+                    <Tab.Panels className="mt-2">
+                        <Tab.Panel>
+                            <AdminGallery />
+                        </Tab.Panel>
+                        <Tab.Panel>
+                            <AdminSponsors />
+                        </Tab.Panel>
+                        <Tab.Panel>
+                            <AdminMessages />
+                        </Tab.Panel>
+                        <Tab.Panel>
+                            <AdminOffers />
+                        </Tab.Panel>
+                        <Tab.Panel>
+                            <AdminUsers />
+                        </Tab.Panel>
+                    </Tab.Panels>
+                </Tab.Group>
+            ) : (
+                // For zdravotnik - only show offers with limited permissions
+                <div className="bg-white rounded-lg shadow">
+                    <ZdravotnikOffers />
+                </div>
+            )}
         </div>
     );
 };
