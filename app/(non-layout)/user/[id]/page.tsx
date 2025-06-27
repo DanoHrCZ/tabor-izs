@@ -65,6 +65,22 @@ export default function UserPage() {
   // Render user information and Offers component if authenticated
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 py-12 px-6">
+      {/* Navigační tlačítka */}
+      <div className="w-full max-w-3xl mb-4 flex gap-2">
+        <button
+          onClick={() => router.back()}
+          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors flex items-center gap-2"
+        >
+          ← Zpět
+        </button>
+        <button
+          onClick={() => router.forward()}
+          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors flex items-center gap-2"
+        >
+          Vpřed →
+        </button>
+      </div>
+
       <div className="w-full max-w-3xl bg-white p-8 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold text-center text-gray-900">
           Vítej, {userData?.firstName}!

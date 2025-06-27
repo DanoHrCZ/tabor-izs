@@ -151,6 +151,24 @@ const NewOfferPage = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      {/* Navigační tlačítka */}
+      <div className="mb-6 flex gap-2">
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors flex items-center gap-2"
+        >
+          ← Zpět
+        </button>
+        <button
+          type="button"
+          onClick={() => router.forward()}
+          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors flex items-center gap-2"
+        >
+          Vpřed →
+        </button>
+      </div>
+
       {isSubmitting ? ( // Zobrazení loading screenu
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500"></div>

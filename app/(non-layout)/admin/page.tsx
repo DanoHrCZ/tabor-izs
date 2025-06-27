@@ -101,6 +101,22 @@ const AdminPage = () => {
 
     return (
         <div className="container mx-auto p-4">
+            {/* Navigační tlačítka */}
+            <div className="mb-4 flex gap-2">
+                <button
+                    onClick={() => router.back()}
+                    className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors flex items-center gap-2"
+                >
+                    ← Zpět
+                </button>
+                <button
+                    onClick={() => router.forward()}
+                    className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors flex items-center gap-2"
+                >
+                    Vpřed →
+                </button>
+            </div>
+
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl font-bold">
                     {role === "admin" ? "Admin Dashboard" : "Zdravotnický panel"}

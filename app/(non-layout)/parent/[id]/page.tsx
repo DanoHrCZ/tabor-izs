@@ -69,6 +69,22 @@ export default function ParentPage() {
 
   return (
     <>
+      {/* Navigační tlačítka */}
+      <div className="m-4 flex gap-2">
+        <button
+          onClick={() => router.back()}
+          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors flex items-center gap-2"
+        >
+          ← Zpět
+        </button>
+        <button
+          onClick={() => router.forward()}
+          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors flex items-center gap-2"
+        >
+          Vpřed →
+        </button>
+      </div>
+
       {parent ? (
         <div className="flex flex-col space-y-2 m-4">
           <p className="mt-6 text-xl/8 text-gray-700">Informace o rodiči</p>

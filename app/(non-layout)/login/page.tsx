@@ -71,6 +71,24 @@ export default function LoginPage() {
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        {/* Navigační tlačítka */}
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm mb-4 flex gap-2">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors flex items-center gap-2"
+          >
+            ← Zpět
+          </button>
+          <button
+            type="button"
+            onClick={() => router.forward()}
+            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors flex items-center gap-2"
+          >
+            Vpřed →
+          </button>
+        </div>
+
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <Image
             alt="logo"

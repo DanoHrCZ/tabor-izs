@@ -15,6 +15,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Content, TDocumentDefinitions } from "pdfmake/interfaces";
 import * as XLSX from 'xlsx';
+import { useRouter } from "next/navigation";
 
 // Set fonts for pdfMake
 pdfMake.vfs = pdfFonts.vfs;
@@ -54,6 +55,7 @@ const AdminOffers: React.FC = () => {
   const [offers, setOffers] = useState<Offer[]>([]);
   const [selectedOffers, setSelectedOffers] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchOffers = async () => {
@@ -773,6 +775,12 @@ const AdminOffers: React.FC = () => {
                         </select>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button
+                          onClick={() => router.push(`/offer/${offer.id}`)}
+                          className="text-text-indigo hover:text-indigo-900 mr-4"
+                        >
+                          Detail
+                        </button>
                         <button
                           onClick={() => deleteOffer(offer.id)}
                           className="text-red-600 hover:text-red-900"

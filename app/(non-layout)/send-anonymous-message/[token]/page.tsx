@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { db } from "../../../../Firebase";
 import { updateDoc, addDoc, collection, query, where, getDocs, serverTimestamp, Timestamp, doc } from "firebase/firestore";
 import React from "react";
@@ -24,6 +24,7 @@ export default function AnonymousMessagePage() {
   const [sending, setSending] = useState<boolean>(false);
   
   const { token } = useParams() as { token: string };
+  const router = useRouter();
 
   useEffect(() => {
     const checkToken = async () => {
@@ -117,6 +118,22 @@ export default function AnonymousMessagePage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 py-12 px-6">
+      {/* Navigační tlačítka */}
+      <div className="w-full max-w-2xl mb-4 flex gap-2">
+        <button
+          onClick={() => router.back()}
+          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors flex items-center gap-2"
+        >
+          ← Zpět
+        </button>
+        <button
+          onClick={() => router.forward()}
+          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors flex items-center gap-2"
+        >
+          Vpřed →
+        </button>
+      </div>
+
       <div className="w-full max-w-2xl bg-white p-8 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold text-center text-gray-900 mb-6">
           Poslat zprávu pro {tokenData?.childName}
