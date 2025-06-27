@@ -81,19 +81,20 @@ export default function Offers() {
                     Posílejte dětem zprávy
                   </p>
                   <p className="mt-2 max-w-lg text-sm/6 text-text-secondary max-lg:text-center">
-                    Na vašem účtu budete mít možnost posílat zprávy jakémukoli dítěti na táboře.
-                    Stačí zadat jméno dítěte a zprávu, my ji vytiskneme a předáme.
-                    Všechny zprávy jsou moderovány vedením tábora.
+                    Nabízíme několik způsobů odesílání zpráv: přes váš účet pro registrované děti, 
+                    obecné zprávy pro jakékoli dítě na táboře, nebo anonymní zprávy přes jednorázový odkaz. 
+                    Všechny zprávy jsou vytištěny a předány dětem vedením tábora.
                   </p>
                 </div>
                 <div className="relative min-h-[30rem] w-full grow [container-type:inline-size] max-lg:mx-auto max-lg:max-w-sm">
                   <div className="absolute inset-x-10 bottom-0 top-10 overflow-hidden rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-text-black shadow-2xl">
-                    <p className="text-positive-color text-center p-16 font-bold text-lg">Obecné zprávy jsou nyní dostupné!</p>
-                    {/* <Image
+                    <Image
                       className="size-full object-cover object-top"
-                      src="/screen2.png"
-                      alt=""
-                    /> */}
+                      src="/offers.png"
+                      width={600}
+                      height={400}
+                      alt="Systém zpráv"
+                    />
                   </div>
                 </div>
               </div>
