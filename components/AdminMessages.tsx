@@ -169,10 +169,6 @@ const AdminMessages: React.FC = () => {
     ];
 
     selectedMessagesData.forEach((message, index) => {
-      if (index > 0) {
-        content.push({ text: '', pageBreak: 'before' } as Content);
-      }
-
       content.push({
         stack: [
           {
