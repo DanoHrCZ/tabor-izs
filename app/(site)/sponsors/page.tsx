@@ -102,7 +102,7 @@ export default function SponsorsPage() {
                     </div>
                 ) : (
                     <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-3">
-                        {sponsors.map((sponsor, index) => (
+                        {sponsors.map((sponsor) => (
                             <div 
                                 key={sponsor.id} 
                                 className="relative group"

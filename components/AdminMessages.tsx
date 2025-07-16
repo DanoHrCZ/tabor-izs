@@ -168,7 +168,7 @@ const AdminMessages: React.FC = () => {
       },
     ];
 
-    selectedMessagesData.forEach((message, index) => {
+    selectedMessagesData.forEach((message) => {
       content.push({
         stack: [
           {
