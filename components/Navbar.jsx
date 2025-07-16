@@ -20,7 +20,7 @@ const navigation = [
   { name: "Co s sebou?", href: "/what-with", current: false },
   { name: "Přihláška", href: "/offers", current: false },
   // { name: "Galerie", href: "gallery", current: false },
-  // { name: "Sponzoři", href: "sponsors", current: false },
+  { name: "Sponzoři", href: "sponsors", current: false },
 ];
 
 export default function Navbar() {

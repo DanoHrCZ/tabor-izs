@@ -36,43 +36,79 @@ export default function AdminSponsors() {
     };
 
     const handleUpload = async () => {
-        if (!file || !name || !description || !website) return;
+        if (!file || !name.trim() || !description.trim() || !website.trim()) {
+            alert("Prosím vyplňte všechna pole a vyberte soubor.");
+            return;
+        }
 
         setUploading(true);
         try {
-            const storageRef = ref(storage, `sponsors/${file.name}`);
+            // Vytvoříme unikátní název souboru s timestampem
+            const timestamp = Date.now();
+            const fileExtension = file.name.split('.').pop();
+            const fileName = `${name.replace(/[^a-zA-Z0-9]/g, '_')}_${timestamp}.${fileExtension}`;
+            
+            const storageRef = ref(storage, `sponsors/${fileName}`);
             await uploadBytes(storageRef, file);
             const logoUrl = await getDownloadURL(storageRef);
 
-            await addDoc(collection(db, "sponsors"), { name, logoUrl, description, website });
+            await addDoc(collection(db, "sponsors"), { 
+                name: name.trim(), 
+                logoUrl, 
+                description: description.trim(), 
+                website: website.trim() 
+            });
+            
+            // Vyčistíme formulář
             setName("");
             setDescription("");
             setWebsite("");
             setFile(null);
+            
+            // Reset file input
+            const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+            if (fileInput) fileInput.value = '';
 
             // Refresh sponsors
             const querySnapshot = await getDocs(collection(db, "sponsors"));
             const sponsorsData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Sponsor));
             setSponsors(sponsorsData);
+            
+            alert("Sponzor byl úspěšně přidán!");
         } catch (error) {
             console.error("Error uploading sponsor:", error);
+            alert("Chyba při přidávání sponzora: " + error);
         } finally {
             setUploading(false);
         }
     };
 
-    const handleDelete = async (id: string, logoUrl: string) => {
+    const handleDelete = async (id: string, logoUrl: string, sponsorName: string) => {
+        if (!confirm(`Opravdu chcete smazat sponzora "${sponsorName}"?`)) {
+            return;
+        }
+        
         try {
             await deleteDoc(doc(db, "sponsors", id));
-            const storageRef = ref(storage, logoUrl);
-            await deleteObject(storageRef);
+            
+            // Pokusíme se smazat soubor ze storage
+            try {
+                const storageRef = ref(storage, logoUrl);
+                await deleteObject(storageRef);
+            } catch (storageError) {
+                console.warn("Nepodařilo se smazat soubor ze storage:", storageError);
+                // Pokračujeme i když se nepodaří smazat soubor
+            }
 
             // Refresh sponsors
             const querySnapshot = await getDocs(collection(db, "sponsors"));
             const sponsorsData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Sponsor));
             setSponsors(sponsorsData);
+            
+            alert("Sponzor byl úspěšně smazán!");
         } catch (error) {
             console.error("Error deleting sponsor:", error);
+            alert("Chyba při mazání sponzora: " + error);
         }
     };
 
@@ -82,33 +118,74 @@ export default function AdminSponsors() {
                 <div className="sm:flex-auto">
                     <h1 className="text-base font-semibold leading-6 text-text-black">Sponzoři</h1>
                 </div>
-                <div className="sm:flex sm:items-center sm:ml-4">
-                    <input
-                        type="text"
-                        placeholder="Název sponzora"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="mr-2 p-2 border border-gray-300 rounded"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Popisek"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        className="mr-2 p-2 border border-gray-300 rounded"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Webová stránka"
-                        value={website}
-                        onChange={(e) => setWebsite(e.target.value)}
-                        className="mr-2 p-2 border border-gray-300 rounded"
-                    />
-                    <input type="file" onChange={handleFileChange} />
+            </div>
+            
+            {/* Formulář pro přidání sponzora */}
+            <div className="mt-6 bg-white shadow rounded-lg p-6">
+                <h2 className="text-lg font-medium text-gray-900 mb-4">Přidat nového sponzora</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Název sponzora *
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="Název sponzora"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-text-indigo"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Webová stránka *
+                        </label>
+                        <input
+                            type="url"
+                            placeholder="https://example.com"
+                            value={website}
+                            onChange={(e) => setWebsite(e.target.value)}
+                            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-text-indigo"
+                        />
+                    </div>
+                    <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Popis *
+                        </label>
+                        <textarea
+                            placeholder="Popis sponzora"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            rows={3}
+                            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-text-indigo"
+                        />
+                    </div>
+                    <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Logo *
+                        </label>
+                        <input 
+                            type="file" 
+                            onChange={handleFileChange}
+                            accept="image/*"
+                            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-text-indigo"
+                        />
+                        {file && (
+                            <p className="mt-2 text-sm text-gray-600">
+                                Vybraný soubor: {file.name}
+                            </p>
+                        )}
+                    </div>
+                </div>
+                <div className="mt-6">
                     <button
                         onClick={handleUpload}
-                        className="ml-2 p-2 bg-text-indigo text-background rounded"
-                        disabled={uploading}
+                        className={`px-6 py-3 rounded-md font-medium transition-colors ${
+                            uploading || !file || !name.trim() || !description.trim() || !website.trim()
+                                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                                : "bg-text-indigo text-white hover:bg-indigo-700"
+                        }`}
+                        disabled={uploading || !file || !name.trim() || !description.trim() || !website.trim()}
                     >
                         {uploading ? "Nahrávání..." : "Přidat sponzora"}
                     </button>
@@ -126,7 +203,7 @@ export default function AdminSponsors() {
                             </a>
                         </div>
                         <button
-                            onClick={() => handleDelete(sponsor.id, sponsor.logoUrl)}
+                            onClick={() => handleDelete(sponsor.id, sponsor.logoUrl, sponsor.name)}
                             className="absolute top-2 right-2 p-1 bg-negative-color text-background rounded"
                         >
                             Smazat

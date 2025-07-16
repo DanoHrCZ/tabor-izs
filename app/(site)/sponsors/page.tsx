@@ -37,7 +37,7 @@ export default function SponsorsPage() {
     }, []);
     
     return (
-        <div className="min-h-dvh relative isolate overflow-hidden bg-background px-6 py-12 sm:py-16 lg:overflow-visible lg:px-0">
+        <div className="relative isolate overflow-hidden bg-background px-6 py-12 sm:py-16 lg:overflow-visible lg:px-0">
             <div className="absolute inset-0 -z-10 overflow-hidden">
                 <svg
                     aria-hidden="true"
@@ -47,7 +47,7 @@ export default function SponsorsPage() {
                         <pattern
                             x="50%"
                             y={-1}
-                            id="e813992c-7d03-4cc4-a2bd-151760b470a0"
+                            id="sponsor-pattern"
                             width={200}
                             height={200}
                             patternUnits="userSpaceOnUse"
@@ -55,8 +55,14 @@ export default function SponsorsPage() {
                             <path d="M100 200V.5M.5 .5H200" fill="none" />
                         </pattern>
                     </defs>
+                    <svg x="50%" y={-1} className="overflow-visible fill-gray-50">
+                        <path
+                            d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
+                            strokeWidth={0}
+                        />
+                    </svg>
                     <rect
-                        fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)"
+                        fill="url(#sponsor-pattern)"
                         width="100%"
                         height="100%"
                         strokeWidth={0}
@@ -64,38 +70,83 @@ export default function SponsorsPage() {
                 </svg>
             </div>
             
-            <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                <div className="mx-auto max-w-2xl lg:text-center">
-                    <p className="text-base/7 font-semibold text-text-indigo">
+            <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
+                <div className="text-center">
+                    <h2 className="text-base/7 font-semibold text-text-indigo">
                         Tábor Integrovaného záchranného systému 2025
-                    </p>
-                    <h2 className="mt-2 text-3xl font-bold tracking-tight text-text-black sm:text-4xl">
-                        Naši sponzoři
                     </h2>
-                    <p className="mt-6 text-lg text-gray-600">
-                        Děkujeme všem našim sponzorům za podporu. Bez jejich pomoci by nebylo možné realizovat náš tábor.
+                    <p className="mx-auto mt-2 max-w-lg text-balance text-center text-4xl font-black tracking-tight text-text-black sm:text-5xl">
+                        Naši sponzoři
+                    </p>
+                    <p className="mt-6 text-xl/8 text-gray-700 max-w-3xl mx-auto">
+                        Děkujeme všem našim sponzorům za podporu. Bez jejich pomoci by nebylo možné realizovat náš tábor a poskytovat dětem nezapomenutelné zážitky.
                     </p>
                 </div>
                 
                 {loading ? (
-                    <div className="text-center mt-10">Načítání...</div>
+                    <div className="text-center mt-10">
+                        <div className="inline-flex items-center space-x-2">
+                            <div className="w-6 h-6 border-2 border-text-indigo border-t-transparent rounded-full animate-spin"></div>
+                            <span className="text-base text-text-secondary">Načítání sponzorů...</span>
+                        </div>
+                    </div>
                 ) : sponsors.length === 0 ? (
-                    <div className="text-center mt-10">Žádní sponzoři nebyli nalezeni.</div>
+                    <div className="text-center mt-10">
+                        <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                            <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                        </div>
+                        <h3 className="text-lg font-medium text-text-black mb-2">Žádní sponzoři</h3>
+                        <p className="text-text-secondary">V tuto chvíli nemáme žádné sponzory k zobrazení.</p>
+                    </div>
                 ) : (
-                    <div className="mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5">
-                        {sponsors.map((sponsor) => (
-                            <div key={sponsor.id} className="col-span-2 lg:col-span-1 text-center cursor-pointer">
-                                <a href={sponsor.website} target="_blank" rel="noopener noreferrer">
-                                    <Image
-                                        alt={sponsor.name}
-                                        src={sponsor.logoUrl}
-                                        width={158}
-                                        height={48}
-                                        className="max-h-12 w-full object-contain"
-                                    />
-                                    <h3 className="mt-4 text-sm font-semibold text-text-black">{sponsor.name}</h3>
-                                    <p className="mt-2 text-sm text-text-secondary">{sponsor.description}</p>
-                                </a>
+                    <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-3">
+                        {sponsors.map((sponsor, index) => (
+                            <div 
+                                key={sponsor.id} 
+                                className="relative group"
+                            >
+                                <div className="absolute inset-px rounded-lg bg-background"></div>
+                                <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
+                                    <a 
+                                        href={sponsor.website} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="block p-8 h-full hover:bg-gray-50 transition-colors duration-200"
+                                    >
+                                        <div className="flex flex-col items-center text-center h-full">
+                                            <div className="relative w-full h-24 mb-6 flex items-center justify-center">
+                                                <Image
+                                                    alt={sponsor.name}
+                                                    src={sponsor.logoUrl}
+                                                    width={150}
+                                                    height={80}
+                                                    className="max-h-20 max-w-full object-contain"
+                                                />
+                                            </div>
+                                            
+                                            <div className="flex-grow flex flex-col justify-center">
+                                                <h3 className="text-lg font-medium tracking-tight text-text-black mb-4 group-hover:text-text-indigo transition-colors duration-200">
+                                                    {sponsor.name}
+                                                </h3>
+                                                {sponsor.description && (
+                                                    <p className="text-sm/6 text-text-secondary leading-relaxed">
+                                                        {sponsor.description}
+                                                    </p>
+                                                )}
+                                            </div>
+                                            
+                                            <div className="mt-6 inline-flex items-center text-sm font-semibold text-text-indigo group-hover:text-indigo-600 transition-colors duration-200">
+                                                Navštívit web
+                                                <svg className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5"></div>
                             </div>
                         ))}
                     </div>
